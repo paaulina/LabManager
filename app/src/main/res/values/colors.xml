@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#868181</color>
+    <color name="colorPrimaryDark">#3D3F3F</color>
+    <color name="colorAccent">#A903B0E5</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="edittextBackground">#E7E7E7</color>
+    <color name="buttonColor">#0ECFE7</color>
+    <color name="darkButtonColor">#A903B0E5</color>
+    <color name="subbuttonColor">#BAC7CE</color>
+    <color name="lightTextColor">#FFFFFF</color>
+    <color name="alertColor">#FB8D02</color>
+    <color name="buttonCorner">#FFFFFF</color>
+    <color name="errorColor">#FF0000</color>
+</resources>

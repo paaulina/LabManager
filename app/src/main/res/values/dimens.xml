@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_page_side_margin">10dp</dimen>
+    <dimen name="subbutton_side_margin">40dp</dimen>
+    <dimen name="small_button_margin">20dp</dimen>
+    <dimen name="add_formulage_layout_weight_sum">6</dimen>
+    <dimen name="add_formulage_first_layout_weight">2</dimen>
+    <dimen name="add_formulage_second_layout_weight">4</dimen>
+    <dimen name="add_formulage_first_subsecond_layout_weight">3</dimen>
+    <dimen name="add_formulage_second_subsecond_layout_weight">1</dimen>
+    <dimen name="main_activity_text_size">20dp</dimen>
+    <dimen name="segment_selection_stroke">2dp</dimen>
+    <dimen name="segment_selection_padding">10dp</dimen>
+    <dimen name="text_input_field_bordered_padding">5dp</dimen>
+    <dimen name="standard_corners_radius">10dp</dimen>
+    <dimen name="standard_text_Size">20dp</dimen>
+    <dimen name="text_logo_margin">24dp</dimen>
+</resources>

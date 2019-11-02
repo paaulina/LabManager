@@ -1,0 +1,79 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="standardMenuButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/standard_page_side_margin</item>
+        <item name="android:background">@color/buttonColor</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/lightTextColor</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="SubButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/standard_page_side_margin</item>
+        <item name="android:layout_marginBottom">@dimen/standard_page_side_margin</item>
+        <item name="android:layout_marginLeft">@dimen/subbutton_side_margin</item>
+        <item name="android:layout_marginRight">@dimen/subbutton_side_margin</item>
+        <item name="android:background">@color/subbuttonColor</item>
+        <item name="android:textColor">@color/lightTextColor</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+
+    <style name="smallButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">@dimen/small_button_margin</item>
+        <item name="android:background">@color/buttonColor</item>
+        <item name="android:textColor">@color/lightTextColor</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="backButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:maxWidth">35dp</item>
+        <item name="android:maxHeight">35dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:src">@drawable/back_button_icon</item>
+    </style>
+
+
+    <style name="ErrorInputText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#ff0000</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="HintInputText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintInputText</item>
+        <item name="errorTextAppearance">@style/ErrorInputText</item>
+        <item name="android:textColor">@color/buttonCorner</item>
+        <item name="android:textColorHint">@color/buttonCorner</item>
+        <item name="colorControlNormal">@color/buttonCorner</item>
+        <item name="colorControlActivated">@color/buttonCorner</item>
+        <item name="colorControlHighlight">@color/buttonCorner</item>
+    </style>
+
+</resources>

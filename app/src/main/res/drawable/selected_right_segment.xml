@@ -1,0 +1,17 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+            android:width="@dimen/segment_selection_stroke"
+            android:color="@color/buttonCorner" />
+
+    <padding
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"
+            android:top="1dp" />
+
+    <corners
+            android:bottomRightRadius="@dimen/standard_corners_radius"
+            android:topRightRadius="@dimen/standard_corners_radius" />
+
+    <solid android:color="@color/buttonCorner" />
+</shape>

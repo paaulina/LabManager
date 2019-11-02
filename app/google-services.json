@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "380078771230",
+    "firebase_url": "https://labmanager-4b1ef.firebaseio.com",
+    "project_id": "labmanager-4b1ef",
+    "storage_bucket": "labmanager-4b1ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380078771230:android:d38dcf2e01b5578bff720f",
+        "android_client_info": {
+          "package_name": "com.example.labmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380078771230-fcap44csl05qcn9vfcgecfsp5drivb3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labmanager",
+            "certificate_hash": "b024ddbfd51d4f51caf27b06efe1572fc96cffd3"
+          }
+        },
+        {
+          "client_id": "380078771230-g4jpcjogeqgr3m8ogus5rkb0cs349g7j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI7ZjW9MX9X-_PQv_eJuNq2HjdeDff6UE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380078771230-g4jpcjogeqgr3m8ogus5rkb0cs349g7j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

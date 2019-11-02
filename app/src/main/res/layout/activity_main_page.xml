@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainPageActivity">
+
+
+    <include layout="@layout/logo_layout"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="35dp"
+             android:layout_marginBottom="0dp"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             app:layout_constraintLeft_toLeftOf="parent"
+             app:layout_constraintRight_toRightOf="parent"
+             app:layout_constraintTop_toTopOf="parent" android:id="@+id/textViewTitle"
+    />
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarStyle="insideOverlay">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:paddingTop="35dp"
+                      android:orientation="vertical">
+
+            <Button
+                    android:id="@+id/addButton"
+                    style="@style/standardMenuButtonStyle"
+                    android:text="@string/Add"
+                    android:onClick="updateAddSubbutonsVisibility"/>
+
+            <Button
+                    android:id="@+id/addTextResultSubbutton"
+                    android:text="@string/AddTestResult"
+                    android:visibility="gone"
+                    android:animateLayoutChanges="true"
+                    style="@style/SubButtonStyle"
+                    android:onClick="goToAddTestResultActivity"/>
+
+            <Button
+                    android:id="@+id/addMedicalFileSubbButton"
+                    android:text="@string/AddMedicalDocument"
+                    android:visibility="gone"
+                    android:animateLayoutChanges="true"
+                    style="@style/SubButtonStyle"
+                    android:onClick="goToAddMedicalFilesActivity"/>
+
+            <Button
+                    android:id="@+id/myResultsButton"
+                    android:text="@string/ViewBloodTestsResults"
+                    style="@style/standardMenuButtonStyle"
+                    android:onClick="goToTestsResultsSearchActivity"/>
+
+            <Button
+                    android:id="@+id/myMedicalFilesButton"
+                    android:text="@string/MyMedicalFiles"
+                    style="@style/standardMenuButtonStyle"
+                    android:onClick="goToMedicalFilesActivity"/>
+
+            <Button
+                    android:id="@+id/notificationButton"
+                    android:text="@string/Planner"
+                    style="@style/standardMenuButtonStyle"
+                    android:onClick="goToPlannerActivity"/>
+
+
+            <ImageButton
+                    android:id="@+id/settingsButton"
+                    style="@style/standardMenuButtonStyle"
+                    android:src="@drawable/settings"
+                    android:onClick="updateSettingsSubbutonsVisibility"/>
+
+            <Button
+                    android:id="@+id/changePasswordSubButton"
+                    android:text="@string/change_password"
+                    android:visibility="gone"
+                    android:animateLayoutChanges="true"
+                    android:onClick="goToChangePasswordrActivity"
+                    style="@style/SubButtonStyle"/>
+
+            <Button
+                    android:id="@+id/logOutSubButton"
+                    android:text="@string/log_out"
+                    android:visibility="gone"
+                    android:animateLayoutChanges="true"
+                    style="@style/SubButtonStyle"
+                    android:onClick="logOut"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

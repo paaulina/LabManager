@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="20dp">
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center_vertical"
+                  android:layout_marginBottom="10dp">
+
+        <ImageButton style="@style/backButtonStyle"
+                    android:onClick="exitActivity"/>
+
+        <TextView
+                android:text="@string/add_new_medical_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:textSize="@dimen/standard_text_Size"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:weightSum="@dimen/add_formulage_layout_weight_sum"
+                  android:gravity="center_vertical">
+        <TextView
+                android:text="@string/title"
+                android:layout_width="0dp"
+                android:layout_weight="@dimen/add_formulage_first_layout_weight"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"/>
+
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:layout_weight="@dimen/add_formulage_second_layout_weight"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:weightSum="@dimen/add_formulage_layout_weight_sum"
+                  android:gravity="center_vertical">
+        <TextView
+                android:text="@string/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_weight="@dimen/add_formulage_first_layout_weight"/>
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/editText"
+                android:layout_weight="@dimen/add_formulage_second_layout_weight"/>
+    </LinearLayout>
+
+
+    <Button android:id="@+id/button"
+            android:text="@string/add_photo"
+            style="@style/smallButtonStyle"
+            />
+
+
+
+
+</LinearLayout>

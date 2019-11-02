@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">LabManager</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="AppTitle">LabManager</string>
+    <string name="Add">Dodaj</string>
+    <string name="ViewBloodTestsResults">Przeglądaj wyniki</string>
+    <string name="MyMedicalFiles">Moje pliki medyczne</string>
+    <string name="Planner">Planer badań</string>
+    <string name="AddTestResult">Dodaj wynik badania</string>
+    <string name="AddMedicalDocument">Dodaj dokument medyczny</string>
+    <string name="dont_remeber_password">Zapomniałeś hasła?</string>
+    <string name="no_account">Nie masz konta? Zaloguj się</string>
+    <string name="add_new_medical_file">Dodaj nowy plik medczny</string>
+    <string name="title">Tytuł:</string>
+    <string name="date">Data:</string>
+    <string name="add_photo">Dodaj zdjęcie</string>
+    <string name="add_new_result">Dodaj nowy wynik</string>
+    <string name="execution_date">Data wykonania:</string>
+    <string name="test_name">Nazwa badania:</string>
+    <string name="result">Wynik:</string>
+    <string name="notes">Notatki:</string>
+    <string name="tick">✓</string>
+    <string name="registration_complited">Rejestracja zakończona.</string>
+    <string name="ok">OK</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="woman">Kobieta</string>
+    <string name="man">Mezczyzna</string>
+    <string name="create_account">Create account</string>
+    <string name="already_a_member_login">Already a member? Login</string>
+    <string name="forgot_password">Zapomniałeś hasła?</string>
+    <string name="reset_password">Zresetuj hasło</string>
+    <string name="change_password">Zmień hasło</string>
+    <string name="log_out">Wyloguj</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+</resources>
