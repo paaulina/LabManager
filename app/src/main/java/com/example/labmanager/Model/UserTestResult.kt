@@ -1,9 +1,11 @@
-package com.example.labmanager
+package com.example.labmanager.Model
+
+import java.sql.Timestamp
 
 data class UserTestResult(
-    var dateInMillis : Int,
-    var bloodTestId : Int,
+    var dateMillis : Long,
     var bloodTestName: String,
+    var resultType : Int,
     var result: Float,
     var unit : String,
     var note: String

@@ -1,4 +1,4 @@
-package com.example.labmanager
+package com.example.labmanager.Adapter
 
 import android.content.Context
 import android.view.View
@@ -8,6 +8,9 @@ import android.widget.Filter
 import android.app.Activity
 import android.util.Log
 import android.widget.TextView
+import com.example.labmanager.Activity.AddTestResultActivity
+import com.example.labmanager.Model.BloodTest
+import com.example.labmanager.R
 
 
 class BloodTestAdapter(context: Context, resource: Int, items: ArrayList<BloodTest>) :
@@ -106,7 +109,7 @@ class BloodTestAdapter(context: Context, resource: Int, items: ArrayList<BloodTe
                     clear()
                     notifyDataSetChanged()
                 }
-                (context as AddTestResultActivity).hideProggressBar()
+                //(context as AddTestResultActivity).hideProggressBar()
             }
 
 

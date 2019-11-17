@@ -1,6 +1,5 @@
-package com.example.labmanager
+package com.example.labmanager.Service
 
-import kotlinx.android.synthetic.main.activity_signup.*
 import java.util.regex.Pattern
 
 
@@ -21,21 +20,32 @@ class TextValidation{
         }
 
         fun correctNameValue(nameText: String): Boolean {
-            if(!matchesPattern(nameText, namePattern)){
+            if(!matchesPattern(
+                    nameText,
+                    namePattern
+                )
+            ){
                 return false
             }
             return true
         }
 
         fun correctEmailValue (emailText: String): Boolean {
-            if(!matchesPattern(emailText, emailPattern)){
+            if(!matchesPattern(
+                    emailText,
+                    emailPattern
+                )
+            ){
                 return false
             }
             return true
         }
 
         fun correctPasswordValue(passwordTest: String) : Boolean{
-            if(!matchesPattern(passwordTest, passwordPattern) || passwordTest.length < 8){
+            if(!matchesPattern(
+                    passwordTest,
+                    passwordPattern
+                ) || passwordTest.length < 8){
                 return false
             }
             return true

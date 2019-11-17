@@ -113,7 +113,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:textColor="@color/lightTextColor"
-                android:background="@drawable/round_button_background"
+                android:background="@drawable/round_button_background_white"
                 android:onClick="registerUser"
                 android:text="@string/create_account"/>
 

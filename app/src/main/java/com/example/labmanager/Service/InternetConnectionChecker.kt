@@ -1,11 +1,9 @@
-package com.example.labmanager
+package com.example.labmanager.Service
 
 import android.app.Activity
 import android.content.Context
-import android.net.NetworkInfo
-import android.content.Context.CONNECTIVITY_SERVICE
-import androidx.core.content.ContextCompat.getSystemService
 import android.net.ConnectivityManager
+import com.example.labmanager.R
 import com.tapadoo.alerter.Alerter
 
 

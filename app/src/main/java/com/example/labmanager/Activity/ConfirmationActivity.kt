@@ -1,9 +1,10 @@
-package com.example.labmanager
+package com.example.labmanager.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.labmanager.R
 import kotlinx.android.synthetic.main.activity_confirmation.*
 
 class ConfirmationActivity : AppCompatActivity() {

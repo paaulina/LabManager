@@ -1,10 +1,12 @@
-package com.example.labmanager
+package com.example.labmanager.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.example.labmanager.*
+import com.example.labmanager.DataBase.DataBaseManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main_page.*
 
@@ -23,7 +25,8 @@ class MainPageActivity : AppCompatActivity() {
             Log.d("Debug:" , " user is not logged")
         }
 
-        DataBaseManager.initArray()
+        //DataBaseManager.initBloodTestsArray()
+        DataBaseManager.getUserNode()
     }
 
     override fun onBackPressed(){}

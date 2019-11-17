@@ -37,4 +37,17 @@
     <string name="log_out">Wyloguj</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
+    <string name="emptyUnitSelection">"?/?"</string>
+    <string name="type_of_test_result">Typ wyniku:</string>
+
+    <string-array name="result_types_array">
+        <item>Wynik liczbowy</item>
+        <item>Wynik pozytywny/negatywny</item>
+        <item>Wynik opisowy</item>
+    </string-array>
+
+
+    <string name="positive">Pozytywny</string>
+    <string name="negative">Negatywny</string>
+
 </resources>

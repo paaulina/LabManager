@@ -1,4 +1,4 @@
-package com.example.labmanager
+package com.example.labmanager.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +7,9 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import com.example.labmanager.DataBase.DataBaseAsyncTask
+import com.example.labmanager.R
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseUser
 
 
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_main)
+        var dataBaseAsyncTask = DataBaseAsyncTask()
+        dataBaseAsyncTask.execute()
 
         if(mAuth!!.currentUser != null){
             Log.d("Debug:" , " user is logged")

@@ -5,6 +5,7 @@
               android:orientation="vertical"
               android:padding="20dp">
 
+
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
@@ -29,18 +30,22 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:weightSum="@dimen/add_formulage_layout_weight_sum"
+                  android:layout_marginTop="@dimen/margin_addresult_sublayout"
+                  android:layout_marginBottom="@dimen/margin_addresult_sublayout"
                   android:gravity="center_vertical">
 
         <TextView
-                android:text="@string/execution_date"
+                android:id="@+id/textView3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:layout_weight="@dimen/add_formulage_first_layout_weight"/>
+                android:layout_weight="@dimen/add_formulage_first_layout_weight"
+                android:text="@string/execution_date"
+                android:textSize="@dimen/small_text_size" />
         <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:textSize="@dimen/small_text_size"
                 android:id="@+id/editTextDate"
                 android:onClick="setDate"
                 android:focusableInTouchMode="false"
@@ -51,11 +56,15 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:weightSum="@dimen/add_formulage_layout_weight_sum"
+                  android:layout_marginTop="@dimen/margin_addresult_sublayout"
+                  android:layout_marginBottom="@dimen/margin_addresult_sublayout"
+                  android:id="@+id/nameLayout"
                   android:gravity="center_vertical">
 
         <TextView
                 android:text="@string/test_name"
                 android:layout_width="0dp"
+                android:textSize="@dimen/small_text_size"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"/>
@@ -63,12 +72,15 @@
         <RelativeLayout android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="0dp"
                         android:layout_weight="4">
 
             <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/autoCompleteTextView"/>
+                    android:textSize="@dimen/small_text_size" />
 
             <ProgressBar android:id="@+id/progress_bar"
                          android:layout_marginTop="10dp"
@@ -88,34 +100,111 @@
 
     </LinearLayout>
 
-
     <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="@dimen/add_formulage_layout_weight_sum"
+            android:layout_marginTop="@dimen/margin_addresult_sublayout"
+            android:layout_marginBottom="@dimen/margin_addresult_sublayout"
+            android:gravity="center_vertical">
+
+        <TextView
+                android:text="@string/type_of_test_result"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:textSize="@dimen/small_text_size"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView41"/>
+
+        <RelativeLayout android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="4">
+
+            <Spinner
+                    android:id="@+id/spinner_test_type"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/small_text_size"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/numericResultLayout"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:weightSum="@dimen/add_formulage_layout_weight_sum"
+                  android:weightSum="12"
+            android:layout_marginTop="@dimen/margin_addresult_sublayout"
+            android:layout_marginBottom="@dimen/margin_addresult_sublayout"
                   android:gravity="center_vertical">
 
         <TextView
                 android:text="@string/result"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="@dimen/add_formulage_first_layout_weight"
+                android:layout_weight="4"
+                android:textSize="@dimen/small_text_size"
                 android:id="@+id/textView5" />
         <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="@dimen/add_formulage_first_subsecond_layout_weight"
-                android:inputType="number"
+                android:layout_weight="5"
+                android:inputType="numberDecimal"
                 android:ems="10"
-                android:id="@+id/editText2" />
+                android:textSize="@dimen/small_text_size"
+                android:layout_marginRight="10dp"
+                android:id="@+id/editTextReslt" />
         <!--<Spinner
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="@dimen/add_formulage_second_subsecond_layout_weight"
                 android:id="@+id/spinner"/>-->
-        <EditText android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:layout_weight="@dimen/add_formulage_second_subsecond_layout_weight"
-                  android:text="mg/l"/>
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/round_button_background_blue"
+                android:layout_weight="3"
+                android:orientation="vertical">
+            <TextView
+                    android:id="@+id/unitsTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/emptyUnitSelection" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/yesNoResultLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="@dimen/add_formulage_layout_weight_sum"
+            android:layout_marginTop="@dimen/margin_addresult_sublayout"
+            android:layout_marginBottom="@dimen/margin_addresult_sublayout"
+            android:gravity="center_vertical">
+
+        <TextView
+                android:text="@string/result"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/add_formulage_first_layout_weight"
+                android:textSize="@dimen/small_text_size"
+                 />
+
+        <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_text_size"
+                android:layout_weight="@dimen/add_formulage_second_layout_weight"
+                android:id="@+id/spinner_positive_negative"/>
 
     </LinearLayout>
 
@@ -135,8 +224,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="date"
+                android:textSize="@dimen/small_text_size"
                 android:ems="10"
                 android:layout_weight="@dimen/add_formulage_second_layout_weight"
+                android:layout_marginTop="@dimen/margin_addresult_sublayout"
                 android:visibility="invisible"/>
 
 
@@ -148,8 +239,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:background="@color/edittextBackground"
-            android:id="@+id/editText3"
+            android:id="@+id/editTextNotes"
             android:minLines="5"
+            android:textSize="@dimen/small_text_size"
             android:maxLines="6"
             android:scrollbars="vertical"
             android:inputType="textMultiLine"
@@ -161,7 +253,7 @@
             style="@style/smallButtonStyle"
             android:id="@+id/button"
             android:layout_gravity="center"
-            android:onClick="tmp"
+            android:onClick="addMedicalFile"
     />
 
 

@@ -1,24 +1,19 @@
-package com.example.labmanager
+package com.example.labmanager.Activity
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.TextureView
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_signup.*
-import java.util.regex.Pattern
 import androidx.core.graphics.drawable.DrawableCompat
-
-
-
-
+import com.example.labmanager.Service.InternetConnectionChecker
+import com.example.labmanager.R
+import com.example.labmanager.Service.TextValidation
 
 
 class SignupActivity : AppCompatActivity() {
@@ -32,7 +27,10 @@ class SignupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
         selectedGender = -1
         mAuth = FirebaseAuth.getInstance()
-        InternetConnectionChecker.checkConnection(this@SignupActivity, this)
+        InternetConnectionChecker.checkConnection(
+            this@SignupActivity,
+            this
+        )
     }
 
     override fun onStart() {
@@ -42,13 +40,17 @@ class SignupActivity : AppCompatActivity() {
 
     fun femaleSegmentSelected(view: View){
         selectSegment(femaleGenderSelector, R.drawable.selected_left_segment)
-        deselectSegment(maleGenderSelector, R.drawable.unselected_right_segment)
+        deselectSegment(maleGenderSelector,
+            R.drawable.unselected_right_segment
+        )
         selectedGender = 0
     }
 
     fun maleSegmentSelected(view: View){
         selectSegment(maleGenderSelector, R.drawable.selected_right_segment)
-        deselectSegment(femaleGenderSelector, R.drawable.unselected_left_segment)
+        deselectSegment(femaleGenderSelector,
+            R.drawable.unselected_left_segment
+        )
         selectedGender = 1
     }
 
@@ -72,7 +74,11 @@ class SignupActivity : AppCompatActivity() {
        var password = password_edit_text.text.toString()
 
         if(correctEmailValue(email) && correctPasswordValue(password) &&
-            genderSelected() && InternetConnectionChecker.checkConnection(this@SignupActivity, this)){
+            genderSelected() && InternetConnectionChecker.checkConnection(
+                this@SignupActivity,
+                this
+            )
+        ){
 
             mAuth?.createUserWithEmailAndPassword(email, password)
                 ?.addOnCompleteListener(this) { task ->
@@ -101,7 +107,8 @@ class SignupActivity : AppCompatActivity() {
     fun correctNameValue(nameText: String): Boolean {
         if(!TextValidation.correctNameValue(nameText)){
             name_edit_text_input_layout.isErrorEnabled = true
-            name_edit_text_input_layout.error = TextValidation.EMAIL_ERROR_TEXT
+            name_edit_text_input_layout.error =
+                TextValidation.EMAIL_ERROR_TEXT
             return false
         }
         name_edit_text_input_layout.isErrorEnabled = false
@@ -111,7 +118,8 @@ class SignupActivity : AppCompatActivity() {
     fun correctEmailValue(emailText: String): Boolean {
         if(!TextValidation.correctEmailValue(emailText)){
             email_edit_text_input_layout.isErrorEnabled = true
-            email_edit_text_input_layout.error = TextValidation.EMAIL_ERROR_TEXT
+            email_edit_text_input_layout.error =
+                TextValidation.EMAIL_ERROR_TEXT
             return false
         }
         email_edit_text_input_layout.isErrorEnabled = false
@@ -121,7 +129,8 @@ class SignupActivity : AppCompatActivity() {
     fun correctPasswordValue(passwordText: String) : Boolean{
         if(!TextValidation.correctPasswordValue(passwordText)){
             password_edit_text_input_layout.isErrorEnabled = true
-            password_edit_text_input_layout.error = TextValidation.PASSWORD_ERROR_TEXT
+            password_edit_text_input_layout.error =
+                TextValidation.PASSWORD_ERROR_TEXT
             return false
         }
         password_edit_text_input_layout.isErrorEnabled = false

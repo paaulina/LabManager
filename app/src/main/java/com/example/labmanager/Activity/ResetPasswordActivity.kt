@@ -1,4 +1,4 @@
-package com.example.labmanager
+package com.example.labmanager.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.edit_text_email
 import kotlinx.android.synthetic.main.activity_reset_password.*
-import com.google.android.gms.tasks.Task
-import androidx.annotation.NonNull
+import com.example.labmanager.R
+import com.example.labmanager.Service.TextValidation
 import com.google.android.gms.tasks.OnCompleteListener
 
 
@@ -29,7 +28,8 @@ class ResetPasswordActivity : AppCompatActivity() {
         var emailText = edit_text_email.text.toString()
         if(!TextValidation.correctEmailValue(emailText)){
             layout_email_text.isErrorEnabled = true
-            layout_email_text.error = TextValidation.EMAIL_ERROR_TEXT
+            layout_email_text.error =
+                TextValidation.EMAIL_ERROR_TEXT
             return
         }
         layout_email_text.isErrorEnabled = false

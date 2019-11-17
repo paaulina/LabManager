@@ -1,4 +1,4 @@
-package com.example.labmanager
+package com.example.labmanager.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +8,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.AuthResult
-import com.google.android.gms.tasks.Task
-import androidx.annotation.NonNull
-import com.google.android.gms.tasks.OnCompleteListener
-import android.R.attr.password
-import android.util.Log
+import com.example.labmanager.Service.InternetConnectionChecker
+import com.example.labmanager.R
+import com.example.labmanager.Service.TextValidation
 
 
 class LoginActivity : AppCompatActivity() {
@@ -24,14 +21,21 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         mAuth = FirebaseAuth.getInstance()
-        InternetConnectionChecker.checkConnection(this@LoginActivity, this)
+        InternetConnectionChecker.checkConnection(
+            this@LoginActivity,
+            this
+        )
     }
 
 
     fun logUser(view: View){
         var emailText = edit_text_email.text.toString()
         var passwordText = edit_text_password.text.toString()
-        if(correctEmailValue(emailText) && correctPasswordValue(passwordText) && InternetConnectionChecker.checkConnection(this@LoginActivity, this)){
+        if(correctEmailValue(emailText) && correctPasswordValue(passwordText) && InternetConnectionChecker.checkConnection(
+                this@LoginActivity,
+                this
+            )
+        ){
 
             mAuth?.signInWithEmailAndPassword(emailText, passwordText)!!
                 .addOnCompleteListener(this) { task ->
