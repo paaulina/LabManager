@@ -15,9 +15,6 @@ import android.view.Window
 import android.widget.*
 import com.example.labmanager.*
 import com.example.labmanager.Adapter.BloodTestAdapter
-import com.example.labmanager.DataBase.DataBaseManager
-import com.example.labmanager.DataBase.usecase.BloodTestsInteractor
-import com.example.labmanager.DataBase.usecase.BloodTestsPresenter
 import com.example.labmanager.Model.BloodTest
 import com.example.labmanager.Model.UserTestResult
 import com.example.labmanager.Service.DateManager
@@ -25,15 +22,16 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import android.view.View.OnFocusChangeListener
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.example.labmanager.DataBase.DataBaseEntry.StaticDataDBEntry
+import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
+import com.example.labmanager.DataBase.usecase.StaticData.StaticDataInteractor
+import com.example.labmanager.DataBase.usecase.UserData.UserTestResultsSaving.UserTestResultSaveInteractor
 
 
 
 
-class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
+
+class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
 
     lateinit var bloodTestsArray: ArrayList<BloodTest>
     lateinit var bloodTestAdapter: BloodTestAdapter
@@ -51,6 +49,7 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
     var selectedUnit = ""
     var insertedNote = ""
     var POS_NEG_HASHMAP = hashMapOf<String, Float>()
+    lateinit var datePickerDialog: DatePickerDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -61,20 +60,20 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
         var context = this
         autoCompleteTextView.setOnTouchListener(object: View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                //progress_bar.visibility = View.VISIBLE
-                var retrieval = BloodTestsInteractor(DataBaseManager, context)
-                retrieval.dispatch()
-
+                StaticDataInteractor(StaticDataDBEntry).getBloodTestsArray(::success, :: failure )
                 autoCompleteTextView.setOnTouchListener(null)
                 return true
             }
 
+            fun success(bT: ArrayList<BloodTest>){
+                context.presentBloodTestsData(bT)
+            }
+
+            fun failure(msg: String){
+                context.presentBloodTestsDataError(msg)
+            }
         })
-        autoCompleteTextView.setOnClickListener {
-            //progress_bar.visibility = View.VISIBLE
-            var retrieval = BloodTestsInteractor(DataBaseManager, this)
-            retrieval.dispatch()
-        }
+
 
         POS_NEG_HASHMAP = hashMapOf<String, Float>(resources.getString(R.string.positive) to 1f,
             resources.getString(R.string.negative) to 0f)
@@ -87,30 +86,23 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
 
 // ----------------------------- DATE -------------------------------------------------------------
 
-    fun setUpTodaysDate(){
+    private fun setUpTodaysDate(){
+
         var calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month+1, day)
+        datePickerDialog = DatePickerDialog(
+            this, this, year, month, day
+        )
     }
-
-    override fun onCreateDialog(id: Int): Dialog? {
-        return if (id == 999) {
-            DatePickerDialog(
-                this,
-                myDateListener, year, month, day
-            )
-        } else null
+    override fun onDateSet(view: DatePicker?, year0: Int, month0: Int, dayOfMonth0: Int) {
+        showDate(year0, month0, dayOfMonth0)
     }
 
     fun setDate(view: View) {
-        showDialog(999)
-    }
-
-
-    private val myDateListener = DatePickerDialog.OnDateSetListener { arg0, arg1, arg2, arg3 ->
-        showDate(arg1, arg2 + 1, arg3)
+        datePickerDialog.show();
     }
 
     private fun showDate(year: Int, month: Int, day: Int) {
@@ -124,12 +116,12 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
 
 // -------------------BLOOD TEST--------------------------------------------------------------------------
 
-    override fun presentBloodTests(bloodTests: ArrayList<BloodTest>) {
+    fun presentBloodTestsData(bloodTests: ArrayList<BloodTest>) {
         bloodTestsArray = bloodTests
         setUpAutoCompleteTextViewData()
     }
 
-    override fun presentBloodTestsError(message: String?) {
+    fun presentBloodTestsDataError(message: String?) {
         Toast.makeText(this,"Error", Toast.LENGTH_LONG)
     }
 
@@ -141,7 +133,6 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
         )
         autoCompleteTextView.threshold = 0
         autoCompleteTextView.setAdapter(bloodTestAdapter)
-        //progress_bar.visibility = View.INVISIBLE
 
 
         autoCompleteTextView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, i, l ->
@@ -328,6 +319,8 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
     }
 
 
+// ------------------------ SAVE INSERTED DATE ---------------------------------------------------
+
     fun addMedicalFile(view: View){
         if(fieldsCorrectlyFilled()){
 
@@ -340,12 +333,9 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
                 insertedNote
             )
 
-            if(DataBaseManager.saveUserTestResult(testResult)){
-                val intent = Intent(this, SuccessActivity::class.java)
-                startActivity(intent)
-            }else{
-                Toast.makeText(this, "Saving Failed", Toast.LENGTH_LONG)
-            }
+            UserTestResultSaveInteractor(UserDataDBEntry)
+                .saveUserTestResult(testResult, ::presentTestResultSavingRespond)
+
         }
     }
 
@@ -374,7 +364,14 @@ class AddTestResultActivity : AppCompatActivity(), BloodTestsPresenter {
         return true;
     }
 
-
+    fun presentTestResultSavingRespond(dataHasBeenSaved: Boolean){
+        if(dataHasBeenSaved){
+            val intent = Intent(this, SuccessActivity::class.java)
+            startActivity(intent)
+        }else {
+            Toast.makeText(this, "Saving Failed", Toast.LENGTH_LONG)
+        }
+    }
 
 
 }

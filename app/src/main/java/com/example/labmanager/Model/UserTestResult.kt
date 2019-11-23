@@ -8,5 +8,6 @@ data class UserTestResult(
     var resultType : Int,
     var result: Float,
     var unit : String,
-    var note: String
+    var note: String,
+    var favorite : Int = 0
 )

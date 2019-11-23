@@ -1,4 +1,4 @@
-package com.example.labmanager.DataBase.usecase
+package com.example.labmanager.DataBase.usecase.BloodTests
 
 import com.example.labmanager.Model.BloodTest
 

@@ -249,8 +249,9 @@
     />
 
     <Button
-            android:text="@string/tick"
+            android:text="Dodaj wynik"
             style="@style/smallButtonStyle"
+            android:background="@drawable/round_filled_background_blue"
             android:id="@+id/button"
             android:layout_gravity="center"
             android:onClick="addMedicalFile"

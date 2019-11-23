@@ -17,4 +17,8 @@
     <dimen name="standard_text_Size">20dp</dimen>
     <dimen name="text_logo_margin">24dp</dimen>
     <dimen name="margin_addresult_sublayout">10dp</dimen>
+    <dimen name="errorTop_padding">10dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="dropdown_item_padding">3dp</dimen>
+    <dimen name="padding_popup_layout">20dp</dimen>
 </resources>

@@ -42,7 +42,7 @@
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait"></activity>
         <activity
-                android:name=".Activity.TestsResultSearchActivity"
+                android:name=".Activity.TestsResultOverviewActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait"></activity>
         <activity

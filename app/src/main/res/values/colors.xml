@@ -12,4 +12,8 @@
     <color name="alertColor">#FB8D02</color>
     <color name="buttonCorner">#FFFFFF</color>
     <color name="errorColor">#FF0000</color>
+    <color name="navigationBarItemColor">#000000</color>
+
+    <color name="navigationBarColorPrimary">#A903B0E5</color>
+    <color name="navigationBarColorBackground">#FFFFFF</color>
 </resources>

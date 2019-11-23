@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+            android:width="1dp"
+            android:color="@color/edittextBackground" />
+
+    <padding
+            android:bottom="@dimen/dropdown_item_padding"
+            android:left="@dimen/dropdown_item_padding"
+            android:right="@dimen/dropdown_item_padding"
+            android:top="@dimen/dropdown_item_padding" />
+
+</shape>

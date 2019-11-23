@@ -1,5 +1,6 @@
 package com.example.labmanager.Service
 
+import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -25,5 +26,20 @@ object DateManager{
         val sdf = SimpleDateFormat("dd/mm/yyyy")
         val date = sdf.parse(stringDate)
         return date.time
+    }
+
+    fun dateMillisToStringDate(milis: Long) : String {
+        val date = Date(milis)
+        var stringDate = "${date.day}/"
+        if(date.day < 10){
+            stringDate = "0${date.day}/"
+        }
+        if(date.month < 10){
+            stringDate = stringDate + "0${date.month}/${date.year}"
+        }else {
+            stringDate = stringDate + "${date.month}/${date.year}"
+        }
+
+        return stringDate
     }
 }

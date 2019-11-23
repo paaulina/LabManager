@@ -49,5 +49,13 @@
 
     <string name="positive">Pozytywny</string>
     <string name="negative">Negatywny</string>
+    <string name="all_test_results">WYNIKI</string>
+    <string name="catalogues">KATALOGI</string>
+    <string name="results_groups">GRUPY BADAŃ</string>
+    <string name="network_connection_error">Brak połączenia z internetem</string>
+    <string name="execution_date_from">Data wykonania od:</string>
+    <string name="execution_date_to">Data wykonania do:</string>
+    <string name="cancel">Anuluj</string>
+    <string name="filter">filtruj</string>
 
 </resources>

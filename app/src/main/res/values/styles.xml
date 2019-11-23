@@ -6,6 +6,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/san_francisco_ui</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:font">@font/san_francisco_regular</item>
+        <item name="android:textColor">@color/buttonColor</item>
+
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="standardMenuButtonStyle">
@@ -75,5 +88,16 @@
         <item name="colorControlActivated">@color/buttonCorner</item>
         <item name="colorControlHighlight">@color/buttonCorner</item>
     </style>
+
+    <style name="AppTheme.BottomNavigationView">
+        <item name="colorPrimary">@color/navigationBarColorPrimary</item>
+        <item name="android:colorBackground">@color/navigationBarColorBackground</item>
+    </style>
+
+    <style name="iosLikeFont">
+        <item name="android:font">@font/san_francisco_regular</item>
+    </style>
+
+
 
 </resources>

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.labmanager.*
-import com.example.labmanager.DataBase.DataBaseManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main_page.*
 
@@ -26,7 +25,7 @@ class MainPageActivity : AppCompatActivity() {
         }
 
         //DataBaseManager.initBloodTestsArray()
-        DataBaseManager.getUserNode()
+        //DataBaseManager.getUserNode()
     }
 
     override fun onBackPressed(){}
@@ -67,7 +66,7 @@ class MainPageActivity : AppCompatActivity() {
     }
 
     fun goToTestsResultsSearchActivity(view: View){
-        val intent = Intent(this, TestsResultSearchActivity::class.java)
+        val intent = Intent(this, TestsResultOverviewActivity::class.java)
         //intent.putExtra("keyIdentifier", value)
         startActivity(intent)
     }
