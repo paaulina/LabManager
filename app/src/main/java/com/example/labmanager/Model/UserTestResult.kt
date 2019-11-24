@@ -3,11 +3,13 @@ package com.example.labmanager.Model
 import java.sql.Timestamp
 
 data class UserTestResult(
-    var dateMillis : Long,
-    var bloodTestName: String,
-    var resultType : Int,
-    var result: Float,
-    var unit : String,
-    var note: String,
-    var favorite : Int = 0
+    var dateMillis : Long = 0,
+    var result: Float = 0f,
+    var note: String = "",
+    var unit : String = "",
+    var favorite : Int = 0,
+    var resultType : Int = 0,
+    var bloodTestName: String = ""
+
+
 )

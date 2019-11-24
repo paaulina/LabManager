@@ -5,26 +5,22 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.labmanager.*
 import com.example.labmanager.Adapter.TestResultAdapter
 import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
 import com.example.labmanager.DataBase.usecase.UserData.UserTestResultsUploading.TestResultInteractor
 import com.example.labmanager.Model.UserTestResult
-import com.example.labmanager.R
+import com.example.labmanager.Service.DateManager
 import com.example.labmanager.Service.ItemClickedCallback
-import kotlinx.android.synthetic.main.activity_add_test_result.*
-import kotlinx.android.synthetic.main.dialog_filter_criteria.*
+import com.example.labmanager.Service.TestResultsFilter
 import kotlinx.android.synthetic.main.fragment_tests_results_overview.*
-import java.util.*
 import kotlin.collections.ArrayList
+import android.R.attr.x
+import android.content.res.Resources
+import android.view.*
 
 
 class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDialog.OnDateSetListener, ItemClickedCallback {
@@ -32,13 +28,7 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
     var parentContext = context
     lateinit var filtersDialog: Dialog
     lateinit var datePickerDialog: DatePickerDialog
-    var yearFrom = 0
-    var monthFrom = 0
-    var dayFrom = 0
     var stringDateFrom = ""
-    var yearTo = 0
-    var monthTo = 0
-    var dayTo = 0
     var stringDateTo = ""
 
     var dateDialogEntry = 0
@@ -46,12 +36,7 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
     var ENTRY_DATE_TO = 2
 
     var resultsList = arrayListOf<UserTestResult>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
+    var displayableResultList = arrayListOf<UserTestResult>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,45 +49,71 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button_filter.setOnClickListener { showFiltersDialog() }
+        resltsRecyclerOverview.visibility = View.GONE
+        progress_bar.visibility = View.VISIBLE
+        TestResultInteractor(UserDataDBEntry).retrieveAllTestResultsForUser(::showResults, ::showErrorMessage)
+    }
 
-        TestResultInteractor(UserDataDBEntry).retrieveAllTestResultsForUser(::setUpRecycler, ::showErrorMessage)
+    fun showResults(results: ArrayList<UserTestResult>){
+        if(resltsRecyclerOverview != null) {
+            resltsRecyclerOverview.visibility = View.VISIBLE
+            //resltsRecyclerOverview.setNestedScrollingEnabled(false)
+            progress_bar.visibility = View.GONE
+            resultsList = results
+            setUpRecycler(resultsList)
+        }
     }
 
     fun setUpRecycler(results: ArrayList<UserTestResult>){
-        resultsList = results
-        val recyclerAdapter = TestResultAdapter(resultsList, parentContext, this)
+        displayableResultList = resultsList
+        val recyclerAdapter = TestResultAdapter(displayableResultList, parentContext, this)
         resltsRecyclerOverview.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         resltsRecyclerOverview.setHasFixedSize(true)
         resltsRecyclerOverview.adapter = recyclerAdapter
+        //resltsRecyclerOverview.setNestedScrollingEnabled(false)
     }
 
     fun showErrorMessage(msg: String){}
 
-    override fun itemAtPositionSelected(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-
+    lateinit var dateFromEditText : EditText
+    lateinit var dateToEditText : EditText
+    var filterName : String = ""
+    var dateFromSet = false
+    var dateToSet = false
+    lateinit var sortingSpinner : Spinner
 
     fun showFiltersDialog(){
 
+        filterName = ""
+        dateFromSet = false
+        dateToSet = false
         filtersDialog = Dialog(context)
         filtersDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         filtersDialog.setContentView(R.layout.dialog_filter_criteria)
-        val dateFromEditText = filtersDialog.findViewById(R.id.editTextDateFrom) as EditText
-        val dateToEditText = filtersDialog.findViewById(R.id.editTextDateTo) as EditText
+        dateFromEditText = filtersDialog.findViewById(R.id.editTextDateFrom) as EditText
+        dateToEditText = filtersDialog.findViewById(R.id.editTextDateTo) as EditText
         dateFromEditText.setOnClickListener { setDateFrom() }
         dateToEditText.setOnClickListener { setDateTo() }
+
+        sortingSpinner = filtersDialog.findViewById(R.id.spinner_sorting)
+        setUpSortingSpinner()
 
         val cancelButton = filtersDialog.findViewById(R.id.button_cancel) as Button
         val applyButton = filtersDialog.findViewById(R.id.button_apply) as Button
 
         cancelButton.setOnClickListener { filtersDialog.hide() }
         applyButton.setOnClickListener {
+            filterName = (filtersDialog.findViewById(R.id.autoCompleteTextView) as AutoCompleteTextView).text.toString()
             applyFilters()
             filtersDialog.hide()
         }
+
+        datePickerDialog = DatePickerDialog(parentContext)
+        datePickerDialog.setOnDateSetListener(this)
+
+        filtersDialog.show()
 
     }
 
@@ -131,11 +142,11 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
             dateString = "0$dateString"
         }
 
-        editTextDateFrom.setText(dateString)
+        dateFromEditText.setText(dateString)
+        dateFromSet = true
         stringDateFrom = dateString
-        yearFrom = year
-        monthFrom = month
-        dayFrom = day
+
+        Log.d("dateFromSetting " , " date drom setting $dateString")
     }
 
     private fun showDateTo(year: Int, month: Int, day: Int) {
@@ -144,16 +155,122 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
             dateString = "0$dateString"
         }
 
-        editTextDateTo.setText(dateString)
+        dateToEditText.setText(dateString)
+        dateToSet = true
         stringDateTo = dateString
-        yearTo = year
-        monthTo = month
-        dayTo = day
+        Log.d("dateToSetting " , " date to setting $dateString")
+    }
+
+    lateinit var sortingTypesArray : Array<String>
+    var selectedSorting = ""
+    fun setUpSortingSpinner(){
+
+        selectedSorting = ""
+        sortingTypesArray = resources.getStringArray(R.array.sorting_types_array)
+        val typesAdapter = ArrayAdapter<String>(parentContext,
+            R.layout.simple_spinner_item,
+            sortingTypesArray
+        )
+
+        sortingSpinner.adapter = typesAdapter
+        sortingSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
+                selectedSorting = sortingTypesArray.get(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedSorting = ""
+            }
+        }
     }
 
 
     fun applyFilters(){
-        //TODO
+        if(filterName.length > 0){
+            displayableResultList = TestResultsFilter.filterByName(filterName, displayableResultList)
+        }
+
+        if(dateFromSet){
+            displayableResultList = TestResultsFilter.filterByDateFrom(DateManager.toMillis(stringDateFrom), displayableResultList)
+        }
+
+        if(dateToSet){
+            displayableResultList = TestResultsFilter.filterByDateTo(DateManager.toMillis(stringDateTo), displayableResultList)
+        }
+
+        when(selectedSorting){
+            sortingTypesArray.get(0) -> displayableResultList = TestResultsFilter.sortByName(displayableResultList)
+            sortingTypesArray.get(1) -> displayableResultList = TestResultsFilter.sortByDate(displayableResultList)
+            sortingTypesArray.get(2) -> displayableResultList = TestResultsFilter.sortByFavourites(displayableResultList)
+        }
+
+        setUpRecycler(displayableResultList)
+    }
+
+// ----------------------------------------- item selected ----------------------------------------------------------------
+
+    lateinit var selectedResult : UserTestResult
+    lateinit var detailsDialog : Dialog
+    lateinit var favouriteButton : ImageButton
+    override fun itemAtPositionSelected(position: Int) {
+        showDetailsDialog(displayableResultList.get(position))
+    }
+
+    fun getScreenWidth(): Int {
+        return Resources.getSystem().getDisplayMetrics().widthPixels
+    }
+
+    fun showDetailsDialog(userTestResult: UserTestResult){
+
+        selectedResult = userTestResult
+        detailsDialog = Dialog(parentContext)
+        detailsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        detailsDialog.setContentView(R.layout.dialog_test_result_details)
+
+        detailsDialog.findViewById<TextView>(R.id.testDateTextView).text = DateManager.dateMillisToStringDate(userTestResult.dateMillis)
+        detailsDialog.findViewById<TextView>(R.id.testResultNameTextView).text = userTestResult.bloodTestName
+
+        var text = ""
+        when(userTestResult.resultType){
+            RESULT_TYPE_NUMERIC -> text = userTestResult.result.toString()
+            RESULT_TYPE_POSITIVE_NEGATIVE -> {
+                when(userTestResult.result){
+                    POSITIVE_RESULT -> text = resources.getString(R.string.positive)
+                    NEGATIVE_RESULT -> text = resources.getString(R.string.negative)
+                }
+            }
+            RESULT_TYPE_DESC -> text = ""
+        }
+        detailsDialog.findViewById<TextView>(R.id.resultValueTextView).text = text
+        detailsDialog.findViewById<TextView>(R.id.notesTextView).text = userTestResult.note
+
+        var favouriteIcon = R.drawable.prestar
+        when(userTestResult.favorite){
+            IS_FAVORITE -> {
+                favouriteIcon = R.drawable.star
+            }
+        }
+        favouriteButton = detailsDialog.findViewById<ImageButton>(R.id.imageButtonFavourite)
+        favouriteButton.setImageResource(favouriteIcon)
+        favouriteButton.setOnClickListener{
+            if (selectedResult.favorite == IS_FAVORITE) addToFavourites() else removeFromFavourites()
+        }
+
+
+        detailsDialog.show()
+
+    }
+
+    fun addToFavourites(){
+        selectedResult.favorite = NOT_FAVORITE
+        favouriteButton.setImageResource(R.drawable.prestar)
+        //todo save
+    }
+
+    fun removeFromFavourites(){
+        selectedResult.favorite = IS_FAVORITE
+        favouriteButton.setImageResource(R.drawable.star)
+        //todo save
     }
 
 }

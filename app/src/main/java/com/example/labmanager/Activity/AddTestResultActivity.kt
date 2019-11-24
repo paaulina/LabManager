@@ -131,7 +131,7 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             R.layout.blood_test_row,
             bloodTestsArray
         )
-        autoCompleteTextView.threshold = 0
+        autoCompleteTextView.threshold = 1
         autoCompleteTextView.setAdapter(bloodTestAdapter)
 
 
@@ -326,11 +326,13 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
             var testResult = UserTestResult(
                 DateManager.toMillis(editTextDate.text.toString()),
-                selectedBloodTest.name!!,
-                selectedResultType,
                 selectedResult,
+                insertedNote,
                 selectedUnit,
-                insertedNote
+                0,
+                selectedResultType,
+                selectedBloodTest.name!!
+
             )
 
             UserTestResultSaveInteractor(UserDataDBEntry)

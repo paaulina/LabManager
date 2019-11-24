@@ -16,7 +16,7 @@
             android:paddingRight="@dimen/padding_popup_layout"
             android:paddingLeft="@dimen/padding_popup_layout"
             android:gravity="center_vertical"
-            android:weightSum="@dimen/add_formulage_layout_weight_sum"
+            android:weightSum="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -25,8 +25,8 @@
                 android:id="@+id/textView4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="@string/test_name"
+                android:layout_weight="1"
+                android:text="Nazwa:"
                 android:textSize="@dimen/small_text_size" />
 
         <RelativeLayout
@@ -79,7 +79,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 android:text="@string/execution_date_from"
                 android:textSize="@dimen/small_text_size" />
 
@@ -87,7 +87,7 @@
                 android:id="@+id/editTextDateFrom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_weight="5"
                 android:ems="10"
                 android:focusableInTouchMode="false"
                 android:inputType="date"
@@ -112,7 +112,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 android:text="@string/execution_date_to"
                 android:textSize="@dimen/small_text_size" />
 
@@ -120,7 +120,7 @@
                 android:id="@+id/editTextDateTo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_weight="5"
                 android:ems="10"
                 android:focusableInTouchMode="false"
                 android:inputType="date"
@@ -129,29 +129,63 @@
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:weightSum="2"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-            tools:layout_editor_absoluteX="20dp">
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:weightSum="10"
+            android:paddingRight="@dimen/padding_popup_layout"
+            android:paddingLeft="@dimen/padding_popup_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <TextView
+                android:id="@+id/textView6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Sortuj według:"
+                android:textSize="@dimen/small_text_size" />
+
+        <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_text_size"
+                android:layout_weight="5"
+                android:id="@+id/spinner_sorting"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <Button
                 android:id="@+id/button_cancel"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/popup_bottom_button_layout_left"
                 android:text="@string/cancel"
+                android:paddingRight="10dp"
+                android:textSize="14sp"
                 android:textColor="@color/buttonColor" />
 
         <Button
                 android:id="@+id/button_apply"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/popup_bottom_button_layout_right"
                 android:text="@string/filter"
+                android:paddingRight="7dp"
+                android:textSize="14sp"
                 android:textColor="@color/buttonColor" />
     </LinearLayout>
 

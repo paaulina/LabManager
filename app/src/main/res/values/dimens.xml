@@ -21,4 +21,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="dropdown_item_padding">3dp</dimen>
     <dimen name="padding_popup_layout">20dp</dimen>
+    <dimen name="posNegIconSize">20dp</dimen>
 </resources>

@@ -60,11 +60,15 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:maxWidth">35dp</item>
         <item name="android:maxHeight">35dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">12dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:background">#00000000</item>
-        <item name="android:src">@drawable/back_button_icon</item>
+        <item name="android:src">@drawable/back</item>
     </style>
 
 

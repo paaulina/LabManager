@@ -1,5 +1,6 @@
 package com.example.labmanager.DataBase.DataBaseEntry
 
+import android.util.Log
 import com.example.labmanager.BLOOD_TESTS_NODE
 import com.example.labmanager.BLOOD_TESTS_NODE_VERSION
 import com.example.labmanager.DATA_BASE_ERROR
@@ -34,7 +35,9 @@ object StaticDataDBEntry :  StaticDataGateway{
         btEndpoint.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(btSnapshot in dataSnapshot.children){
+                    Log.d("userdblog " , "userdblog item " + btSnapshot)
                     bloodTestsArray.add(btSnapshot.getValue(BloodTest::class.java) as BloodTest)
+                    Log.d("userdblog " , "userdblog name " + (btSnapshot.getValue(BloodTest::class.java) as BloodTest).name)
                 }
                 callback.onBloodTestsRetrievalSuccess(bloodTestsArray)
             }

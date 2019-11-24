@@ -25,39 +25,42 @@
             android:layout_marginStart="10dp"
             android:text="2019-12-04"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/testResultNameTextView"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
             android:id="@+id/testResultNameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/san_francisco_regular"
             android:text="Androstedion"
-            android:textSize="30dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonFavourite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonFavourite" />
 
     <TextView
-            android:id="@+id/numericResultTextView"
-            android:layout_width="128dp"
-            android:layout_height="54dp"
+            android:id="@+id/resultValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="122.46"
-            android:textSize="40dp"
-            android:visibility="invisible"
+            android:textSize="18sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toBottomOf="@+id/testResultNameTextView"
             app:layout_constraintVertical_bias="0.238" />
 
     <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_thin_blue_line"
-            android:padding="12dp"
-            android:src="@drawable/edit"
+            android:id="@+id/imageButtonFavourite"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/prestar"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,19 +70,9 @@
             android:layout_height="wrap_content"
             android:text="Wynik:"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/posNegResultTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/resultValueTextView"
             app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-            android:id="@+id/posNegResultTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="Pozytywny"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/numericResultTextView"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="@+id/numericResultTextView" />
 
     <TextView
             android:id="@+id/notesTextView"
@@ -89,6 +82,21 @@
             android:text="Notatki"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numericResultTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/resultValueTextView" />
+
+    <ImageButton
+            android:id="@+id/prestarButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="invisible"
+            android:adjustViewBounds="true"
+            android:background="@color/colorTransparent"
+            android:padding="5dp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/prestar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

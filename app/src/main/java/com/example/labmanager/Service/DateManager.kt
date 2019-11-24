@@ -1,5 +1,6 @@
 package com.example.labmanager.Service
 
+import android.util.Log
 import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -29,6 +30,8 @@ object DateManager{
     }
 
     fun dateMillisToStringDate(milis: Long) : String {
+
+
         val date = Date(milis)
         var stringDate = "${date.day}/"
         if(date.day < 10){
@@ -39,7 +42,7 @@ object DateManager{
         }else {
             stringDate = stringDate + "${date.month}/${date.year}"
         }
-
-        return stringDate
+        Log.d("dateMillis " , " millis: $milis time: $stringDate , ${date.toString()}"  )
+        return date.toString()
     }
 }

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.labmanager.*
 import com.example.labmanager.Model.UserTestResult
 import com.example.labmanager.Service.DateManager
-import com.example.labmanager.Service.ItemClickedCallback
 import kotlinx.android.synthetic.main.test_result_list_item.view.*
 
 class TestResultViewHolder (itemView: View) :
@@ -16,7 +15,7 @@ class TestResultViewHolder (itemView: View) :
 
     val resultNameTextView: TextView = itemView.testResultNameTextView
     val resultDateTextView: TextView = itemView.testDateTextView
-    val resultNumericTextView: TextView = itemView.numericResultTextView
+    val resultNumericTextView: TextView = itemView.resultValueTextView
     val posNegImageEmpty: ImageView = itemView.imageViewEmpty
     val posNegImageFilled: ImageView = itemView.imageViewFilled
     var starButton: ImageButton = itemView.starButton
@@ -34,22 +33,38 @@ class TestResultViewHolder (itemView: View) :
                 posNegImageFilled.visibility = View.INVISIBLE
             }
             RESULT_TYPE_POSITIVE_NEGATIVE -> {
-                resultNumericTextView.visibility = View.INVISIBLE
+//                resultNumericTextView.visibility = View.INVISIBLE
+//                when(userTestResult.result){
+//                    NEGATIVE_RESULT -> {
+//                        posNegImageEmpty.visibility = View.VISIBLE
+//                        posNegImageFilled.visibility = View.INVISIBLE
+//                    }
+//                    POSITIVE_RESULT -> {
+//                        posNegImageEmpty.visibility = View.INVISIBLE
+//                        posNegImageFilled.visibility = View.VISIBLE
+//                    }
+//                    else -> {
+//                        posNegImageEmpty.visibility = View.INVISIBLE
+//                        posNegImageFilled.visibility = View.INVISIBLE
+//                    }
+//                }
+//                resultNumericTextView.visibility = View.INVISIBLE
+
+                resultNumericTextView.visibility = View.VISIBLE
+                posNegImageEmpty.visibility = View.INVISIBLE
+                posNegImageFilled.visibility = View.INVISIBLE
+
                 when(userTestResult.result){
                     NEGATIVE_RESULT -> {
-                        posNegImageEmpty.visibility = View.VISIBLE
-                        posNegImageFilled.visibility = View.INVISIBLE
+                        resultNumericTextView.text = "N"
                     }
                     POSITIVE_RESULT -> {
-                        posNegImageEmpty.visibility = View.INVISIBLE
-                        posNegImageFilled.visibility = View.VISIBLE
+                        resultNumericTextView.text = "P"
                     }
                     else -> {
-                        posNegImageEmpty.visibility = View.INVISIBLE
-                        posNegImageFilled.visibility = View.INVISIBLE
+                        resultNumericTextView.text = ""
                     }
                 }
-                resultNumericTextView.visibility = View.INVISIBLE
             }
             RESULT_TYPE_DESC -> {
                 posNegImageEmpty.visibility = View.INVISIBLE

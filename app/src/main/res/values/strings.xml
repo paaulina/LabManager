@@ -46,6 +46,12 @@
         <item>Wynik opisowy</item>
     </string-array>
 
+    <string-array name="sorting_types_array">
+        <item>Nazwa</item>
+        <item>Data</item>
+        <item>Ulubione</item>
+    </string-array>
+
 
     <string name="positive">Pozytywny</string>
     <string name="negative">Negatywny</string>

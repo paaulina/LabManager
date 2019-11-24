@@ -1,5 +1,6 @@
 package com.example.labmanager.DataBase.DataBaseEntry
 
+import android.util.Log
 import com.example.labmanager.*
 import com.example.labmanager.DataBase.usecase.UserData.UserTestResultsSaving.UserTestResultSavingCallback
 import com.example.labmanager.DataBase.usecase.UserData.UserTestResultsSaving.UserTestResutSavingGatewey
@@ -16,6 +17,7 @@ object UserDataDBEntry : UserTestResutSavingGatewey, TestResultGateway{
     private var firebaseAuth = FirebaseAuth.getInstance()
     private var userId = ""
     private var userTestsResultsArray = arrayListOf<UserTestResult>()
+    private var uploaded = false
 
     override fun saveUserTestResult(userTestResult: UserTestResult, callback: UserTestResultSavingCallback) {
         if(firebaseAuth.currentUser != null){
@@ -45,7 +47,7 @@ object UserDataDBEntry : UserTestResutSavingGatewey, TestResultGateway{
     }
 
     override fun retrieveAllTestResultsForUser(callback: TestResultCallback) {
-        if(userTestsResultsArray.size > 0){
+        if(userTestsResultsArray.size > 0 && uploaded){
             callback.onTestResultRetrievalSuccess(userTestsResultsArray)
             return
         }
@@ -53,12 +55,22 @@ object UserDataDBEntry : UserTestResutSavingGatewey, TestResultGateway{
         userId = firebaseAuth.currentUser!!.uid
         var userEndpoint = databaseReference.child(USERS_NODE).child(
             userId
-        )
+        ).child(TESTS_RESULTS_NODE)
+
+        Log.d("userdblog " , "userdblog " + userEndpoint)
         userEndpoint.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(snapshot in dataSnapshot.children){
-                    userTestsResultsArray.add(snapshot.getValue(UserTestResult::class.java) as UserTestResult)
+
+
+
+
+
+                    userTestsResultsArray.add(userTestResultFromDataSnapshot(snapshot))
+                    //userTestsResultsArray.add(snapshot.getValue(UserTestResult::class.java) as UserTestResult)
+                    //Log.d("userdblog " , "userdblog name " + (snapshot.getValue(UserTestResult::class.java) as UserTestResult).bloodTestName)
                 }
+                uploaded = true
                 callback.onTestResultRetrievalSuccess(userTestsResultsArray)
             }
 
@@ -67,5 +79,28 @@ object UserDataDBEntry : UserTestResutSavingGatewey, TestResultGateway{
             }
         })
     }
+
+
+    fun userTestResultFromDataSnapshot(dataSnapshot: DataSnapshot) : UserTestResult{
+        var userTestResult = UserTestResult()
+
+        for(snap in dataSnapshot.children){
+            var key = snap.key
+
+            when(snap.key){
+                DATE -> userTestResult.dateMillis = snap.getValue(Long::class.java)!!
+                FAVORITE -> userTestResult.favorite = snap.getValue(Int::class.java)!!
+                BLOODTEST_NAME -> userTestResult.bloodTestName = snap.getValue(String::class.java)!!
+                NOTES -> userTestResult.note = snap.getValue(String::class.java)!!
+                RESULT_TYPE -> userTestResult.resultType = snap.getValue(Int::class.java)!!
+                UNIT -> userTestResult.unit = snap.getValue(String::class.java)!!
+                RESULT -> userTestResult.result = snap.getValue(Float::class.java)!!
+            }
+            Log.d("child1", "child1 key  " + key + "  val " + snap.getValue(Any::class.java))
+        }
+        return userTestResult
+    }
+
+
 
 }
