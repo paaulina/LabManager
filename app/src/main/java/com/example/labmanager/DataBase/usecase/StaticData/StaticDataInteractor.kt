@@ -6,10 +6,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class StaticDataInteractor(private val gateway: StaticDataGateway) : StaticDataCallback{
+class StaticDataInteractor(
+    private val gateway: StaticDataGateway) : StaticDataCallback{
 
-    private var databaseReference = FirebaseDatabase.getInstance().reference
-    private var bloodTestsArray = ArrayList<BloodTest>()
+
     lateinit var successfulBloodTestRetrieval : (ArrayList<BloodTest>) -> Unit
     lateinit var failureBloodTestRetrieval : (String) -> Unit
 

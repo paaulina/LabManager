@@ -26,5 +26,13 @@ val UNIT = "unit"
 val NOTES = "note"
 val FAVORITE = "fav"
 
+val USER_GENERATED = 1
+val AUTO_GENERATED = 2
 
 val DATA_BASE_ERROR = "error"
+
+val GLOBAL_NODE = "Global"
+val HASHED_ID = "hId"
+val BLOOD_TEST_REF = "bt"
+
+val USER_GLOBAL_PERMISSION = "Global"

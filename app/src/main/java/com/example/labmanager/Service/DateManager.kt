@@ -24,7 +24,7 @@ object DateManager{
     }
 
     fun toMillis(stringDate: String) : Long {
-        val sdf = SimpleDateFormat("dd/mm/yyyy")
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
         val date = sdf.parse(stringDate)
         return date.time
     }

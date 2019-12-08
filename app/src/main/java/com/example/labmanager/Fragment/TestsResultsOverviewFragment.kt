@@ -11,19 +11,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.labmanager.*
 import com.example.labmanager.Adapter.TestResultAdapter
 import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
-import com.example.labmanager.DataBase.usecase.UserData.UserTestResultsUploading.TestResultInteractor
 import com.example.labmanager.Model.UserTestResult
 import com.example.labmanager.Service.DateManager
 import com.example.labmanager.Service.ItemClickedCallback
 import com.example.labmanager.Service.TestResultsFilter
 import kotlinx.android.synthetic.main.fragment_tests_results_overview.*
 import kotlin.collections.ArrayList
-import android.R.attr.x
 import android.content.res.Resources
 import android.view.*
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultSavingCallback
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsPresenter
+import com.example.labmanager.Service.UserTestsResultsGroupManager
 
 
-class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDialog.OnDateSetListener, ItemClickedCallback {
+class TestsResultsOverviewFragment(
+    context: Context
+) : Fragment(),
+    DatePickerDialog.OnDateSetListener,
+    ItemClickedCallback,
+    UserTestResultsPresenter,
+    UserTestResultSavingCallback {
+
 
     var parentContext = context
     lateinit var filtersDialog: Dialog
@@ -48,24 +57,42 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button_filter.setOnClickListener { showFiltersDialog() }
+        button_filter.setOnClickListener {
+            showFiltersDialog()
+        }
         resltsRecyclerOverview.visibility = View.GONE
         progress_bar.visibility = View.VISIBLE
-        TestResultInteractor(UserDataDBEntry).retrieveAllTestResultsForUser(::showResults, ::showErrorMessage)
+        //TestResultInteractor(UserDataDBEntry).retrieveAllTestResultsForUser(::showResults, ::showErrorMessage)
+        UserTestResultsInteractor(
+            UserDataDBEntry
+        ).getAllTestResults(this)
     }
 
-    fun showResults(results: ArrayList<UserTestResult>){
+    override fun presentUsersTestResults(testResults: ArrayList<UserTestResult>) {
         if(resltsRecyclerOverview != null) {
             resltsRecyclerOverview.visibility = View.VISIBLE
-            //resltsRecyclerOverview.setNestedScrollingEnabled(false)
             progress_bar.visibility = View.GONE
-            resultsList = results
+            resultsList = UserTestsResultsGroupManager(arrayListOf()).sortByDate(testResults)
             setUpRecycler(resultsList)
         }
     }
 
+    override fun presentRetrievalError() {
+        progress_bar.visibility = View.GONE
+    }
+
+//    fun showResults(results: ArrayList<UserTestResult>){
+//        if(resltsRecyclerOverview != null) {
+//            resltsRecyclerOverview.visibility = View.VISIBLE
+//            //resltsRecyclerOverview.setNestedScrollingEnabled(false)
+//            progress_bar.visibility = View.GONE
+//            resultsList = results
+//            setUpRecycler(resultsList)
+//        }
+//    }
+
     fun setUpRecycler(results: ArrayList<UserTestResult>){
-        displayableResultList = resultsList
+        displayableResultList = results
         val recyclerAdapter = TestResultAdapter(displayableResultList, parentContext, this)
         resltsRecyclerOverview.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -74,7 +101,7 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
         //resltsRecyclerOverview.setNestedScrollingEnabled(false)
     }
 
-    fun showErrorMessage(msg: String){}
+ //   fun showErrorMessage(msg: String){}
 
 
     lateinit var dateFromEditText : EditText
@@ -215,6 +242,11 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
     override fun itemAtPositionSelected(position: Int) {
         showDetailsDialog(displayableResultList.get(position))
     }
+    override fun itemAtPositionLongClicked(position: Int) {
+        Toast.makeText(parentContext,"LongClikc", Toast.LENGTH_LONG)
+//        if(position >= 0)
+//            UserDataDBEntry.deleteUserTestResult(displayableResultList.get(position), this)
+    }
 
     fun getScreenWidth(): Int {
         return Resources.getSystem().getDisplayMetrics().widthPixels
@@ -255,22 +287,30 @@ class TestsResultsOverviewFragment(context: Context) : Fragment(), DatePickerDia
         favouriteButton.setOnClickListener{
             if (selectedResult.favorite == IS_FAVORITE) addToFavourites() else removeFromFavourites()
         }
-
-
         detailsDialog.show()
-
     }
 
     fun addToFavourites(){
         selectedResult.favorite = NOT_FAVORITE
         favouriteButton.setImageResource(R.drawable.prestar)
+        UserDataDBEntry.updateUserTestResult(selectedResult, this)
         //todo save
     }
 
     fun removeFromFavourites(){
         selectedResult.favorite = IS_FAVORITE
         favouriteButton.setImageResource(R.drawable.star)
+        UserDataDBEntry.updateUserTestResult(selectedResult, this)
         //todo save
+    }
+
+    override fun onSaveSuccess() {
+        UserTestResultsInteractor(
+            UserDataDBEntry
+        ).getAllTestResults(this)
+    }
+
+    override fun onSaveFailure() {
     }
 
 }

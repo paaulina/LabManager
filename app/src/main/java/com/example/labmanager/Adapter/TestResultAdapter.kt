@@ -2,6 +2,7 @@ package com.example.labmanager.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.labmanager.Model.UserTestResult
@@ -20,6 +21,7 @@ class TestResultAdapter (val resultsArray: ArrayList<UserTestResult>, val contex
             callback.itemAtPositionSelected(viewholder.adapterPosition)
         }
 
+        viewholder.itemView.setOnLongClickListener(callback, viewholder.adapterPosition)
         return viewholder
     }
 
@@ -32,4 +34,8 @@ class TestResultAdapter (val resultsArray: ArrayList<UserTestResult>, val contex
     }
 
 
+}
+
+private fun View.setOnLongClickListener(callback : ItemClickedCallback, position: Int) {
+    callback.itemAtPositionLongClicked(position)
 }

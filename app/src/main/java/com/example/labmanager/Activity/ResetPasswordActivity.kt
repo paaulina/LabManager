@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.edit_text_email
 import kotlinx.android.synthetic.main.activity_reset_password.*
@@ -25,6 +26,7 @@ class ResetPasswordActivity : AppCompatActivity() {
     }
 
     fun resetPassword(view : View){
+
         var emailText = edit_text_email.text.toString()
         if(!TextValidation.correctEmailValue(emailText)){
             layout_email_text.isErrorEnabled = true
@@ -38,7 +40,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     passwordResetSuccess(emailText)
                 } else {
-                    Log.d("ERROR", "wrong email")
+                    Toast.makeText(this, "Zy adres email", Toast.LENGTH_LONG)
                 }
             })
 

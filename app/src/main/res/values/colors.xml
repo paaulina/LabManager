@@ -17,4 +17,11 @@
 
     <color name="navigationBarColorPrimary">#A903B0E5</color>
     <color name="navigationBarColorBackground">#FFFFFF</color>
+
+    <color name="colorChartMain">#92333333</color>
+    <color name="colorChartLight">#E1E2E1</color>
+    <color name="black">#000000</color>
+    <color name="chartColor1">#0ECFE7</color>
+    <color name="barChartColor2">#9F0000</color>
+    <color name="barChartColor3">#8E24AA</color>
 </resources>

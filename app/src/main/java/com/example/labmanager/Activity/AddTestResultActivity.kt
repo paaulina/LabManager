@@ -24,8 +24,9 @@ import kotlin.collections.ArrayList
 import android.view.View.OnFocusChangeListener
 import com.example.labmanager.DataBase.DataBaseEntry.StaticDataDBEntry
 import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
+import com.example.labmanager.DataBase.usecase.GlobalData.GlobalDataInteractor
 import com.example.labmanager.DataBase.usecase.StaticData.StaticDataInteractor
-import com.example.labmanager.DataBase.usecase.UserData.UserTestResultsSaving.UserTestResultSaveInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsInteractor
 
 
 
@@ -321,6 +322,7 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
 // ------------------------ SAVE INSERTED DATE ---------------------------------------------------
 
+    var savedResult  = UserTestResult()
     fun addMedicalFile(view: View){
         if(fieldsCorrectlyFilled()){
 
@@ -334,9 +336,10 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
                 selectedBloodTest.name!!
 
             )
-
-            UserTestResultSaveInteractor(UserDataDBEntry)
-                .saveUserTestResult(testResult, ::presentTestResultSavingRespond)
+            savedResult = testResult
+            UserTestResultsInteractor(
+                UserDataDBEntry
+            ).saveUserTestResult(testResult, ::presentTestResultSavingRespond)
 
         }
     }
@@ -368,6 +371,7 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
     fun presentTestResultSavingRespond(dataHasBeenSaved: Boolean){
         if(dataHasBeenSaved){
+            GlobalDataInteractor.save(savedResult)
             val intent = Intent(this, SuccessActivity::class.java)
             startActivity(intent)
         }else {

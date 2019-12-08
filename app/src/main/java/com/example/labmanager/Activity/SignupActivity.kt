@@ -88,7 +88,6 @@ class SignupActivity : AppCompatActivity() {
                         //updateUI(user)
                     } else {
                         var erro = task.result.toString()
-                        Log.d("DebugPJ: " , erro)
                        Toast.makeText(
                             this@SignupActivity, "Authentication failed.",
                             Toast.LENGTH_SHORT

@@ -19,7 +19,7 @@ class TestsResultOverviewActivity : AppCompatActivity() {
 
         val testsResultsOverviewFragment = TestsResultsOverviewFragment(this)
         val userGroupsOverviewFragment = UserGroupsOverviewFragment()
-        val groupedResultsOverviewFragment = GroupedResultsOverviewFragment()
+        val groupedResultsOverviewFragment = GroupedResultsOverviewFragment(this, supportFragmentManager)
 
         bottom_navigation.selectedItemId = R.id.nav_all_results_overview
 
@@ -61,6 +61,8 @@ class TestsResultOverviewActivity : AppCompatActivity() {
                         .show(groupedResultsOverviewFragment)
                         .commit()
                     Log.d("LogDebug3", "LogDebug3")
+
+                    //(supportFragmentManager.findFragmentById(R.id.fragments_container) as GroupedResultsOverviewFragment).setUpResults()
                 }
                 else -> {
                     supportFragmentManager
