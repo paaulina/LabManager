@@ -12,47 +12,48 @@
             android:roundIcon="@mipmap/ic_syringe_text_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Activity.SuccessActivity"></activity>
+        <activity android:name=".Activity.GroupEditionActivity"></activity>
+        <activity android:name=".Activity.SuccessActivity" />
         <activity
                 android:name=".Activity.NoInternetConnectionActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.ResetPasswordActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.ConfirmationActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.SignupActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.LoginActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.MainPageActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.MedicalFilesActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.TestsResultOverviewActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.AddMedicalFilesActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.AddTestResultActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".Activity.MainActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"

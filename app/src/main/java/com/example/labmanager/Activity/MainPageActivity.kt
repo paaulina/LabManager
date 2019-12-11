@@ -7,7 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.labmanager.*
+import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
 import com.example.labmanager.DataBase.usecase.GlobalData.GlobalDataInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsGetterCallback
+import com.example.labmanager.Model.TestsGroup
 import com.example.labmanager.Model.UserTestResult
 import com.example.labmanager.Service.DateManager
 import com.google.firebase.auth.FirebaseAuth
@@ -39,8 +42,6 @@ class MainPageActivity : AppCompatActivity() {
             addTextResultSubbutton.visibility = View.GONE
             addMedicalFileSubbButton.visibility = View.GONE
         }
-
-
     }
 
     fun updateSettingsSubbutonsVisibility(view: View){

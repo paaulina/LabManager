@@ -17,6 +17,8 @@ val BLOOD_TESTS_NODE = "BloodTests"
 val BLOOD_TESTS_NODE_VERSION = "vBT"
 val USERS_NODE = "Users"
 val TESTS_RESULTS_NODE = "TestResults"
+val TESTS_GROUPS_NODE = "TestGroups"
+
 val DATE = "dt"
 //val BLOODTEST_ID = "id"
 val BLOODTEST_NAME = "nm"
@@ -25,6 +27,9 @@ val RESULT = "val"
 val UNIT = "unit"
 val NOTES = "note"
 val FAVORITE = "fav"
+
+val TEST_GROUP_NAME = "Name"
+val TEST_IDs = "IDs"
 
 val USER_GENERATED = 1
 val AUTO_GENERATED = 2

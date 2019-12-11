@@ -26,9 +26,6 @@ class GroupedResultsOverviewFragment(context: Context, fragmentManager: Fragment
     var fragmentmanager = fragmentManager
     lateinit var listView : ListView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

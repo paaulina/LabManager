@@ -82,6 +82,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="HintInputTextLight" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
         <!-- reference our hint & error styles -->
         <item name="hintTextAppearance">@style/HintInputText</item>
@@ -91,6 +96,17 @@
         <item name="colorControlNormal">@color/buttonCorner</item>
         <item name="colorControlActivated">@color/buttonCorner</item>
         <item name="colorControlHighlight">@color/buttonCorner</item>
+    </style>
+
+    <style name="TextInputLayoutAppearanceLight" parent="Widget.Design.TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintInputTextLight</item>
+        <item name="errorTextAppearance">@style/ErrorInputText</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/black</item>
+        <item name="colorControlHighlight">@color/black</item>
     </style>
 
     <style name="AppTheme.BottomNavigationView">

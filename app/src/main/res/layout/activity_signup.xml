@@ -122,7 +122,7 @@
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginBottom="24dp"
-                  android:text="@string/already_a_member_login"
+                  android:text="Posiadasz konto? Zaloguj się!"
                   android:gravity="center"
                   android:onClick="goToLoginActivity"
                   android:textSize="16dip"/>

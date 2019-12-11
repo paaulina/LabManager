@@ -1,8 +1,11 @@
 package com.example.labmanager.DataBase.usecase.UserData.Gateway
 
 import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserDataCallback
+import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsGetterCallback
+import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsSavingCallback
 import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultSavingCallback
 import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsGetterCallback
+import com.example.labmanager.Model.TestsGroup
 import com.example.labmanager.Model.UserTestResult
 
 interface UserDataGateway {
@@ -16,6 +19,11 @@ interface UserDataGateway {
     fun getGlobalPermission(callback: UserDataCallback)
     fun allowGlobal(callback: UserDataCallback)
     fun disableGlobal(callback: UserDataCallback)
+
+    fun saveUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback)
+    fun updateUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback)
+    fun deleteUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback)
+    fun getUserTestsGroup(callback: TestGroupsGetterCallback)
 
 
 }

@@ -18,7 +18,7 @@ class TestsResultOverviewActivity : AppCompatActivity() {
 
 
         val testsResultsOverviewFragment = TestsResultsOverviewFragment(this)
-        val userGroupsOverviewFragment = UserGroupsOverviewFragment()
+        val userGroupsOverviewFragment = UserGroupsOverviewFragment(this, supportFragmentManager)
         val groupedResultsOverviewFragment = GroupedResultsOverviewFragment(this, supportFragmentManager)
 
         bottom_navigation.selectedItemId = R.id.nav_all_results_overview

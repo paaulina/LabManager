@@ -33,9 +33,9 @@ class TestResultAdapter (val resultsArray: ArrayList<UserTestResult>, val contex
         holder.bind(resultsArray.get(position))
     }
 
-
+    private fun View.setOnLongClickListener(callback : ItemClickedCallback, position: Int) {
+        callback.itemAtPositionLongClicked(position)
+    }
 }
 
-private fun View.setOnLongClickListener(callback : ItemClickedCallback, position: Int) {
-    callback.itemAtPositionLongClicked(position)
-}
+

@@ -68,6 +68,7 @@
             <Button
                     android:id="@+id/notificationButton"
                     android:text="@string/Planner"
+                    android:visibility="gone"
                     style="@style/standardMenuButtonStyle"
                     android:onClick="goToPlannerActivity"/>
 
