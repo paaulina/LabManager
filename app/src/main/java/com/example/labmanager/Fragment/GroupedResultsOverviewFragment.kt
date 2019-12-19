@@ -15,16 +15,18 @@ import com.example.labmanager.Service.UserTestsResultsGroupManager
 import kotlinx.android.synthetic.main.fragment_grouped_results_overview.*
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsInteractor
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsPresenter
+import com.example.labmanager.AUTO_GENERATED
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestResultsInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestResultsPresenter
 import com.example.labmanager.Model.UserTestResult
 
 class GroupedResultsOverviewFragment(context: Context, fragmentManager: FragmentManager ) : Fragment(),
-    UserTestResultsPresenter {
+    TestResultsPresenter {
 
     var parentContext = context
     var fragmentmanager = fragmentManager
     lateinit var listView : ListView
+    lateinit var allTestResults: ArrayList<UserTestResult>
 
 
     override fun onCreateView(
@@ -38,12 +40,13 @@ class GroupedResultsOverviewFragment(context: Context, fragmentManager: Fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView = view.findViewById(R.id.groupsListView)
-        UserTestResultsInteractor(
+        TestResultsInteractor(
             UserDataDBEntry
         ).getAllTestResults(this)
     }
 
     override fun presentUsersTestResults(testResults: ArrayList<UserTestResult>) {
+        allTestResults = testResults
         setUpResults(testResults)
     }
 
@@ -56,15 +59,23 @@ class GroupedResultsOverviewFragment(context: Context, fragmentManager: Fragment
         var manager = UserTestsResultsGroupManager(testResults)
         var groupsArray = manager.getGroupedByName()
         var names = manager.getGroupNamesArray(groupsArray)
-        var adapter = ArrayAdapter<String>(parentContext, R.layout.simple_spinner_item, names)
+        var adapter = ArrayAdapter<String>(parentContext, R.layout.group_name_recycler_item, names)
 
 
         if(groupsListView != null){
             groupsListView.adapter = adapter
 
             groupsListView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-                var chartFragment = GroupWithChartFragment(groupsArray.get(position), fragmentmanager, parentContext)
-                fragmentmanager.beginTransaction().replace(R.id.fragments_container, chartFragment).addToBackStack("frag").commit()
+
+                var group = groupsArray.get(position)
+                if(group.groupType == AUTO_GENERATED){
+                    var chartFragment = GroupWithChartFragment(groupsArray.get(position), fragmentmanager, parentContext)
+                    fragmentmanager.beginTransaction().replace(R.id.fragments_container, chartFragment).addToBackStack("frag").commit()
+                } else {
+                    var noChartFragment = GroupPresenterFragment(parentContext, fragmentmanager, groupsArray.get(position), allTestResults)
+                    fragmentmanager.beginTransaction().replace(R.id.fragments_container, noChartFragment).addToBackStack("frag").commit()
+                }
+
             })
         }
 

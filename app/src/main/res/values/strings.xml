@@ -49,7 +49,6 @@
     <string-array name="sorting_types_array">
         <item>Nazwa</item>
         <item>Data</item>
-        <item>Ulubione</item>
     </string-array>
 
 
@@ -63,5 +62,7 @@
     <string name="execution_date_to">Data wykonania do:</string>
     <string name="cancel">Anuluj</string>
     <string name="filter">filtruj</string>
+    <string name="global_description">Aktywując opcję anonimowego udostępniania danych wspierasz program badania zależności między wynikami badań laboratoryjnych, którego celem jest opracowanie systemu sugerującego wykonanie konkretnych badań na podstawie zadeklarowanych już wartości.
+                                      Udostępniane są jedynie wprowadzone do systemu wyniki, bez referencji do danych Twojego konta. </string>
 
 </resources>

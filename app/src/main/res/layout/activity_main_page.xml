@@ -88,6 +88,14 @@
                     style="@style/SubButtonStyle"/>
 
             <Button
+                    android:id="@+id/globalSettongsSubButton"
+                    android:text="Ustawienia prywatności"
+                    android:visibility="gone"
+                    android:animateLayoutChanges="true"
+                    style="@style/SubButtonStyle"
+                    android:onClick="goToGlobalSettingActivity"/>
+
+            <Button
                     android:id="@+id/logOutSubButton"
                     android:text="@string/log_out"
                     android:visibility="gone"

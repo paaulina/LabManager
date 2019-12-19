@@ -17,27 +17,24 @@ object StaticDataDBEntry :  StaticDataGateway{
 
     private var databaseReference = FirebaseDatabase.getInstance().reference
     private var bloodTestsArray = arrayListOf<BloodTest>()
-    private var dataVersion: Long = 0
 
     override fun getBloodTestsArray(callback: StaticDataCallback) {
 
-        if(isUpToDate()){
-            if(bloodTestsArray.size > 0){
-                callback.onBloodTestsRetrievalSuccess(bloodTestsArray)
-                return
-            }
-            callback.onBloodTestsRetrievalFailure(DATA_BASE_ERROR)
+        if(bloodTestsArray.size > 0){
+            callback.onBloodTestsRetrievalSuccess(bloodTestsArray)
             return
         }
+        callback.onBloodTestsRetrievalFailure(DATA_BASE_ERROR)
 
         bloodTestsArray = arrayListOf<BloodTest>()
         var btEndpoint = databaseReference.child(BLOOD_TESTS_NODE)
         btEndpoint.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                bloodTestsArray.clear()
                 for(btSnapshot in dataSnapshot.children){
-                    Log.d("userdblog " , "userdblog item " + btSnapshot)
                     bloodTestsArray.add(btSnapshot.getValue(BloodTest::class.java) as BloodTest)
-                    Log.d("userdblog " , "userdblog name " + (btSnapshot.getValue(BloodTest::class.java) as BloodTest).name)
+                    Log.d("StatickDataRetrieval", "Fuuuuuck")
+
                 }
                 callback.onBloodTestsRetrievalSuccess(bloodTestsArray)
             }
@@ -49,20 +46,20 @@ object StaticDataDBEntry :  StaticDataGateway{
     }
 
 
-    private fun isUpToDate() : Boolean{
-        var returnValue = false;
-        var btEndpoint = databaseReference.child(BLOOD_TESTS_NODE_VERSION)
-        btEndpoint.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                returnValue = dataVersion <= dataSnapshot.getValue() as Long
-                dataVersion = dataSnapshot.getValue() as Long
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                returnValue = true
-            }
-        })
-        return returnValue
-    }
+//    private fun isUpToDate() : Boolean{
+//        var returnValue = false;
+//        var btEndpoint = databaseReference.child(BLOOD_TESTS_NODE_VERSION)
+//        btEndpoint.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                returnValue = dataVersion <= dataSnapshot.getValue() as Long
+//                dataVersion = dataSnapshot.getValue() as Long
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                returnValue = true
+//            }
+//        })
+//        return returnValue
+//    }
 
 }

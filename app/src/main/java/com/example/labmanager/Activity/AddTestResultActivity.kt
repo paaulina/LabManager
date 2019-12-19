@@ -26,13 +26,17 @@ import com.example.labmanager.DataBase.DataBaseEntry.StaticDataDBEntry
 import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
 import com.example.labmanager.DataBase.usecase.GlobalData.GlobalDataInteractor
 import com.example.labmanager.DataBase.usecase.StaticData.StaticDataInteractor
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsInteractor
+import com.example.labmanager.DataBase.usecase.StaticData.StaticDataPresenter
+import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserGlobalPermissionPresenter
+import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserProfileDataInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestResultsInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestsResultSavingPresenter
 
 
-
-
-
-class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
+class AddTestResultActivity : AppCompatActivity(),
+                              DatePickerDialog.OnDateSetListener,
+                              StaticDataPresenter,
+                              TestsResultSavingPresenter, UserGlobalPermissionPresenter{
 
     lateinit var bloodTestsArray: ArrayList<BloodTest>
     lateinit var bloodTestAdapter: BloodTestAdapter
@@ -61,17 +65,9 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         var context = this
         autoCompleteTextView.setOnTouchListener(object: View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                StaticDataInteractor(StaticDataDBEntry).getBloodTestsArray(::success, :: failure )
+                StaticDataInteractor(StaticDataDBEntry, context).getBloodTestsArray()
                 autoCompleteTextView.setOnTouchListener(null)
                 return true
-            }
-
-            fun success(bT: ArrayList<BloodTest>){
-                context.presentBloodTestsData(bT)
-            }
-
-            fun failure(msg: String){
-                context.presentBloodTestsDataError(msg)
             }
         })
 
@@ -117,12 +113,12 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
 // -------------------BLOOD TEST--------------------------------------------------------------------------
 
-    fun presentBloodTestsData(bloodTests: ArrayList<BloodTest>) {
+    override fun presentBloodTestsArray(bloodTests: ArrayList<BloodTest>) {
         bloodTestsArray = bloodTests
         setUpAutoCompleteTextViewData()
     }
 
-    fun presentBloodTestsDataError(message: String?) {
+    override fun presentBloodTestsRetrievalError(error: String) {
         Toast.makeText(this,"Error", Toast.LENGTH_LONG)
     }
 
@@ -259,9 +255,13 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
 
     fun exitActivity(view: View){
-        finish()
+        onBackPressed()
     }
-    override fun onBackPressed(){}
+
+    override fun onBackPressed(){
+        val intent = Intent(this, MainPageActivity::class.java)
+        startActivity(intent)
+    }
 
 
 
@@ -337,9 +337,9 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
 
             )
             savedResult = testResult
-            UserTestResultsInteractor(
+            TestResultsInteractor(
                 UserDataDBEntry
-            ).saveUserTestResult(testResult, ::presentTestResultSavingRespond)
+            ).saveUserTestResult(testResult, this)
 
         }
     }
@@ -369,14 +369,26 @@ class AddTestResultActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         return true;
     }
 
-    fun presentTestResultSavingRespond(dataHasBeenSaved: Boolean){
-        if(dataHasBeenSaved){
+    override fun presentSaveSuccess() {
+        UserProfileDataInteractor(UserDataDBEntry).getGlobalPermission(this)
+
+    }
+
+    override fun presentSaveError() {
+        Toast.makeText(this, "Saving Failed", Toast.LENGTH_LONG)
+    }
+
+    override fun presentGlobalPersmission(permission: Int) {
+        if(permission == GLOBAL_ALLOWED){
             GlobalDataInteractor.save(savedResult)
-            val intent = Intent(this, SuccessActivity::class.java)
-            startActivity(intent)
-        }else {
-            Toast.makeText(this, "Saving Failed", Toast.LENGTH_LONG)
         }
+        val intent = Intent(this, SuccessActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun presentPermissionRetrievalFailure() {
+        val intent = Intent(this, SuccessActivity::class.java)
+        startActivity(intent)
     }
 
 

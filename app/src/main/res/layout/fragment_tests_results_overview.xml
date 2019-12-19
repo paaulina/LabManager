@@ -7,20 +7,58 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <ImageButton
-            style="@style/backButtonStyle"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:onClick="exitActivity"
+    <LinearLayout
+            android:id="@+id/top_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+                android:id="@+id/imageButton2"
+                style="@style/backButtonStyle"
+                android:onClick="exitActivity"/>
+
+        <TextView
+                android:id="@+id/text_view_tab_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wyniki badań"
+                android:textSize="@dimen/tab_name_text_size" />
+
+
+    </LinearLayout>
+
+<!--    <ImageButton-->
+<!--            android:id="@+id/imageButton2"-->
+<!--            style="@style/backButtonStyle"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:onClick="exitActivity"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/button_filter"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/button_filter" />-->
+
+<!--    <TextView-->
+<!--            android:id="@+id/text_view_tab_name"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="@dimen/tab_name_margin_left"-->
+<!--            android:text="Wyniki badań"-->
+<!--            android:textSize="@dimen/tab_name_text_size"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/button_filter"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/imageButton2"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/button_filter" />-->
 
 
     <FrameLayout
+            android:id="@+id/frameLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minWidth="800dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_filter">
 
@@ -30,24 +68,23 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp" />
-
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="40dp" />
 
 
         <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="50dp"
-                android:minWidth="250dp"
-                android:max="100"
-                android:layout_margin="50dp"
                 android:layout_gravity="center"
+                android:layout_margin="50dp"
                 android:indeterminate="true"
+                android:max="100"
+                android:minWidth="250dp"
+                android:minHeight="50dp"
                 android:progress="1" />
+
     </FrameLayout>
-
-
 
     <Button
             android:id="@+id/button_filter"
@@ -60,10 +97,25 @@
             android:paddingTop="0dp"
             android:paddingRight="15dp"
             android:text="Filtruj"
-            android:textSize="12sp"
             android:textColor="@color/buttonColor"
+            android:textSize="12sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+            android:id="@+id/buttonFavFilter"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorTransparent"
+            android:scaleType="centerInside"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/button_filter"
+            app:layout_constraintEnd_toStartOf="@+id/button_filter"
+            app:layout_constraintTop_toTopOf="@+id/button_filter"
+            app:srcCompat="@drawable/prestar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

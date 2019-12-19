@@ -23,6 +23,7 @@ class SelectiveTestResultViewHolder (itemView: View) :
     val checkBox : CheckBox = itemView.checkBoxSelect
 
 
+
     fun bind(position: Int, userTestResult: UserTestResult, isSelected: Boolean, callback: CheckBoxSelectionCallback){
         resultNameTextView.text = userTestResult.bloodTestName
         resultDateTextView.text = DateManager.dateMillisToStringDate(userTestResult.dateMillis)
@@ -51,6 +52,8 @@ class SelectiveTestResultViewHolder (itemView: View) :
 
         if(isSelected){
             checkBox.isChecked = true
+        }else{
+            checkBox.isChecked = false
         }
         checkBox.setOnClickListener {
             if(checkBox.isChecked){

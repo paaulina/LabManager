@@ -17,29 +17,55 @@
 
         <ImageButton
                 android:id="@+id/imageButton"
-                style="@style/backButtonStyle"/>
+                style="@style/backButtonStyle"
+                android:onClick="exitActivity"/>
 
         <TextView
                 android:id="@+id/text_view_tab_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Wyniki badań"/>
+                android:textSize="@dimen/tab_name_text_size"
+                android:text="Grupy badań"/>
 
     </LinearLayout>
 
-    <ListView
-            android:id="@+id/groupsListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_layout"
-            app:layout_constraintVertical_bias="0.0">
 
-    </ListView>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="800dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_layout">
+
+        <ListView
+                android:id="@+id/groupsListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_layout"
+                app:layout_constraintVertical_bias="0.0">
+
+        </ListView>
+
+
+
+        <ProgressBar
+                android:id="@+id/progress_bar_grouped_results"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="50dp"
+                android:minWidth="250dp"
+                android:max="100"
+                android:visibility="invisible"
+                android:layout_margin="50dp"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:progress="1" />
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

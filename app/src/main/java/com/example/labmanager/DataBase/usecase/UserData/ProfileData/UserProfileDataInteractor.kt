@@ -2,40 +2,51 @@ package com.example.labmanager.DataBase.usecase.UserData.ProfileData
 
 import com.example.labmanager.DataBase.usecase.UserData.Gateway.UserDataGateway
 import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserDataCallback
+import com.example.labmanager.GLOBAL_ALLOWED
+import com.example.labmanager.GLOBAL_DECLINED
 
 class UserProfileDataInteractor(
     private val userDataGatewey: UserDataGateway
 ) : UserDataCallback {
+
+    lateinit var nodeCreationPresenter : UserNodeCreationPresenter
+    fun createUserNode(userID: String, name: String, gender: String, presenter: UserNodeCreationPresenter){
+        nodeCreationPresenter = presenter
+        userDataGatewey.createUserNode(userID, name, gender, GLOBAL_ALLOWED, this)
+
+    }
     override fun onSuccessfulNodeCreation() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        nodeCreationPresenter.onNodeCreationSuccess()
     }
 
     override fun onFailureNodeCreation() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        nodeCreationPresenter.onNodeCreationFailure()
     }
 
-    override fun onNodeAvailable() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    override fun onNodeUnavailable() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    lateinit var permissionPresenter : UserGlobalPermissionPresenter
+    fun getGlobalPermission(userGlobalPermissionPresenter: UserGlobalPermissionPresenter){
+        permissionPresenter = userGlobalPermissionPresenter
+        userDataGatewey.getGlobalPermission(this)
     }
-
     override fun onPermissionRetrieval(permission: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        permissionPresenter.presentGlobalPersmission(permission)
     }
 
     override fun onPermissionRetrievalFailure() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        permissionPresenter.presentPermissionRetrievalFailure()
     }
 
-    override fun onPermissionSwitchSuccess() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun switchGlobal(currentGlobal: Int) {
+        when(currentGlobal){
+            GLOBAL_ALLOWED -> userDataGatewey.disableGlobal(this)
+            GLOBAL_DECLINED -> userDataGatewey.allowGlobal(this)
+        }
+
     }
 
-    override fun onPermissionSwitchFailure() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onPermissionSwitchSuccess() {}
+
+    override fun onPermissionSwitchFailure() {}
 
 }

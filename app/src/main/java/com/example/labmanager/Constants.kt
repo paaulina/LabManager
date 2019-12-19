@@ -33,6 +33,7 @@ val TEST_IDs = "IDs"
 
 val USER_GENERATED = 1
 val AUTO_GENERATED = 2
+val AUTO_GENERATED_NO_CHART = 3
 
 val DATA_BASE_ERROR = "error"
 
@@ -40,4 +41,14 @@ val GLOBAL_NODE = "Global"
 val HASHED_ID = "hId"
 val BLOOD_TEST_REF = "bt"
 
+val GLOBAL_ALLOWED = 1
+val GLOBAL_DECLINED = 0
+
 val USER_GLOBAL_PERMISSION = "Global"
+val MEDICAL_FILES_NODE = "MedFiles"
+
+val NAME = "Name"
+val VERIFY_EMAIL_ERROR_CODE = "1974"
+
+val USER_NAME = "Name"
+val USER_GENDER= "Gender"

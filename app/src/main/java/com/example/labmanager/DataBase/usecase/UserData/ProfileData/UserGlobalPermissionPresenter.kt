@@ -1,7 +1,7 @@
 package com.example.labmanager.DataBase.usecase.UserData.ProfileData
 
-interface UserProfileDataPresenter {
+interface UserGlobalPermissionPresenter {
 
-    fun presentGlobalPersmission()
+    fun presentGlobalPersmission(permission: Int)
     fun presentPermissionRetrievalFailure()
 }

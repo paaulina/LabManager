@@ -20,6 +20,9 @@ class TextValidation{
         }
 
         fun correctNameValue(nameText: String): Boolean {
+            if(nameText.isEmpty()){
+                return false
+            }
             if(!matchesPattern(
                     nameText,
                     namePattern

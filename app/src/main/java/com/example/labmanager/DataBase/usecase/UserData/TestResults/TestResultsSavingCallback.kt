@@ -1,6 +1,6 @@
 package com.example.labmanager.DataBase.usecase.UserData.TestResults
 
-interface UserTestResultSavingCallback {
+interface TestResultsSavingCallback {
     fun onSaveSuccess()
     fun onSaveFailure()
 }

@@ -6,17 +6,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-    <ImageButton
-            style="@style/backButtonStyle"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:onClick="exitActivity"
+    <LinearLayout
+            android:id="@+id/top_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+                android:id="@+id/buttonBack"
+                style="@style/backButtonStyle"
+                android:onClick="exitActivity" />
+
+        <TextView
+                android:id="@+id/text_view_tab_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Utworzone katalogi"
+                android:textSize="@dimen/tab_name_text_size"/>
+
+
+    </LinearLayout>
+
+
+
 
 
     <FrameLayout
+            android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minWidth="800dp"
@@ -38,17 +57,16 @@
         </ListView>
 
 
-
         <ProgressBar
-                android:id="@+id/progress_bar"
+                android:id="@+id/progress_bar_user_groups"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="50dp"
-                android:minWidth="250dp"
-                android:max="100"
-                android:layout_margin="50dp"
                 android:layout_gravity="center"
+                android:layout_margin="50dp"
                 android:indeterminate="true"
+                android:max="100"
+                android:minWidth="250dp"
+                android:minHeight="50dp"
                 android:progress="1" />
     </FrameLayout>
 

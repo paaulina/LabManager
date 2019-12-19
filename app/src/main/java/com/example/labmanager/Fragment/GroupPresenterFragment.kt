@@ -1,12 +1,12 @@
 package com.example.labmanager.Fragment
 
-import android.app.Dialog
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.labmanager.*
 import com.example.labmanager.Adapter.TestResultAdapter
 import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsInteractor
+import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserProfileDataInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsSavingPresenter
 import com.example.labmanager.Model.TestsGroup
 import com.example.labmanager.Model.UserTestResult
-import com.example.labmanager.Service.DateManager
 import com.example.labmanager.Service.ItemClickedCallback
-import com.example.labmanager.Service.UserTestsResultsGroupManager
-import kotlinx.android.synthetic.main.fragment_grouped_results_overview.*
 import kotlinx.android.synthetic.main.fragment_tests_results_overview.*
 
 class GroupPresenterFragment (
@@ -29,7 +28,7 @@ class GroupPresenterFragment (
     fragmentManager: FragmentManager,
     var testsGroup: TestsGroup,
     val allResults: ArrayList<UserTestResult>
-) : ItemClickedCallback, Fragment(){
+) : ItemClickedCallback, Fragment(), TestGroupsSavingPresenter{
 
 
     var parentContext = context
@@ -49,19 +48,47 @@ class GroupPresenterFragment (
         recyclerView = view.findViewById(R.id.resltsRecycler)
 
         var buttonEdit = view.findViewById<Button>(R.id.button_edit)
-        buttonEdit.setOnClickListener {
-            var groupEditionFragment = GroupEditionFragment(parentContext, testsGroup,  allResults)
-            fragmentmanager.beginTransaction().replace(R.id.fragments_container, groupEditionFragment).addToBackStack("frag").commit()
+        var deleteButton = view.findViewById<ImageButton>(R.id.buttonDelete)
+        if(testsGroup.groupType == USER_GENERATED){
+            buttonEdit.setOnClickListener {
+                var groupEditionFragment = GroupEditionFragment(parentContext, testsGroup,  allResults, fragmentmanager)
+                fragmentmanager.beginTransaction().replace(R.id.fragments_container, groupEditionFragment).addToBackStack("frag").commit()
+            }
+            deleteButton.setOnClickListener {
+                AlertDialog.Builder(parentContext).setMessage("Czy chcesz usunąć katalog?")
+                    .setPositiveButton("Tak") { dialog, which -> deleteGroup()}
+                    .setNegativeButton("Anuluj"){dialog, which -> dialog.cancel() }
+                    .setCancelable(true)
+                    .show()
+            }
+        } else {
+            buttonEdit.visibility = View.INVISIBLE
+            deleteButton.visibility = View.INVISIBLE
         }
+
+
+
+
+        var buttonBack = view.findViewById<ImageButton>(R.id.button_back)
+        buttonBack.setOnClickListener {
+            fragmentmanager.popBackStackImmediate()
+        }
+
+        view.findViewById<TextView>(R.id.text_view_group_name).text = testsGroup.groupName
+        setUpResults()
+    }
+
+    fun deleteGroup(){
+        TestGroupsInteractor(UserDataDBEntry, null, this).deleteGroup(testsGroup)
     }
 
     fun setUpResults(){
         if(recyclerView != null){
             val recyclerAdapter = TestResultAdapter(testsGroup.resultsList, parentContext, this)
-            resltsRecyclerOverview.layoutManager =
+            recyclerView.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            resltsRecyclerOverview.setHasFixedSize(true)
-            resltsRecyclerOverview.adapter = recyclerAdapter
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = recyclerAdapter
         }
     }
 
@@ -122,7 +149,15 @@ class GroupPresenterFragment (
 //    }
 
     override fun itemAtPositionLongClicked(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    }
+
+    override fun onSaveSuccess() {
+        fragmentmanager.popBackStackImmediate()
+    }
+
+    override fun onSaveFailure() {
+
     }
 
 }

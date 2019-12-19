@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {}
 
     private fun updateUI(currentUser: FirebaseUser?) {
-        if(currentUser != null){
+        if(currentUser != null && currentUser.isEmailVerified){
             val intent = Intent(this, MainPageActivity::class.java)
             startActivity(intent)
         }

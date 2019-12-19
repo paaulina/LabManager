@@ -1,5 +1,6 @@
 package com.example.labmanager.Activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +34,11 @@ class TestsResultOverviewActivity : AppCompatActivity() {
             .commit()
 
         bottom_navigation.setOnNavigationItemSelectedListener {
+            Log.d("LogDebug1", "LogDebug1 ${supportFragmentManager.backStackEntryCount}")
+            while(supportFragmentManager.backStackEntryCount > 0){
+                supportFragmentManager.popBackStackImmediate()
+            }
+
             when(it.itemId) {
                 R.id.nav_all_results_overview -> {
                     supportFragmentManager
@@ -42,7 +48,7 @@ class TestsResultOverviewActivity : AppCompatActivity() {
                         .show(testsResultsOverviewFragment)
                         .commit()
 
-                    Log.d("LogDebug1", "LogDebug1")
+
                 }
                 R.id.nav_user_groups_overview -> {
                     supportFragmentManager
@@ -79,6 +85,7 @@ class TestsResultOverviewActivity : AppCompatActivity() {
     }
 
     fun exitActivity(view: View){
-        finish()
+        val intent = Intent(this, MainPageActivity::class.java)
+        startActivity(intent)
     }
 }

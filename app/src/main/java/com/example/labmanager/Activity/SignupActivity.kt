@@ -15,8 +15,16 @@ import com.example.labmanager.Service.InternetConnectionChecker
 import com.example.labmanager.R
 import com.example.labmanager.Service.TextValidation
 
+import com.google.android.gms.tasks.Task
+import androidx.annotation.NonNull
+import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
+import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserNodeCreationPresenter
+import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserProfileDataInteractor
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.RuntimeExecutionException
 
-class SignupActivity : AppCompatActivity() {
+
+class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
 
     private var mAuth: FirebaseAuth? = null
     private var selectedGender = -1
@@ -36,7 +44,10 @@ class SignupActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         segmentPadding = resources.getDimension(R.dimen.segment_selection_padding).toInt()
+        setGenderError(false)
     }
+
+
 
     fun femaleSegmentSelected(view: View){
         selectSegment(femaleGenderSelector, R.drawable.selected_left_segment)
@@ -52,6 +63,14 @@ class SignupActivity : AppCompatActivity() {
             R.drawable.unselected_left_segment
         )
         selectedGender = 1
+    }
+
+    fun getGender(intVal : Int) : String{
+        when(intVal){
+            0 -> return "F"
+            1 -> return "M"
+        }
+        return "F"
     }
 
 
@@ -80,26 +99,51 @@ class SignupActivity : AppCompatActivity() {
             )
         ){
 
-            mAuth?.createUserWithEmailAndPassword(email, password)
-                ?.addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = mAuth?.getCurrentUser()
-                        startApp()
-                        //updateUI(user)
-                    } else {
-                        var erro = task.result.toString()
-                       Toast.makeText(
-                            this@SignupActivity, "Authentication failed.",
+            mAuth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener{
+                try{
+                    if(it.isSuccessful){
+                        sendConfirmationEmail()
+                    } else{
+                        var erro = it.result.toString()
+                        Toast.makeText(
+                            this@SignupActivity, "Authentication failed. $erro",
                             Toast.LENGTH_SHORT
                         ).show()
-
                     }
-
-                    // ...
+                } catch (err : RuntimeExecutionException){
+                    email_edit_text_input_layout.isErrorEnabled = true
+                    email_edit_text_input_layout.error =
+                        TextValidation.EMAIL_ERROR_TEXT
+                    Toast.makeText(
+                        this@SignupActivity, "Adres e-mail jest już używany w systemie.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
+            }
 
         }
+    }
+
+
+
+    fun sendConfirmationEmail(){
+
+        Log.d("confirmationEmail" ,  "in")
+        if(mAuth != null){
+            Log.d("confirmationEmail" ,  "iner")
+            val user = mAuth!!.getCurrentUser()
+            user!!.sendEmailVerification().addOnCompleteListener{
+                if(it.isSuccessful) {
+                    Log.d("confirmationEmail" ,  "success")
+                    createUserNode(user.uid)
+                }
+                else {
+                    showErrorActivity()
+                }
+            }
+        }
+
     }
 
 
@@ -136,12 +180,21 @@ class SignupActivity : AppCompatActivity() {
         return true
     }
 
-    fun genderSelected(): Boolean{
+    fun setGenderError(isError: Boolean){
         val unwrappedDrawable = getDrawable(R.drawable.input_field_error_background)
         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-        DrawableCompat.setTint(wrappedDrawable, Color.RED)
+        if(isError){
+            DrawableCompat.setTint(wrappedDrawable, Color.RED)
+        } else{
+            DrawableCompat.setTint(wrappedDrawable, Color.TRANSPARENT)
+        }
+        genderSelectionLayout.background = wrappedDrawable
+    }
+
+    fun genderSelected(): Boolean{
+
         if(selectedGender < 0){
-            genderSelectionLayout.background = wrappedDrawable
+            setGenderError(true)
             return false
         }
         return true
@@ -153,14 +206,28 @@ class SignupActivity : AppCompatActivity() {
     }
 
 
-    fun startApp(){
-        val intent = Intent(this, ConfirmationActivity::class.java)
-        intent.putExtra("message", "Rejestracja zakończona")
-        startActivity(intent)
-    }
-
     fun goToResetPasswordActivity(view: View){
         val intent = Intent(this, ResetPasswordActivity::class.java)
         startActivity(intent)
     }
+
+
+    fun createUserNode(userId: String){
+        UserProfileDataInteractor(UserDataDBEntry).createUserNode(userId, name_edit_text.text.toString(), getGender(selectedGender), this)
+    }
+
+    override fun onNodeCreationSuccess() {
+        val intent = Intent(this, ConfirmationActivity::class.java)
+        intent.putExtra("message", "Rejestracja zakończona. Potwiedź konto poprzez link wysłany na podany adres e-mail.")
+        startActivity(intent)
+    }
+
+
+    fun showErrorActivity(){
+        val intent = Intent(this, ConfirmationActivity::class.java)
+        intent.putExtra("message", "Coś poszło nie tak :(")
+        startActivity(intent)
+    }
+
+    override fun onNodeCreationFailure() {}
 }

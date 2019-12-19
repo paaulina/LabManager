@@ -1,15 +1,20 @@
 package com.example.labmanager.DataBase.DataBaseEntry
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.example.labmanager.*
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultSavingCallback
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestResultsSavingCallback
 import com.example.labmanager.DataBase.usecase.UserData.Gateway.UserDataGateway
+import com.example.labmanager.DataBase.usecase.UserData.MedicalFiles.MedicalFilesIDsRetrievalCallback
+import com.example.labmanager.DataBase.usecase.UserData.MedicalFiles.MedicalFilesIDsSavingCallback
 import com.example.labmanager.DataBase.usecase.UserData.ProfileData.UserDataCallback
-import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsGetterCallback
+import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsRetrievalCallback
 import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsSavingCallback
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsGetterCallback
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestResultsRetrievalCallback
+import com.example.labmanager.Model.MedicalFile
 import com.example.labmanager.Model.TestsGroup
 import com.example.labmanager.Model.UserTestResult
+import com.example.labmanager.Service.DummyBitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -19,12 +24,12 @@ object UserDataDBEntry : UserDataGateway {
     private var firebaseAuth = FirebaseAuth.getInstance()
     private var userId = ""
     private var userTestsResultsArray = arrayListOf<UserTestResult>()
-    private var userResultsUploaded = false
     private var userTestsGroupsArray = arrayListOf<TestsGroup>()
-    private var userGroupsUploaded = false
+    private var globalPermission = -1
 
 
-    override fun saveUserTestResult(userTestResult: UserTestResult, callback: UserTestResultSavingCallback) {
+
+    override fun saveUserTestResult(userTestResult: UserTestResult, callback: TestResultsSavingCallback) {
         if(firebaseAuth.currentUser != null){
             userId = firebaseAuth.currentUser!!.uid
             var userEndpoint = databaseReference.child(USERS_NODE).child(
@@ -35,8 +40,6 @@ object UserDataDBEntry : UserDataGateway {
                 writeTestResult(userEndpoint.child(TESTS_RESULTS_NODE).child(key), userTestResult)
                 userTestResult.id = key
                 userTestsResultsArray.add(userTestResult)
-
-
                 callback.onSaveSuccess()
                 return
             }
@@ -44,7 +47,7 @@ object UserDataDBEntry : UserDataGateway {
         callback.onSaveFailure()
     }
 
-    override fun updateUserTestResult(userTestResult: UserTestResult, callback: UserTestResultSavingCallback) {
+    override fun updateUserTestResult(userTestResult: UserTestResult, callback: TestResultsSavingCallback) {
 
         if(removeUserTestResult(userTestResult)){
             saveUserTestResult(userTestResult, callback)
@@ -53,9 +56,22 @@ object UserDataDBEntry : UserDataGateway {
         }
     }
 
-    private fun removeUserTestResult(userTestResult: UserTestResult) : Boolean{
+    override fun setFavourite(testID: String, newFavValue: Int, callback: TestResultsSavingCallback) {
+        if(firebaseAuth.currentUser != null){
+            userId = firebaseAuth.currentUser!!.uid
+            databaseReference.child(USERS_NODE)
+                             .child(userId)
+                             .child(TESTS_RESULTS_NODE)
+                             .child(testID)
+                             .child(FAVORITE)
+                             .setValue(newFavValue)
+            callback.onSaveSuccess()
+        }
+        callback.onSaveFailure()
 
-        Log.d("RemovingUserTestResult " , "${userTestResult.id} ${userTestResult.bloodTestName}")
+    }
+
+    private fun removeUserTestResult(userTestResult: UserTestResult) : Boolean{
         var counter = 0;
         var toRemove = -1;
         for( res in userTestsResultsArray){
@@ -74,7 +90,6 @@ object UserDataDBEntry : UserDataGateway {
             )
             userEndpoint.child(TESTS_RESULTS_NODE).child(userTestResult.id).removeValue()
             return true
-
         }
         return false
     }
@@ -89,7 +104,7 @@ object UserDataDBEntry : UserDataGateway {
         databaseReference.child(NOTES).setValue(userTestResult.note)
     }
 
-    override fun deleteUserTestResult(userTestResult: UserTestResult, callback: UserTestResultSavingCallback) {
+    override fun deleteUserTestResult(userTestResult: UserTestResult, callback: TestResultsSavingCallback) {
         if(removeUserTestResult(userTestResult)){
             callback.onSaveSuccess()
         }else{
@@ -98,39 +113,32 @@ object UserDataDBEntry : UserDataGateway {
     }
 
 
-    override fun getUserTestsResults(callback: UserTestResultsGetterCallback) {
+    override fun getUserTestsResults(callback: TestResultsRetrievalCallback) {
 
-        Log.d("USerTestsResultDB 0 " , "${userTestsResultsArray.size} $userResultsUploaded")
-        if(userTestsResultsArray.size > 0 && userResultsUploaded){
+        if(userTestsResultsArray.size > 0){
             callback.onTestResultRetrievalSuccess(userTestsResultsArray)
             return
-        }else{
-            userResultsUploaded = true
-            var userTestResults1 = arrayListOf<UserTestResult>()
-
-            userId = firebaseAuth.currentUser!!.uid
-            var userEndpoint = databaseReference.child(USERS_NODE).child(
-                userId
-            ).child(TESTS_RESULTS_NODE)
-
-
-            userEndpoint.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for(snapshot in dataSnapshot.children){
-                        userTestResults1.add(userTestResultFromDataSnapshot(snapshot))
-                    }
-                    userResultsUploaded = true
-                    userTestsResultsArray = userTestResults1
-                    Log.d("USerTestsResultDB 1 " , "${userTestsResultsArray.size}")
-                    callback.onTestResultRetrievalSuccess(userTestsResultsArray)
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    callback.onTestResultRetrievalFailure()
-                }
-            })
         }
 
+        userId = firebaseAuth.currentUser!!.uid
+        var userEndpoint = databaseReference.child(USERS_NODE)
+                                                             .child(userId)
+                                                             .child(TESTS_RESULTS_NODE)
+
+
+        userEndpoint.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                userTestsResultsArray.clear()
+                for(snapshot in dataSnapshot.children){
+                    userTestsResultsArray.add(userTestResultFromDataSnapshot(snapshot))
+                }
+                callback.onTestResultRetrievalSuccess(userTestsResultsArray)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                callback.onTestResultRetrievalFailure()
+            }
+        })
 
     }
 
@@ -158,62 +166,85 @@ object UserDataDBEntry : UserDataGateway {
 
 
     override fun createUserNode(
+        userId: String,
         name: String,
         gender: String,
         globalPermission: Int,
         callback: UserDataCallback
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        databaseReference.child(USERS_NODE).child(userId).child(USER_NAME).setValue(name)
+        databaseReference.child(USERS_NODE).child(userId).child(USER_GENDER).setValue(gender)
+        databaseReference.child(USERS_NODE).child(userId).child(USER_GLOBAL_PERMISSION).setValue(globalPermission)
+        callback.onSuccessfulNodeCreation()
     }
 
-    override fun checkUserNode(callback: UserDataCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun getGlobalPermission(callback: UserDataCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if(globalPermission >= 0){
+            callback.onPermissionRetrieval(globalPermission)
+            return
+        }
+
+        if(firebaseAuth.currentUser == null){
+            callback.onPermissionRetrievalFailure()
+            return
+        }
+        userId = firebaseAuth.currentUser!!.uid
+        var userEndpoint = databaseReference.child(USERS_NODE)
+            .child(userId).child(USER_GLOBAL_PERMISSION)
+
+
+        userEndpoint.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                globalPermission = dataSnapshot.getValue(Int::class.java)!!
+                callback.onPermissionRetrieval(globalPermission)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                callback.onPermissionRetrievalFailure()
+            }
+        })
     }
 
     override fun allowGlobal(callback: UserDataCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userId = firebaseAuth.currentUser!!.uid
+        databaseReference.child(USERS_NODE).child(userId).child(USER_GLOBAL_PERMISSION).setValue(GLOBAL_ALLOWED)
+
     }
 
     override fun disableGlobal(callback: UserDataCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userId = firebaseAuth.currentUser!!.uid
+        databaseReference.child(USERS_NODE).child(userId).child(USER_GLOBAL_PERMISSION).setValue(
+            GLOBAL_DECLINED)
     }
 
 
 
-    override fun getUserTestsGroup(callback: TestGroupsGetterCallback) {
+    override fun getUserTestsGroup(callback: TestGroupsRetrievalCallback) {
 
-        if(userTestsGroupsArray.size > 0 && userGroupsUploaded){
+        if(userTestsGroupsArray.size > 0){
             callback.oGroupsRetrievalSuccess(userTestsGroupsArray)
             return
-        }else{
-            userGroupsUploaded= true
-            var groups = arrayListOf<TestsGroup>()
-
-            userId = firebaseAuth.currentUser!!.uid
-            var userEndpoint = databaseReference.child(USERS_NODE).child(
-                userId
-            ).child(TESTS_GROUPS_NODE)
-
-
-            userEndpoint.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for(snapshot in dataSnapshot.children){
-                        groups.add(groupFromDataSnapshot(snapshot))
-                    }
-                    userGroupsUploaded = true
-                    userTestsGroupsArray = groups
-                    callback.oGroupsRetrievalSuccess(userTestsGroupsArray)
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    callback.onGroupRetrievalFailure()
-                }
-            })
         }
+        userId = firebaseAuth.currentUser!!.uid
+        var userEndpoint = databaseReference.child(USERS_NODE).child(
+            userId
+        ).child(TESTS_GROUPS_NODE)
+
+
+        userEndpoint.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                userTestsGroupsArray.clear()
+                for(snapshot in dataSnapshot.children){
+                    userTestsGroupsArray.add(groupFromDataSnapshot(snapshot))
+                }
+                callback.oGroupsRetrievalSuccess(userTestsGroupsArray)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                callback.onGroupRetrievalFailure()
+            }
+        })
     }
 
     fun groupFromDataSnapshot(dataSnapshot: DataSnapshot) : TestsGroup{
@@ -256,15 +287,90 @@ object UserDataDBEntry : UserDataGateway {
     }
 
     override fun saveUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if(firebaseAuth.currentUser != null){
+            userId = firebaseAuth.currentUser!!.uid
+            var userEndpoint = databaseReference.child(USERS_NODE).child(
+                userId
+            )
+            var key = userEndpoint.child(TESTS_GROUPS_NODE).push().key
+            if (key != null) {
+                writeTestGroup(userEndpoint.child(TESTS_GROUPS_NODE).child(key), testsGroup)
+                testsGroup.groupId = key
+                userTestsGroupsArray.add(testsGroup)
+                callback.onSaveSuccess()
+                return
+            }
+        }
+        callback.onSaveFailure()
+    }
+
+    private fun writeTestGroup(databaseReference: DatabaseReference, testsGroup: TestsGroup){
+        databaseReference.child(TEST_GROUP_NAME).setValue(testsGroup.groupName)
+        for(i in 0 .. testsGroup.resultsList.size - 1){
+            databaseReference.child(TEST_IDs).child(i.toString()).setValue(testsGroup.resultsList.get(i).id)
+        }
     }
 
     override fun updateUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userId = firebaseAuth.currentUser!!.uid
+        var ref = databaseReference.child(USERS_NODE).child(userId).child(TESTS_GROUPS_NODE).child(testsGroup.groupId)
+        ref.removeValue()
+        saveUserTestGroup(testsGroup, callback)
     }
 
     override fun deleteUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback) {
+        userId = firebaseAuth.currentUser!!.uid
+        var ref = databaseReference.child(USERS_NODE).child(userId).child(TESTS_GROUPS_NODE).child(testsGroup.groupId)
+        ref.removeValue()
+        callback.onSaveSuccess()
+    }
+
+
+
+    override fun addMedicalFileID(name: String, callback: MedicalFilesIDsSavingCallback) {
+        if(firebaseAuth.currentUser != null){
+            userId = firebaseAuth.currentUser!!.uid
+            var userEndpoint = databaseReference.child(USERS_NODE).child(
+                userId
+            )
+            var key = userEndpoint.child(MEDICAL_FILES_NODE).push().key
+            if (key != null) {
+                userEndpoint.child(MEDICAL_FILES_NODE).child(key).setValue(name)
+                callback.onSaveSuccess(key)
+                return
+            }
+        }
+        callback.onFailure()
+    }
+
+
+    override fun removeMedicalFileID(id: String, callback: MedicalFilesIDsSavingCallback) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getAllMadicalFilesIDs(callback: MedicalFilesIDsRetrievalCallback) {
+        var medicalFiles = arrayListOf<MedicalFile>()
+
+        userId = firebaseAuth.currentUser!!.uid
+        var filesEndpoint = databaseReference.child(USERS_NODE)
+            .child(userId)
+            .child(MEDICAL_FILES_NODE)
+
+
+        filesEndpoint.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for(snapshot in dataSnapshot.children){
+                    medicalFiles.add(MedicalFile( snapshot.getValue(String::class.java)!!, snapshot.key!!,DummyBitmap.getEmptyBitmap()))
+                }
+                callback.onRetrievalSuccess(medicalFiles)
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                callback.onRetrievalFailure()
+            }
+        })
+
     }
 
 

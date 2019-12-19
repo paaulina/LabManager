@@ -19,6 +19,7 @@ class TestResultViewHolder (itemView: View) :
     val posNegImageEmpty: ImageView = itemView.imageViewEmpty
     val posNegImageFilled: ImageView = itemView.imageViewFilled
     var starButton: ImageButton = itemView.starButton
+    var prestarButton: ImageButton = itemView.prestarButton
 
 
     fun bind(userTestResult: UserTestResult){
@@ -74,11 +75,17 @@ class TestResultViewHolder (itemView: View) :
         }
 
         when(userTestResult.favorite){
-            IS_FAVORITE ->  starButton = itemView.starButton
-            NOT_FAVORITE -> starButton = itemView.prestarButton
+            IS_FAVORITE -> {
+                starButton.visibility = View.VISIBLE
+                prestarButton.visibility = View.INVISIBLE
+            }
+            NOT_FAVORITE -> {
+                starButton.visibility = View.INVISIBLE
+                prestarButton.visibility = View.VISIBLE
+            }
         }
 
-        starButton.visibility = View.VISIBLE
+
     }
 
 

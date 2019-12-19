@@ -2,6 +2,7 @@ package com.example.labmanager.Service
 
 import android.util.Log
 import com.example.labmanager.AUTO_GENERATED
+import com.example.labmanager.AUTO_GENERATED_NO_CHART
 import com.example.labmanager.Model.TestsGroup
 import com.example.labmanager.Model.UserTestResult
 import com.example.labmanager.RESULT_TYPE_NUMERIC
@@ -75,30 +76,50 @@ class UserTestsResultsGroupManager (var resultsLists : ArrayList<UserTestResult>
 
     fun getGroupedByName() : ArrayList<TestsGroup>{
         var groupList = arrayListOf<TestsGroup>()
-        var allUserResults = resultsLists
 
         if(!sorted) sort()
 
         var currGroup = TestsGroup("", arrayListOf(), 0)
         for(result in resultsLists){
-            if(result.resultType == RESULT_TYPE_NUMERIC){
-                Log.d("ResultLog: " , result.bloodTestName + " time : ${result.dateMillis}")
-                if(result.bloodTestName.equals(currGroup.groupName)){
-                    currGroup.resultsList.add(result)
-                    Log.d("ResultAddingChart: " , " ${result.bloodTestName} ${result.dateMillis} ${result.result}")
+//            if(result.resultType == RESULT_TYPE_NUMERIC){
+//                if(result.bloodTestName.equals(currGroup.groupName)){
+//                    currGroup.resultsList.add(result)
+//                } else{
+//                    if (currGroup.resultsList.size > 1){
+//                        currGroup.resultsList = sortByDate(currGroup.resultsList)
+//                        groupList.add(currGroup)
+//                        Log.d("ResultLog group: " , "${currGroup.groupName}  ${currGroup.resultsList.get(0).dateMillis}  ${currGroup.resultsList.get(1).dateMillis}")
+//                    }
+//                    currGroup = TestsGroup(result.bloodTestName, arrayListOf<UserTestResult>(result), AUTO_GENERATED)
+//                }
+//            }
 
-                } else{
-                    if (currGroup.resultsList.size > 1){
-                        currGroup.resultsList = sortByDate(currGroup.resultsList)
-                        groupList.add(currGroup)
-                        Log.d("ResultLog group: " , "${currGroup.groupName}  ${currGroup.resultsList.get(0).dateMillis}  ${currGroup.resultsList.get(1).dateMillis}")
-                    }
-                    currGroup = TestsGroup(result.bloodTestName, arrayListOf<UserTestResult>(result), AUTO_GENERATED)
+            if(result.bloodTestName.equals(currGroup.groupName)){
+                currGroup.resultsList.add(result)
+                if(result.resultType != RESULT_TYPE_NUMERIC){
+                    currGroup.groupType = AUTO_GENERATED_NO_CHART
+                    Log.d("NOTNUMERIC", "notnumeric")
+                }
+            } else{
+                if (currGroup.resultsList.size > 1){
+                    currGroup.resultsList = sortByDate(currGroup.resultsList)
+                    groupList.add(currGroup)
+                    Log.d("ResultLog group: " , "${currGroup.groupName}  ${currGroup.resultsList.get(0).dateMillis}  ${currGroup.resultsList.get(1).dateMillis}")
+                }
+                currGroup = TestsGroup(result.bloodTestName, arrayListOf<UserTestResult>(result), AUTO_GENERATED)
+                if(result.resultType != RESULT_TYPE_NUMERIC){
+                    currGroup.groupType = AUTO_GENERATED_NO_CHART
+                    Log.d("NOTNUMERIC", "notnumeric")
                 }
             }
         }
 
-        Log.d("Groupm" , "$groupList")
+        if (currGroup.resultsList.size > 1){
+            currGroup.resultsList = sortByDate(currGroup.resultsList)
+            groupList.add(currGroup)
+         }
+
+
         return groupList
     }
 

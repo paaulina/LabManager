@@ -44,56 +44,6 @@ class GroupWithChartFragment (var testsGroup: TestsGroup, fragmentManager: Fragm
         setUpRecycler()
     }
 
-//    fun showChart(){
-//        any_chart_view.setProgressBar(progress_bar)
-//        var cartesian = AnyChart.line()
-//        cartesian.animation(true)
-//
-//        cartesian.padding(10.0, 20.0, 5.0, 20.0)
-//
-//        cartesian.crosshair().enabled(true)
-//        cartesian.crosshair()
-//            .yLabel(true)
-//            // TODO ystroke
-//            .yStroke(null as Stroke?, null, null, null as String?, null as String?)
-//
-//        cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
-//
-//        cartesian.title("Chart")
-//        cartesian.yAxis(0).title("Wynik")
-//        cartesian.xAxis(0).labels().padding(5.0, 5.0, 5.0, 5.0)
-//
-//        //val seriesData : List<DataEntry> = arrayListOf<ValueDataEntry>()
-//        val seriesData  = arrayListOf<ValueDataEntry>()
-//
-//        seriesData.add(ValueDataEntry("12/12/2019", 12.4f))
-//        seriesData.add(ValueDataEntry("16/12/2019", 15.4f))
-//        seriesData.add(ValueDataEntry("19/12/2019", 16f))
-//        val seriesData2 : List<DataEntry> = seriesData
-//
-//        val set = Set.instantiate()
-//        set.data(seriesData2)
-//        val series1Mapping = set.mapAs("{ x: 'x', value: 'value' }")
-//
-//        var series1 = cartesian.line(series1Mapping);
-//        series1.name("Brandy");
-//        series1.hovered().markers().enabled(true);
-//        series1.hovered().markers()
-//                .type(MarkerType.CIRCLE)
-//                .size(4)
-//        series1.tooltip()
-//                .position("right")
-//                .anchor(Anchor.LEFT_CENTER)
-//                .offsetX(5)
-//                .offsetY(5)
-//
-//        cartesian.legend().enabled(true)
-//        cartesian.legend().fontSize(13)
-//        cartesian.legend().padding(0, 0, 10, 0)
-//
-//        any_chart_view.setChart(cartesian);
-//    }
-
 
     lateinit var valuseHashMap: HashMap<Float, String>
     fun showChart(){
@@ -109,7 +59,7 @@ class GroupWithChartFragment (var testsGroup: TestsGroup, fragmentManager: Fragm
             valuseHashMap.put(data.dateMillis.toFloat(), DateManager.dateMillisToStringDate(data.dateMillis))
         }
 
-        var dataSet = LineDataSet(entries, "DT1")
+        var dataSet = LineDataSet(entries, "Data wykonania.")
         dataSet.color = resources.getColor(R.color.chartColor1)
         dataSet.valueTextColor = Color.BLACK
         dataSet.isHighlightEnabled = false
@@ -117,15 +67,10 @@ class GroupWithChartFragment (var testsGroup: TestsGroup, fragmentManager: Fragm
 
         val lineData = LineData(dataSet)
 
-//        val colorTemplate= IntArray(3)
-//        colorTemplate[0] = R.color.barChartColor1
-//        colorTemplate[1] = R.color.barChartColor2
-//        colorTemplate[2] = R.color.barChartColor3
-//
-//        dataSet.setColors(colorTemplate, parentContext)
         var xAxis = chart.xAxis
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
         xAxis.setDrawGridLines(false)
+        xAxis.setLabelCount(5)
         xAxis.valueFormatter = object: ValueFormatter() {
 
             override fun getFormattedValue(value: Float): String {
@@ -145,6 +90,7 @@ class GroupWithChartFragment (var testsGroup: TestsGroup, fragmentManager: Fragm
 
         chart.lineData.setValueTextColor(parentContext.resources.getColor(R.color.colorChartMain))
         chart.description.textColor = parentContext.resources.getColor(R.color.black)
+        chart.description.isEnabled = false
 
     }
 

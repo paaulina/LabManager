@@ -7,31 +7,21 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class StaticDataInteractor(
-    private val gateway: StaticDataGateway) : StaticDataCallback{
+    private val gateway: StaticDataGateway,
+    private val presenter: StaticDataPresenter
+) : StaticDataCallback{
 
 
-    lateinit var successfulBloodTestRetrieval : (ArrayList<BloodTest>) -> Unit
-    lateinit var failureBloodTestRetrieval : (String) -> Unit
-
-    fun getBloodTestsArray(
-        success: (ArrayList<BloodTest>) -> Unit,
-        failure: (String) -> Unit
-    ) {
-        successfulBloodTestRetrieval = success
-        failureBloodTestRetrieval = failure
+    fun getBloodTestsArray() {
         gateway.getBloodTestsArray(this)
     }
 
     override fun onBloodTestsRetrievalSuccess(bloodTests: ArrayList<BloodTest>) {
-        successfulBloodTestRetrieval(bloodTests)
+        presenter.presentBloodTestsArray(bloodTests)
     }
 
     override fun onBloodTestsRetrievalFailure(message: String?) {
-        if (message == null) {
-            failureBloodTestRetrieval("Error")
-            return
-        }
-        failureBloodTestRetrieval(message)
+        presenter.presentBloodTestsRetrievalError(message + "")
     }
 
 }

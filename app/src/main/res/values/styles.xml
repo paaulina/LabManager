@@ -66,7 +66,7 @@
         <item name="android:paddingBottom">12dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:layout_marginLeft">3dp</item>
-        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginRight">5dp</item>
         <item name="android:background">#00000000</item>
         <item name="android:src">@drawable/back</item>
     </style>
@@ -96,6 +96,17 @@
         <item name="colorControlNormal">@color/buttonCorner</item>
         <item name="colorControlActivated">@color/buttonCorner</item>
         <item name="colorControlHighlight">@color/buttonCorner</item>
+    </style>
+
+    <style name="TextInputLayoutAppearanceDark" parent="Widget.Design.TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintInputText</item>
+        <item name="errorTextAppearance">@style/ErrorInputText</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColorHint">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
     </style>
 
     <style name="TextInputLayoutAppearanceLight" parent="Widget.Design.TextInputLayout">

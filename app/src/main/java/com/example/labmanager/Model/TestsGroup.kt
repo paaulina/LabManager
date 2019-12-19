@@ -16,4 +16,5 @@ class TestsGroup (
 
     constructor(groupName: String, resultsList: ArrayList<UserTestResult>)
      : this("", groupName, resultsList, USER_GENERATED)
+
 }

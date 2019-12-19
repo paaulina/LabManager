@@ -3,6 +3,7 @@ package com.example.labmanager.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.example.labmanager.Service.InternetConnectionChecker
 import com.example.labmanager.R
 import com.example.labmanager.Service.TextValidation
+import com.example.labmanager.VERIFY_EMAIL_ERROR_CODE
 
 
 class LoginActivity : AppCompatActivity() {
@@ -42,7 +44,15 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val user = mAuth?.getCurrentUser()
                         if (user != null) {
-                            goToMainPageActivity(user)
+
+                            if(user.isEmailVerified){
+                                goToMainPageActivity(user)
+                            }else{
+                                val intent = Intent(this, ConfirmationActivity::class.java)
+                                intent.putExtra("message", VERIFY_EMAIL_ERROR_CODE)
+                                startActivity(intent)
+                            }
+
                         }
                     } else {
                         Toast.makeText(

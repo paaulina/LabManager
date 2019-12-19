@@ -8,18 +8,30 @@
         android:paddingTop="20dp"
         android:background="@drawable/rounded_berders">
 
+    <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filtruj wyniki"
+            android:paddingBottom="15dp"
+            android:textSize="18sp"
+            android:textColor="@color/buttonColor"
+            android:paddingLeft="@dimen/padding_popup_layout"
+            android:paddingRight="@dimen/padding_popup_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
             android:id="@+id/nameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/padding_popup_layout"
-            android:paddingLeft="@dimen/padding_popup_layout"
             android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_popup_layout"
+            android:paddingRight="@dimen/padding_popup_layout"
             android:weightSum="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/title">
 
         <TextView
                 android:id="@+id/textView4"

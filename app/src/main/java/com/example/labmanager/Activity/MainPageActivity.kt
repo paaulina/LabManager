@@ -5,14 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.example.labmanager.*
-import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
-import com.example.labmanager.DataBase.usecase.GlobalData.GlobalDataInteractor
-import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsGetterCallback
-import com.example.labmanager.Model.TestsGroup
-import com.example.labmanager.Model.UserTestResult
 import com.example.labmanager.Service.DateManager
+import com.example.labmanager.Service.DummyBitmap
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main_page.*
 
@@ -30,9 +25,18 @@ class MainPageActivity : AppCompatActivity() {
         }else{
             Log.d("Debug:" , " user is not logged")
         }
+        test()
+        DummyBitmap.initialaze(this)
     }
 
     override fun onBackPressed(){}
+
+    fun test(){
+        var date = "18/12/2019"
+        var milis = DateManager.toMillis(date)
+        var dateBack = DateManager.dateMillisToStringDate(milis)
+        Log.d("DateTesting" , " ${date} -> $milis -> $dateBack")
+    }
 
     fun updateAddSubbutonsVisibility(view: View){
         if(addTextResultSubbutton.visibility == View.GONE){
@@ -48,9 +52,11 @@ class MainPageActivity : AppCompatActivity() {
         if(changePasswordSubButton.visibility == View.GONE){
             changePasswordSubButton.visibility = View.VISIBLE
             logOutSubButton.visibility = View.VISIBLE
+            globalSettongsSubButton.visibility = View.VISIBLE
         } else {
             changePasswordSubButton.visibility = View.GONE
             logOutSubButton.visibility = View.GONE
+            globalSettongsSubButton.visibility = View.GONE
         }
     }
 
@@ -74,7 +80,9 @@ class MainPageActivity : AppCompatActivity() {
     }
 
     fun goToMedicalFilesActivity(view: View){
-
+        val intent = Intent(this, MedicalFilesActivity::class.java)
+        //intent.putExtra("keyIdentifier", value)
+        startActivity(intent)
     }
 
     fun goToPlannerActivity(view: View){
@@ -89,6 +97,13 @@ class MainPageActivity : AppCompatActivity() {
     fun logOut (view : View){
         mAuth?.signOut()!!
         val intent = Intent(this, MainActivity::class.java)
+        //intent.putExtra("keyIdentifier", value)
+        startActivity(intent)
+    }
+
+    fun goToGlobalSettingActivity (view : View){
+
+        val intent = Intent(this, GlobalSettingsActivity::class.java)
         //intent.putExtra("keyIdentifier", value)
         startActivity(intent)
     }

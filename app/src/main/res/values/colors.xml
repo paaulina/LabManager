@@ -24,4 +24,8 @@
     <color name="chartColor1">#0ECFE7</color>
     <color name="barChartColor2">#9F0000</color>
     <color name="barChartColor3">#8E24AA</color>
+
+    <color name="selected_star_color">#ffffff</color>
+
+
 </resources>

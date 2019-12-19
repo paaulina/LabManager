@@ -1,75 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:padding="20dp">
 
-    <LinearLayout android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:gravity="center_vertical"
-                  android:layout_marginBottom="10dp">
+    <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton style="@style/backButtonStyle"
-                    android:onClick="exitActivity"/>
+        <ImageButton
+                style="@style/backButtonStyle"
+                android:onClick="exitActivity" />
 
         <TextView
-                android:text="@string/add_new_medical_file"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:textSize="@dimen/standard_text_Size"/>
+                android:text="@string/add_new_medical_file"
+                android:textSize="@dimen/standard_text_Size" />
 
     </LinearLayout>
 
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:weightSum="@dimen/add_formulage_layout_weight_sum"
-                  android:gravity="center_vertical">
-        <TextView
-                android:text="@string/title"
-                android:layout_width="0dp"
-                android:layout_weight="@dimen/add_formulage_first_layout_weight"
+<!--    <LinearLayout-->
+<!--            android:id="@+id/linearLayout6"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:weightSum="@dimen/add_formulage_layout_weight_sum"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">-->
+
+<!--        <TextView-->
+<!--                android:id="@+id/textView4"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="@dimen/add_formulage_first_layout_weight"-->
+<!--                android:text="@string/title" />-->
+
+<!--        <EditText-->
+<!--                android:id="@+id/editTextName"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="@dimen/add_formulage_second_layout_weight"-->
+<!--                android:ems="10"-->
+<!--                android:inputType="textPersonName" />-->
+
+<!--    </LinearLayout>-->
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/text_input_field_with_border"
+            android:padding="@dimen/text_input_field_bordered_padding"
+            android:theme="@style/TextInputLayoutAppearanceDark"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+            <EditText android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="Nazwa" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView4"/>
+                android:gravity="center_vertical"
+                android:weightSum="@dimen/add_formulage_layout_weight_sum"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
-        <EditText
-                android:layout_width="0dp"
+            <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@dimen/add_formulage_first_layout_weight"
+                    android:text="@string/date" />
+
+            <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@dimen/add_formulage_second_layout_weight"
+                    android:ems="10"
+                    android:inputType="date" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/layoutbuttons"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:layout_weight="@dimen/add_formulage_second_layout_weight"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:weightSum="2"
+                app:layout_constraintStart_toStartOf="parent">
 
-    </LinearLayout>
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:weightSum="@dimen/add_formulage_layout_weight_sum"
-                  android:gravity="center_vertical">
-        <TextView
-                android:text="@string/date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:layout_weight="@dimen/add_formulage_first_layout_weight"/>
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:ems="10"
-                android:id="@+id/editText"
-                android:layout_weight="@dimen/add_formulage_second_layout_weight"/>
-    </LinearLayout>
+            <Button
+                    android:id="@+id/buttonAddOther"
+                    android:layout_width="0dp"
+                    android:visibility="invisible"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_button_background_blue_thin"
+                    android:layout_weight="1"
+                    android:layout_marginRight="8dp"
+                    android:text="Wybierz inne" />
+            <Button
+                    android:id="@+id/buttonSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/round_button_background_blue"
+                    android:layout_weight="1"
+                    android:text="@string/Add" />
 
 
-    <Button android:id="@+id/button"
-            android:text="@string/add_photo"
-            style="@style/smallButtonStyle"
-            />
+        </LinearLayout>
 
 
 
+        <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:minWidth="800dp"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/layoutbuttons"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
-</LinearLayout>
+
+            <ImageView
+                    android:id="@+id/fileImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:visibility="invisible"
+                    tools:srcCompat="@tools:sample/avatars[0]" />
+
+            <Button
+                    android:id="@+id/buttonUploadImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/round_button_background_blue_thin"
+                    android:text="+Dodaj zdjęcie" />
+
+            <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="50dp"
+                    android:minWidth="250dp"
+                    android:max="100"
+                    android:visibility="invisible"
+                    android:layout_margin="50dp"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:progress="1" />
+
+
+
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

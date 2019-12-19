@@ -1,7 +1,6 @@
 package com.example.labmanager.Fragment
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,32 +9,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import androidx.fragment.app.FragmentManager
 import com.example.labmanager.DataBase.DataBaseEntry.UserDataDBEntry
 import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsInteractor
 import com.example.labmanager.DataBase.usecase.UserData.TestGruops.TestGroupsPresenter
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsInteractor
-import com.example.labmanager.DataBase.usecase.UserData.TestResults.UserTestResultsPresenter
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestResultsInteractor
+import com.example.labmanager.DataBase.usecase.UserData.TestResults.TestResultsPresenter
 import com.example.labmanager.Model.TestsGroup
 import com.example.labmanager.Model.UserTestResult
 
 import com.example.labmanager.R
-import com.example.labmanager.Service.UserTestsResultsGroupManager
-import kotlinx.android.synthetic.main.fragment_grouped_results_overview.*
 import kotlinx.android.synthetic.main.fragment_user_groups_overview.*
+import android.widget.AdapterView.OnItemLongClickListener
+import android.widget.ImageButton
+
 
 class UserGroupsOverviewFragment (
     context: Context,
     fragmentManager: FragmentManager
 ) : Fragment(),
-    UserTestResultsPresenter,
+    TestResultsPresenter,
     TestGroupsPresenter{
 
     var parentContext = context
     var fragmentmanager = fragmentManager
     var allTestResults = arrayListOf<UserTestResult>()
     var allGroups = arrayListOf<TestsGroup>()
-
+    lateinit var addButton : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,16 +53,24 @@ class UserGroupsOverviewFragment (
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        UserTestResultsInteractor(
+        TestResultsInteractor(
             UserDataDBEntry
         ).getAllTestResults(this)
+
+
+        addButton = view.findViewById<Button>(R.id.button_add_group)
+        addButton.setOnClickListener {
+            addGroup()
+        }
+
     }
 
     override fun presentUsersTestResults(testResults: ArrayList<UserTestResult>) {
         allTestResults = testResults
         TestGroupsInteractor(
             UserDataDBEntry,
-            this
+            this,
+            null
         ).getAllUserGroups()
     }
 
@@ -69,9 +78,17 @@ class UserGroupsOverviewFragment (
 
     }
 
+    fun addGroup(){
+        if(allTestResults.size > 0){
+            var groupEditionFragment = GroupEditionFragment(parentContext, TestsGroup(),  allTestResults, fragmentmanager)
+            fragmentmanager.beginTransaction().replace(R.id.fragments_container, groupEditionFragment).addToBackStack("frag").commit()
+
+        }
+    }
     override fun presentTestGroups(testResults: ArrayList<TestsGroup>) {
         allGroups = testResults
-        progress_bar.visibility = View.INVISIBLE
+        if(progress_bar_user_groups != null)
+            progress_bar_user_groups.visibility = View.INVISIBLE
         setUpResults(testResults)
     }
 
@@ -83,7 +100,7 @@ class UserGroupsOverviewFragment (
         for(group in testGroups){
             names.add(group.groupName)
         }
-        var adapter = ArrayAdapter<String>(parentContext, R.layout.simple_spinner_item, names)
+        var adapter = ArrayAdapter<String>(parentContext, R.layout.group_name_recycler_item, names)
 
 
         if(userGroupsListView != null){
@@ -92,6 +109,16 @@ class UserGroupsOverviewFragment (
             userGroupsListView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
                 var groupPresenterFragment = GroupPresenterFragment(parentContext, fragmentmanager, testGroups.get(position),  allTestResults)
                 fragmentmanager.beginTransaction().replace(R.id.fragments_container, groupPresenterFragment).addToBackStack("frag").commit()
+            })
+
+
+
+            userGroupsListView.setOnItemLongClickListener(OnItemLongClickListener { arg0, arg1, pos, id ->
+                // TODO Auto-generated method stub
+
+                Log.v("long clicked exoo", "pos: $pos")
+
+                true
             })
         }
 

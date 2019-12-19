@@ -12,7 +12,8 @@
             android:roundIcon="@mipmap/ic_syringe_text_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Activity.GroupEditionActivity"></activity>
+        <activity android:name=".Activity.GlobalSettingsActivity"></activity>
+
         <activity android:name=".Activity.SuccessActivity" />
         <activity
                 android:name=".Activity.NoInternetConnectionActivity"
