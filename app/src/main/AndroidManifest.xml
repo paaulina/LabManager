@@ -12,51 +12,51 @@
             android:roundIcon="@mipmap/ic_syringe_text_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Activity.GlobalSettingsActivity"></activity>
 
-        <activity android:name=".Activity.SuccessActivity" />
+        <activity android:name=".activity.GlobalSettingsActivity" />
+        <activity android:name=".activity.SuccessActivity" />
         <activity
-                android:name=".Activity.NoInternetConnectionActivity"
+                android:name=".activity.NoInternetConnectionActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.ResetPasswordActivity"
+                android:name=".activity.ResetPasswordActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.ConfirmationActivity"
+                android:name=".activity.ConfirmationActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.SignupActivity"
+                android:name=".activity.SignupActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.LoginActivity"
+                android:name=".activity.LoginActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.MainPageActivity"
+                android:name=".activity.MainPageActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.MedicalFilesActivity"
+                android:name=".activity.MedicalFilesActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.TestsResultOverviewActivity"
+                android:name=".activity.TestsResultOverviewActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.AddMedicalFilesActivity"
+                android:name=".activity.AddMedicalFilesActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.AddTestResultActivity"
+                android:name=".activity.AddTestResultActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait" />
         <activity
-                android:name=".Activity.MainActivity"
+                android:name=".activity.MainActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:screenOrientation="portrait">
             <intent-filter>

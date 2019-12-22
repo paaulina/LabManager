@@ -11,7 +11,7 @@
     <string name="AddTestResult">Dodaj wynik badania</string>
     <string name="AddMedicalDocument">Dodaj dokument medyczny</string>
     <string name="dont_remeber_password">Zapomniałeś hasła?</string>
-    <string name="no_account">Nie masz konta? Zaloguj się</string>
+    <string name="no_account">Nie masz konta? Zarejestruj się!</string>
     <string name="add_new_medical_file">Dodaj nowy plik medczny</string>
     <string name="title">Tytuł:</string>
     <string name="date">Data:</string>
@@ -60,9 +60,20 @@
     <string name="network_connection_error">Brak połączenia z internetem</string>
     <string name="execution_date_from">Data wykonania od:</string>
     <string name="execution_date_to">Data wykonania do:</string>
-    <string name="cancel">Anuluj</string>
     <string name="filter">filtruj</string>
-    <string name="global_description">Aktywując opcję anonimowego udostępniania danych wspierasz program badania zależności między wynikami badań laboratoryjnych, którego celem jest opracowanie systemu sugerującego wykonanie konkretnych badań na podstawie zadeklarowanych już wartości.
+    <string name="global_description">Aktywując opcję anonimowego udostępniania danych wspierasz program badania zależności między wynikami badań laboratoryjnych, którego celem jest opracowanie systemu sugerującego użytkownikowi niniejszej aplikacji wykonanie konkretnych badań, na podstawie zadeklarowanych już wartości.
                                       Udostępniane są jedynie wprowadzone do systemu wyniki, bez referencji do danych Twojego konta. </string>
 
+    <string name="app_cant_work_incorrectly_alert">"Aplikacja może nie działać poprawnie."</string>
+    <string name="set_up_connection_to_continue">"Przywróć połączenie z siecią by kontynuować."</string>
+    <string name="confirm_your_email">Proszę potwiedź konto poprzez link wysłany na podany adres e-mail.</string>
+    <string name="email_has_been_successfully_sent">Email został wysłany ponownie.</string>
+    <string name="reseting_link_has_been_sent_to">Link resetujący hasło został wysłany na adres:</string>
+    <string name="med_file_has_been_successfully_Added">Plik meyczny został dodany pomyślnie.</string>
+    <string name="do_you_want_toDelete_folder">Czy chcesz usunąć katalog?</string>
+    <string name="yes">Tak</string>
+    <string name="cancel">Anuluj</string>
+    <string name="creation_date">Data wykonania.</string>
+    <string name="results">Wyniki</string>
+    <string name="do_you_want_to_delete_file">Czy chcesz usunąć plik?</string>
 </resources>

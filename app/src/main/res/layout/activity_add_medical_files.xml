@@ -5,14 +5,14 @@
         android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:padding="20dp">
+              android:padding="10dp">
 
     <LinearLayout
             android:id="@+id/linearLayout7"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,32 +31,6 @@
     </LinearLayout>
 
 
-<!--    <LinearLayout-->
-<!--            android:id="@+id/linearLayout6"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:weightSum="@dimen/add_formulage_layout_weight_sum"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">-->
-
-<!--        <TextView-->
-<!--                android:id="@+id/textView4"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="@dimen/add_formulage_first_layout_weight"-->
-<!--                android:text="@string/title" />-->
-
-<!--        <EditText-->
-<!--                android:id="@+id/editTextName"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="@dimen/add_formulage_second_layout_weight"-->
-<!--                android:ems="10"-->
-<!--                android:inputType="textPersonName" />-->
-
-<!--    </LinearLayout>-->
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
@@ -73,7 +47,8 @@
             <EditText android:id="@+id/editTextName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:maxLength="150"
                     android:hint="Nazwa" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,7 +113,7 @@
 
 
         <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:minWidth="800dp"
                 android:layout_margin="20dp"
@@ -151,10 +126,11 @@
             <ImageView
                     android:id="@+id/fileImageView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="24dp"
                     android:visibility="invisible"
+                    android:adjustViewBounds="true"
+
                     tools:srcCompat="@tools:sample/avatars[0]" />
 
             <Button

@@ -7,7 +7,7 @@
         android:padding="20dp"
         android:layout_height="match_parent"
         android:background="@color/colorAccent"
-        tools:context=".Activity.ConfirmationActivity">
+        tools:context=".activity.ConfirmationActivity">
 
     <TextView
             android:text="@string/registration_complited"

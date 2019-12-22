@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorAccent"
-        tools:context=".Activity.SuccessActivity">
+        tools:context=".activity.SuccessActivity">
 
     <TextView
             android:text="Wynik został dodany pomyślnie."
