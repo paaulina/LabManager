@@ -44,11 +44,11 @@ class MainPageActivity : AppCompatActivity() {
         if(changePasswordSubButton.visibility == View.GONE){
             changePasswordSubButton.visibility = View.VISIBLE
             logOutSubButton.visibility = View.VISIBLE
-            globalSettongsSubButton.visibility = View.VISIBLE
+            globalSettingsSubButton.visibility = View.VISIBLE
         } else {
             changePasswordSubButton.visibility = View.GONE
             logOutSubButton.visibility = View.GONE
-            globalSettongsSubButton.visibility = View.GONE
+            globalSettingsSubButton.visibility = View.GONE
         }
     }
 

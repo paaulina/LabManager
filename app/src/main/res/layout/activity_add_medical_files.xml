@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:maxLength="150"
-                    android:hint="Nazwa" />
+                    android:hint="@string/file_name" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -97,7 +97,7 @@
                     android:background="@drawable/round_button_background_blue_thin"
                     android:layout_weight="1"
                     android:layout_marginRight="8dp"
-                    android:text="Wybierz inne" />
+                    android:text="@string/choose_other" />
             <Button
                     android:id="@+id/buttonSave"
                     android:layout_width="0dp"

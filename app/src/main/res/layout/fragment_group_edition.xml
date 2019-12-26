@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/text_input_field_with_border"
             android:padding="@dimen/text_input_field_bordered_padding"
-            android:theme="@style/TextInputLayoutAppearanceLight"
+            android:theme="@style/TextInputLayoutAppearanceDark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +24,7 @@
                 android:id="@+id/name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nazwa"
+                android:hint="@string/group_name"
                 android:textColor="@color/colorPrimaryDark" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,17 +54,17 @@
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_filled_squared_background_blue"
-                android:text="Zapisz"
+                android:text="@string/save"
                 android:textColor="#ffffff" />
 
         <Button
                 android:id="@+id/buttonCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_thin_blue_line"
                 android:text="@string/cancel" />

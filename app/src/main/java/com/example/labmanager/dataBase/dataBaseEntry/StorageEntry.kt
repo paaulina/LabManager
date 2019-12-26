@@ -103,7 +103,9 @@ object StorageEntry : MedicalFilesGateway,
             uploadTask?.addOnFailureListener {
                 currentlySavingCallback.onFailure()
             }?.addOnSuccessListener {
-                allMedicalFiles.add(currentlySavedMedicalFile)
+                if(allMedicalFiles.isNotEmpty()){
+                    allMedicalFiles.add(currentlySavedMedicalFile)
+                }
                 currentlySavingCallback.onSuccess()
             }
         }

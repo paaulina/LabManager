@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/text_input_field_with_border"
             android:padding="@dimen/text_input_field_bordered_padding"
-            android:theme="@style/TextInputLayoutAppearanceLight"
+            android:theme="@style/TextInputLayoutAppearanceDark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -24,8 +24,7 @@
                 android:hint="@string/name"
                 android:maxLines="1"
                 android:maxLength="150"
-                android:inputType="textCapWords"
-                android:textColor="@color/black" />
+                android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <FrameLayout
@@ -78,14 +77,14 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_filled_squared_background_blue"
                 android:textColor="#ffffff"
-                android:layout_marginRight="12dp"
-                android:text="Zapisz" />
+                android:layout_marginEnd="12dp"
+                android:text="@string/save" />
 
         <Button
                 android:id="@+id/buttonCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:background="@drawable/background_thin_blue_line"
                 android:layout_weight="1"
                 android:text="@string/cancel" />

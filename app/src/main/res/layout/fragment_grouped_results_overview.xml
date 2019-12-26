@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/tab_name_text_size"
-                android:text="Grupy badań"/>
+                android:text="@string/result_groups"/>
 
     </LinearLayout>
 

@@ -13,20 +13,21 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toStartOf="@+id/button_edit"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
                 android:id="@+id/button_back"
                 style="@style/backButtonStyle"
-                android:onClick="exitActivity" />
+                android:onClick="exitActivity"
+                android:contentDescription="@string/desc_back_button" />
 
         <TextView
                 android:id="@+id/text_view_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pliki medyczne"
+                android:text="@string/medical_files"
                 android:textSize="@dimen/tab_name_text_size" />
 
 

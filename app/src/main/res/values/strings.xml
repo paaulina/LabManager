@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">LabManager</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="AppTitle">LabManager</string>
     <string name="Add">Dodaj</string>
@@ -69,11 +68,38 @@
     <string name="confirm_your_email">Proszę potwiedź konto poprzez link wysłany na podany adres e-mail.</string>
     <string name="email_has_been_successfully_sent">Email został wysłany ponownie.</string>
     <string name="reseting_link_has_been_sent_to">Link resetujący hasło został wysłany na adres:</string>
-    <string name="med_file_has_been_successfully_Added">Plik meyczny został dodany pomyślnie.</string>
+    <string name="med_file_has_been_successfully_Added">Plik med./l yczny został dodany pomyślnie.</string>
     <string name="do_you_want_toDelete_folder">Czy chcesz usunąć katalog?</string>
     <string name="yes">Tak</string>
     <string name="cancel">Anuluj</string>
     <string name="creation_date">Data wykonania.</string>
     <string name="results">Wyniki</string>
     <string name="do_you_want_to_delete_file">Czy chcesz usunąć plik?</string>
+    <string name="file_name">Nazwa</string>
+    <string name="choose_other">Wybierz inne</string>
+    <string name="desc_back_button">Back</string>
+    <string name="save">Zapisz</string>
+    <string name="desc_logo">logo</string>
+    <string name="desc_settings">ustawienia</string>
+    <string name="desc_global_Settings">Ustawienia prywatności</string>
+    <string name="medical_files">Pliki medyczne</string>
+    <string name="no_internet_connection">Brak połączenia z internetem.</string>
+    <string name="redo_arrow">↻</string>
+    <string name="hava_account">Posiadasz konto? Zaloguj się!</string>
+    <string name="succes_result_saving">Wynik został dodany pomyślnie.</string>
+    <string name="add_next_result">Dadaj kolejny wynik</string>
+    <string name="go_back">Powrót</string>
+    <string name="test_results">Wyniki badań</string>
+    <string name="filter_results">Filtruj wyniki</string>
+    <string name="filter_name">Nazwa:</string>
+    <string name="sort_by">Sortuj według:</string>
+    <string name="date_">Data:</string>
+    <string name="result_">Wynik:</string>
+    <string name="notes_">Notatki</string>
+    <string name="desc_deleteButton">delete</string>
+    <string name="unit_separator">/</string>
+    <string name="group_name">Nazwa</string>
+    <string name="edit">Edytuj</string>
+    <string name="result_groups">Grupy badań</string>
+    <string name="created_folders">Utworzone katalogi</string>
 </resources>

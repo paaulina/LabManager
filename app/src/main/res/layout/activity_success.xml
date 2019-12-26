@@ -8,7 +8,7 @@
         tools:context=".activity.SuccessActivity">
 
     <TextView
-            android:text="Wynik został dodany pomyślnie."
+            android:text="@string/succes_result_saving"
             android:textColor="@color/lightTextColor"
             android:textSize="15sp"
             android:layout_margin="40dp"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/lightTextColor"
             android:background="@drawable/round_button_background_white"
-            android:text="Dadaj kolejny wynik"
+            android:text="@string/add_next_result"
             android:onClick="addNextResult"
             android:layout_margin="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/lightTextColor"
             android:background="@drawable/round_button_background_white"
-            android:text="Powrót"
+            android:text="@string/go_back"
             android:onClick="goBack"
             android:layout_margin="20dp"
             app:layout_constraintTop_toBottomOf="@+id/button_add_next"/>

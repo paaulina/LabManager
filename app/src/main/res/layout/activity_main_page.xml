@@ -77,7 +77,8 @@
                     android:id="@+id/settingsButton"
                     style="@style/standardMenuButtonStyle"
                     android:src="@drawable/settings"
-                    android:onClick="updateSettingsSubbutonsVisibility"/>
+                    android:onClick="updateSettingsSubbutonsVisibility"
+                    android:contentDescription="@string/desc_settings" />
 
             <Button
                     android:id="@+id/changePasswordSubButton"
@@ -88,8 +89,8 @@
                     style="@style/SubButtonStyle"/>
 
             <Button
-                    android:id="@+id/globalSettongsSubButton"
-                    android:text="Ustawienia prywatności"
+                    android:id="@+id/globalSettingsSubButton"
+                    android:text="@string/desc_global_Settings"
                     android:visibility="gone"
                     android:animateLayoutChanges="true"
                     style="@style/SubButtonStyle"

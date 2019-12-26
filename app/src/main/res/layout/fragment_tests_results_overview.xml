@@ -25,7 +25,7 @@
                 android:id="@+id/text_view_tab_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wyniki badań"
+                android:text="@string/test_results"
                 android:textSize="@dimen/tab_name_text_size" />
 
 

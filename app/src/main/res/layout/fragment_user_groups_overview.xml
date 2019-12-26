@@ -24,7 +24,7 @@
                 android:id="@+id/text_view_tab_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Utworzone katalogi"
+                android:text="@string/created_folders"
                 android:textSize="@dimen/tab_name_text_size"/>
 
 
@@ -82,7 +82,7 @@
             android:paddingLeft="15dp"
             android:paddingTop="0dp"
             android:paddingRight="15dp"
-            android:text="Dodaj"
+            android:text="@string/Add"
             android:textSize="12sp"
             android:textColor="@color/buttonColor"
             app:layout_constraintEnd_toEndOf="parent"

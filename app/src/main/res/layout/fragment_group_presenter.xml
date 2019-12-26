@@ -64,7 +64,7 @@
             android:paddingTop="0dp"
             android:paddingRight="15dp"
             android:layout_marginRight="10dp"
-            android:text="Edytuj"
+            android:text="@string/edit"
             android:textColor="@color/buttonColor"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/buttonDelete"

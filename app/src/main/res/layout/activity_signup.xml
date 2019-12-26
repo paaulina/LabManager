@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_height="fill_parent"
             android:background="@color/colorAccent"
             android:fitsSystemWindows="true">
 
@@ -18,7 +18,8 @@
                    android:layout_height="wrap_content"
                    android:layout_marginTop="@dimen/text_logo_margin"
                    android:layout_marginBottom="@dimen/text_logo_margin"
-                   android:layout_gravity="center_horizontal" />
+                   android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/desc_logo" />
 
         <!--  Name Label -->
         <com.google.android.material.textfield.TextInputLayout
@@ -122,10 +123,10 @@
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginBottom="24dp"
-                  android:text="Posiadasz konto? Zaloguj się!"
+                  android:text="@string/hava_account"
                   android:gravity="center"
                   android:onClick="goToLoginActivity"
-                  android:textSize="16dip"/>
+                  android:textSize="16sp"/>
 
     </LinearLayout>
 </ScrollView>

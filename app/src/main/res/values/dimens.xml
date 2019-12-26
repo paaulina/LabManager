@@ -15,7 +15,7 @@
     <dimen name="standard_corners_radius">10dp</dimen>
     <dimen name="small_corners_radius">5dp</dimen>
     <dimen name="small_text_size">14sp</dimen>
-    <dimen name="standard_text_Size">20dp</dimen>
+    <dimen name="standard_text_Size">20sp</dimen>
     <dimen name="text_logo_margin">24dp</dimen>
     <dimen name="margin_addresult_sublayout">10dp</dimen>
     <dimen name="errorTop_padding">10dp</dimen>

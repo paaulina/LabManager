@@ -13,7 +13,8 @@
 
         <ImageButton
                 style="@style/backButtonStyle"
-                android:onClick="exitActivity"/>
+                android:onClick="exitActivity"
+                android:contentDescription="@string/desc_back_button" />
 
 
         <TextView
@@ -56,7 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="@dimen/small_text_size"
                     android:id="@+id/editTextDate"
                     android:onClick="setDate"
@@ -85,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_gravity="center_vertical"
-                    android:paddingRight="0dp"
+                    android:paddingEnd="0dp"
                     android:layout_weight="4">
 
                 <AutoCompleteTextView
