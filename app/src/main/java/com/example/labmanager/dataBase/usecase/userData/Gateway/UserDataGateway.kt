@@ -23,8 +23,8 @@ interface UserDataGateway {
     fun allowGlobal(callback: UserDataCallback)
     fun disableGlobal(callback: UserDataCallback)
 
-    fun saveUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback)
-    fun updateUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback)
+    fun saveUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback?)
+    fun updateUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback?)
     fun deleteUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback)
     fun getUserTestsGroup(callback: TestGroupsRetrievalCallback)
 

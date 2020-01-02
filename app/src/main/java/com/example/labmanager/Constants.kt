@@ -3,6 +3,31 @@ package com.example.labmanager
 val FIRST_UNIT_ARRAY = arrayListOf("µmol","umol","mcmol","µIU", "mIU", "IU", "kIU", "µM", "mcM", "uM", "mg", "µg", "mcg", "ug", "microg", "pg", "ng")
 val SECOND_UNIT_ARRAY = arrayListOf("mL","dL","L")
 
+val FIRST_UNIT_MOL = hashMapOf("µmol" to 1.0,
+                                                    "umol" to 1.0,
+                                                    "mcmol" to 1.0,
+                                                    "µM" to 1.0,
+                                                    "mcM" to 1.0,
+                                                    "uM" to 1.0)
+
+
+val FIRST_UNIT_IU = hashMapOf(  "µIU" to 1000000.0,
+                                                    "mIU" to 1000.0,
+                                                    "IU" to 1.0,
+                                                    "kIU" to 0.001)
+
+val FIRST_UNIT_GRAM = hashMapOf("mg" to 0.001,
+                                                    "µg" to 1.0,
+                                                    "mcg" to 1.0,
+                                                    "ug" to 1.0,
+                                                    "microg" to 1.0,
+                                                    "pg" to 1000000.0,
+                                                    "ng" to 1000.0)
+
+val SECOND_UNIT_ML = hashMapOf("mL" to 1.0,
+                                                    "dL" to 0.01,
+                                                    "L" to 0.001)
+
 const val RESULT_TYPE_NUMERIC = 0
 const val RESULT_TYPE_POSITIVE_NEGATIVE = 1
 const val RESULT_TYPE_DESC = 2
@@ -66,5 +91,16 @@ const val HEX_CHARS = "0123456789ABCDEF"
 const val SHA_256 = "SHA-256"
 
 const val EMAIL_ERROR_TEXT = "Nieprawidowa wartość"
+const val EMAIL_ERROR_TEXT_WRONG = "Wprowadź swój adres e-mail"
 const val PASSWORD_ERROR_TEXT = "Hasło musi zawierać min. 8 znaków, w tym minimum jedną dużą i małą literę oraz liczbę"
 const val NAME_ERROR_TEXT = "Nieprawidowa wartość"
+
+const val ACTION_ADDING_FAV = 1
+const val ACTION_DELETING = 2
+const val ACTION_FILTERING = 3
+const val ACTION_SHOWING_FAV = 4
+
+
+const val DIALOG_EDITABLE = 1
+const val DIALOG_NOT_EDITABLE = 2
+

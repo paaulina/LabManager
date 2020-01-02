@@ -17,6 +17,7 @@ import com.example.labmanager.adapter.TestResultAdapter
 import com.example.labmanager.dataBase.dataBaseEntry.UserDataDBEntry
 import com.example.labmanager.dataBase.usecase.userData.TestGruops.TestGroupsInteractor
 import com.example.labmanager.dataBase.usecase.userData.TestGruops.TestGroupsSavingPresenter
+import com.example.labmanager.dialog.DialogManager
 import com.example.labmanager.model.TestsGroup
 import com.example.labmanager.model.UserTestResult
 import com.example.labmanager.service.ItemClickedCallback
@@ -92,7 +93,10 @@ class GroupPresenterFragment (
         recyclerView.adapter = recyclerAdapter
     }
 
-    override fun itemAtPositionSelected(position: Int) {}
+    override fun itemAtPositionSelected(position: Int) {
+        var selectedResult = testsGroup.resultsList[position]
+        DialogManager().showDetailsDialog(DIALOG_NOT_EDITABLE, selectedResult, parentContext, null)
+    }
 
     override fun itemAtPositionLongClicked(position: Int) {}
 

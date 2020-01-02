@@ -4,7 +4,7 @@ import com.example.labmanager.dataBase.usecase.userData.Gateway.UserDataGateway
 import com.example.labmanager.GLOBAL_ALLOWED
 import com.example.labmanager.GLOBAL_DECLINED
 
-class UserProfileDataInteractor(
+class UserNodeInteractor(
     private val userDataGatewey: UserDataGateway
 ) : UserDataCallback {
 

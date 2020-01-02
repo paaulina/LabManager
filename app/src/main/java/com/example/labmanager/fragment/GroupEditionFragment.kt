@@ -15,9 +15,8 @@ import com.example.labmanager.dataBase.usecase.userData.TestGruops.TestGroupsSav
 import com.example.labmanager.model.TestsGroup
 import com.example.labmanager.model.UserTestResult
 import com.example.labmanager.R
-import kotlinx.android.synthetic.main.fragment_group_edition.buttonCancel
-import kotlinx.android.synthetic.main.fragment_group_edition.buttonSave
-import kotlinx.android.synthetic.main.fragment_group_edition.resltsRecycler
+import kotlinx.android.synthetic.main.fragment_group_edition.*
+
 
 class GroupEditionFragment(
     private var testsGroup: TestsGroup,
@@ -70,6 +69,12 @@ class GroupEditionFragment(
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         resltsRecycler.setHasFixedSize(true)
         resltsRecycler.adapter = adapter
+
+        if(allResults.isEmpty()){
+            textViewNoItems.visibility = View.VISIBLE
+        } else {
+            textViewNoItems.visibility = View.GONE
+        }
     }
 
     override fun onSaveSuccess() {

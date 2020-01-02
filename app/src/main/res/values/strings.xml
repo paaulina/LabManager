@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">LabManager</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="AppTitle">LabManager</string>
     <string name="Add">Dodaj</string>
     <string name="ViewBloodTestsResults">Przeglądaj wyniki</string>
@@ -11,7 +9,7 @@
     <string name="AddMedicalDocument">Dodaj dokument medyczny</string>
     <string name="dont_remeber_password">Zapomniałeś hasła?</string>
     <string name="no_account">Nie masz konta? Zarejestruj się!</string>
-    <string name="add_new_medical_file">Dodaj nowy plik medczny</string>
+    <string name="add_new_medical_file">Dodaj nowy plik medyczny</string>
     <string name="title">Tytuł:</string>
     <string name="date">Data:</string>
     <string name="add_photo">Dodaj zdjęcie</string>
@@ -27,7 +25,7 @@
     <string name="password">Hasło</string>
     <string name="name">Imię</string>
     <string name="woman">Kobieta</string>
-    <string name="man">Mezczyzna</string>
+    <string name="man">Mężczyzna</string>
     <string name="create_account">Załóż konto</string>
     <string name="already_a_member_login">Already a member? Login</string>
     <string name="forgot_password">Zapomniałeś hasła?</string>
@@ -56,19 +54,19 @@
     <string name="all_test_results">WYNIKI</string>
     <string name="catalogues">KATALOGI</string>
     <string name="results_groups">GRUPY BADAŃ</string>
-    <string name="network_connection_error">Brak połączenia z internetem</string>
+    <string name="network_connection_error">Brak połączenia z Internetem</string>
     <string name="execution_date_from">Data wykonania od:</string>
     <string name="execution_date_to">Data wykonania do:</string>
     <string name="filter">filtruj</string>
     <string name="global_description">Aktywując opcję anonimowego udostępniania danych wspierasz program badania zależności między wynikami badań laboratoryjnych, którego celem jest opracowanie systemu sugerującego użytkownikowi niniejszej aplikacji wykonanie konkretnych badań, na podstawie zadeklarowanych już wartości.
                                       Udostępniane są jedynie wprowadzone do systemu wyniki, bez referencji do danych Twojego konta. </string>
 
-    <string name="app_cant_work_incorrectly_alert">"Aplikacja może nie działać poprawnie."</string>
-    <string name="set_up_connection_to_continue">"Przywróć połączenie z siecią by kontynuować."</string>
+    <string name="app_cant_work_incorrectly_alert">Aplikacja może nie działać poprawnie.</string>
+    <string name="set_up_connection_to_continue">Przywróć połączenie z siecią by kontynuować.</string>
     <string name="confirm_your_email">Proszę potwiedź konto poprzez link wysłany na podany adres e-mail.</string>
     <string name="email_has_been_successfully_sent">Email został wysłany ponownie.</string>
     <string name="reseting_link_has_been_sent_to">Link resetujący hasło został wysłany na adres:</string>
-    <string name="med_file_has_been_successfully_Added">Plik med./l yczny został dodany pomyślnie.</string>
+    <string name="med_file_has_been_successfully_Added">Plik medyczny został dodany pomyślnie.</string>
     <string name="do_you_want_toDelete_folder">Czy chcesz usunąć katalog?</string>
     <string name="yes">Tak</string>
     <string name="cancel">Anuluj</string>
@@ -83,7 +81,7 @@
     <string name="desc_settings">ustawienia</string>
     <string name="desc_global_Settings">Ustawienia prywatności</string>
     <string name="medical_files">Pliki medyczne</string>
-    <string name="no_internet_connection">Brak połączenia z internetem.</string>
+    <string name="no_internet_connection">Brak połączenia z Internetem.</string>
     <string name="redo_arrow">↻</string>
     <string name="hava_account">Posiadasz konto? Zaloguj się!</string>
     <string name="succes_result_saving">Wynik został dodany pomyślnie.</string>
@@ -102,4 +100,13 @@
     <string name="edit">Edytuj</string>
     <string name="result_groups">Grupy badań</string>
     <string name="created_folders">Utworzone katalogi</string>
+    <string name="no_items_displayable">Brak elementów do wyświetlenia.</string>
+    <string name="no_available_test_results">Brak dostępnych wyników badań.</string>
+    <string name="choose_unit">Wybierz jednostkę</string>
+    <string name="ineert_email_to_continue">W celu potwierdzenia podaj e-mail</string>
+    <string name="send_reset_link">Wyślij link resetujący</string>
+    <string name="female">F</string>
+    <string name="male">M</string>
+    <string name="registration_finish_successfully">Rejestracja zakończona. Potwiedź konto poprzez link wysłany na podany adres e-mail.</string>
+    <string name="something_went_wrong">Coś poszło nie tak :(</string>
 </resources>

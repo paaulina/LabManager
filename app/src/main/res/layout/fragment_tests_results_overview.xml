@@ -31,26 +31,17 @@
 
     </LinearLayout>
 
-<!--    <ImageButton-->
-<!--            android:id="@+id/imageButton2"-->
-<!--            style="@style/backButtonStyle"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:onClick="exitActivity"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/button_filter"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/button_filter" />-->
 
-<!--    <TextView-->
-<!--            android:id="@+id/text_view_tab_name"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="@dimen/tab_name_margin_left"-->
-<!--            android:text="Wyniki badań"-->
-<!--            android:textSize="@dimen/tab_name_text_size"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/button_filter"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/imageButton2"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/button_filter" />-->
-
+    <TextView
+            android:id="@+id/textViewNoItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/frameLayout3"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            android:text="@string/no_items_displayable"/>
 
     <FrameLayout
             android:id="@+id/frameLayout3"
@@ -61,6 +52,8 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_filter">
+
+
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/resltsRecyclerOverview"
@@ -74,8 +67,8 @@
 
         <ProgressBar
                 android:id="@+id/progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="50dp"
                 android:indeterminate="true"

@@ -22,7 +22,6 @@ import com.example.labmanager.model.MedicalFile
 import com.example.labmanager.PICK_IMAGE_REQUEST
 import com.example.labmanager.SUCCESS_ACTIVITY_ENTRY_POINT
 import com.example.labmanager.service.InternetConnectionChecker
-import com.example.labmanager.service.TextValidation
 
 class AddMedicalFilesActivity : AppCompatActivity(), MedicalFilesSavingResultPresenter {
 

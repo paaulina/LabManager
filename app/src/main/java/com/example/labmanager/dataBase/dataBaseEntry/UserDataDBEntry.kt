@@ -106,26 +106,19 @@ object UserDataDBEntry : UserDataGateway {
 
     override fun deleteUserTestResult(userTestResult: UserTestResult, callback: TestResultsSavingCallback) {
         if(removeUserTestResult(userTestResult)){
+            removeFromGroup(userTestResult.id)
             callback.onSaveSuccess()
         }else{
             callback.onSaveFailure()
         }
     }
 
-
     override fun getUserTestsResults(callback: TestResultsRetrievalCallback) {
-
-        if(userTestsResultsArray.size > 0){
-            callback.onTestResultRetrievalSuccess(userTestsResultsArray)
-            return
-        }
 
         userId = firebaseAuth.currentUser!!.uid
         val userEndpoint = databaseReference.child(USERS_NODE)
                                                              .child(userId)
                                                              .child(TESTS_RESULTS_NODE)
-
-
         userEndpoint.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 userTestsResultsArray.clear()
@@ -219,10 +212,10 @@ object UserDataDBEntry : UserDataGateway {
 
     override fun getUserTestsGroup(callback: TestGroupsRetrievalCallback) {
 
-        if(userTestsGroupsArray.size > 0){
-            callback.oGroupsRetrievalSuccess(userTestsGroupsArray)
-            return
-        }
+//        if(userTestsGroupsArray.size > 0){
+//            callback.oGroupsRetrievalSuccess(userTestsGroupsArray)
+//            return
+//        }
         userId = firebaseAuth.currentUser!!.uid
         val userEndpoint = databaseReference.child(USERS_NODE).child(
             userId
@@ -281,7 +274,7 @@ object UserDataDBEntry : UserDataGateway {
         return null
     }
 
-    override fun saveUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback) {
+    override fun saveUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback?) {
         if(firebaseAuth.currentUser != null){
             userId = firebaseAuth.currentUser!!.uid
             val userEndpoint = databaseReference.child(USERS_NODE).child(
@@ -292,11 +285,12 @@ object UserDataDBEntry : UserDataGateway {
                 writeTestGroup(userEndpoint.child(TESTS_GROUPS_NODE).child(key), testsGroup)
                 testsGroup.groupId = key
                 userTestsGroupsArray.add(testsGroup)
-                callback.onSaveSuccess()
+                callback?.onSaveSuccess()
                 return
             }
         }
-        callback.onSaveFailure()
+        callback?.onSaveFailure()
+
     }
 
     private fun writeTestGroup(databaseReference: DatabaseReference, testsGroup: TestsGroup){
@@ -306,7 +300,8 @@ object UserDataDBEntry : UserDataGateway {
         }
     }
 
-    override fun updateUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback) {
+    override fun updateUserTestGroup(testsGroup: TestsGroup, callback: TestGroupsSavingCallback?) {
+
         userId = firebaseAuth.currentUser!!.uid
         val ref = databaseReference.child(USERS_NODE).child(userId).child(TESTS_GROUPS_NODE).child(testsGroup.groupId)
         ref.removeValue()
@@ -318,6 +313,53 @@ object UserDataDBEntry : UserDataGateway {
         val ref = databaseReference.child(USERS_NODE).child(userId).child(TESTS_GROUPS_NODE).child(testsGroup.groupId)
         ref.removeValue()
         callback.onSaveSuccess()
+    }
+
+
+    private fun removeFromGroup (testesultID : String){
+
+        val temporaryGroupsArray = userTestsGroupsArray
+        if(temporaryGroupsArray.isEmpty()){
+            userId = firebaseAuth.currentUser!!.uid
+            val userEndpoint = databaseReference.child(USERS_NODE).child(
+                userId
+            ).child(TESTS_GROUPS_NODE)
+
+            userEndpoint.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for(snapshot in dataSnapshot.children){
+                        temporaryGroupsArray.add(groupFromDataSnapshot(snapshot))
+                    }
+                    checkForIDInGroups(testesultID, temporaryGroupsArray)
+                }
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
+        } else {
+            checkForIDInGroups(testesultID, temporaryGroupsArray)
+        }
+    }
+
+    private fun checkForIDInGroups(testesultID: String, groupsList: ArrayList<TestsGroup>){
+        var counter = 0
+        var found = -1
+        for(i in 0 until groupsList.size){
+            var group = groupsList[i]
+            found = -1
+            counter = 0
+            for(result in group.resultsList){
+                if(testesultID == result.id){
+                    found = counter
+                    break
+                }
+                counter++
+            }
+
+            if(found >= 0){
+                group.resultsList.removeAt(found)
+                counter = -1
+                updateUserTestGroup(group, null)
+            }
+        }
     }
 
 

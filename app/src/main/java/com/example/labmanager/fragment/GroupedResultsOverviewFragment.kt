@@ -19,6 +19,7 @@ import com.example.labmanager.AUTO_GENERATED
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestResultsInteractor
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestResultsPresenter
 import com.example.labmanager.model.UserTestResult
+import kotlinx.android.synthetic.main.fragment_grouped_results_overview.textViewNoItems
 
 class GroupedResultsOverviewFragment(context: Context,
                                      fragmentManager: FragmentManager
@@ -52,7 +53,9 @@ class GroupedResultsOverviewFragment(context: Context,
         setUpResults(testResults)
     }
 
-    override fun presentRetrievalError() {}
+    override fun presentRetrievalError() {
+        textViewNoItems.visibility = View.VISIBLE
+    }
 
     private fun setUpResults(testResults: ArrayList<UserTestResult>){
 
@@ -61,6 +64,14 @@ class GroupedResultsOverviewFragment(context: Context,
         val names = manager.getGroupNamesArray(groupsArray)
         val adapter = ArrayAdapter<String>(parentContext, R.layout.group_name_recycler_item, names)
 
+
+        if(textViewNoItems != null){
+            if(names.isEmpty()){
+                textViewNoItems.visibility = View.VISIBLE
+            } else {
+                textViewNoItems.visibility = View.GONE
+            }
+        }
 
         if(groupsListView != null){
             groupsListView.adapter = adapter
@@ -84,6 +95,7 @@ class GroupedResultsOverviewFragment(context: Context,
 
                 }
         }
+
 
     }
 

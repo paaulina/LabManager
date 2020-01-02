@@ -1,6 +1,5 @@
 package com.example.labmanager.activity
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,7 @@ import com.example.labmanager.service.TextValidation
 
 import com.example.labmanager.dataBase.dataBaseEntry.UserDataDBEntry
 import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserNodeCreationPresenter
-import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserProfileDataInteractor
+import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserNodeInteractor
 import com.google.android.gms.tasks.RuntimeExecutionException
 
 
@@ -66,10 +65,10 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
 
     fun getGender(intVal : Int) : String{
         when(intVal){
-            0 -> return "F"
-            1 -> return "M"
+            0 -> return getString(R.string.female)
+            1 -> return getString(R.string.male)
         }
-        return "F"
+        return getString(R.string.female)
     }
 
 
@@ -113,10 +112,6 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
                 } catch (err : RuntimeExecutionException){
                     email_edit_text_input_layout.isErrorEnabled = true
                     email_edit_text_input_layout.error = EMAIL_ERROR_TEXT
-                    Toast.makeText(
-                        this@SignupActivity, "Adres e-mail jest już używany w systemie.",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
 
             }
@@ -126,15 +121,12 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
 
 
 
-    fun sendConfirmationEmail(){
+    private fun sendConfirmationEmail(){
 
-        Log.d("confirmationEmail" ,  "in")
         if(mAuth != null){
-            Log.d("confirmationEmail" ,  "iner")
             val user = mAuth!!.getCurrentUser()
             user!!.sendEmailVerification().addOnCompleteListener{
                 if(it.isSuccessful) {
-                    Log.d("confirmationEmail" ,  "success")
                     createUserNode(user.uid)
                 }
                 else {
@@ -146,17 +138,8 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
     }
 
 
-    fun correctNameValue(nameText: String): Boolean {
-        if(!TextValidation.correctNameValue(nameText)){
-            name_edit_text_input_layout.isErrorEnabled = true
-            name_edit_text_input_layout.error = EMAIL_ERROR_TEXT
-            return false
-        }
-        name_edit_text_input_layout.isErrorEnabled = false
-        return true
-    }
 
-    fun correctEmailValue(emailText: String): Boolean {
+    private fun correctEmailValue(emailText: String): Boolean {
         if(!TextValidation.correctEmailValue(emailText)){
             email_edit_text_input_layout.isErrorEnabled = true
             email_edit_text_input_layout.error = EMAIL_ERROR_TEXT
@@ -166,7 +149,7 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
         return true
     }
 
-    fun correctPasswordValue(passwordText: String) : Boolean{
+    private fun correctPasswordValue(passwordText: String) : Boolean{
         if(!TextValidation.correctPasswordValue(passwordText)){
             password_edit_text_input_layout.isErrorEnabled = true
             password_edit_text_input_layout.error = PASSWORD_ERROR_TEXT
@@ -176,7 +159,7 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
         return true
     }
 
-    fun setGenderError(isError: Boolean){
+    private fun setGenderError(isError: Boolean){
         val unwrappedDrawable = getDrawable(R.drawable.input_field_error_background)
         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
         if(isError){
@@ -187,7 +170,7 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
         genderSelectionLayout.background = wrappedDrawable
     }
 
-    fun genderSelected(): Boolean{
+    private fun genderSelected(): Boolean{
 
         if(selectedGender < 0){
             setGenderError(true)
@@ -210,19 +193,19 @@ class SignupActivity : AppCompatActivity(), UserNodeCreationPresenter {
 
 
     fun createUserNode(userId: String){
-        UserProfileDataInteractor(UserDataDBEntry).createUserNode(userId, name_edit_text.text.toString(), getGender(selectedGender), this)
+        UserNodeInteractor(UserDataDBEntry).createUserNode(userId, name_edit_text.text.toString(), getGender(selectedGender), this)
     }
 
     override fun onNodeCreationSuccess() {
         val intent = Intent(this, ConfirmationActivity::class.java)
-        intent.putExtra("message", "Rejestracja zakończona. Potwiedź konto poprzez link wysłany na podany adres e-mail.")
+        intent.putExtra("message", getString(R.string.registration_finish_successfully))
         startActivity(intent)
     }
 
 
     fun showErrorActivity(){
         val intent = Intent(this, ConfirmationActivity::class.java)
-        intent.putExtra("message", "Coś poszło nie tak :(")
+        intent.putExtra("message", getString(R.string.something_went_wrong))
         startActivity(intent)
     }
 

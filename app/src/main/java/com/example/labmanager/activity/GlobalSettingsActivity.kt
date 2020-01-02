@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.labmanager.dataBase.dataBaseEntry.UserDataDBEntry
 import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserGlobalPermissionPresenter
-import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserProfileDataInteractor
+import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserNodeInteractor
 import com.example.labmanager.GLOBAL_ALLOWED
 import com.example.labmanager.GLOBAL_DECLINED
 import com.example.labmanager.R
@@ -22,7 +22,7 @@ class GlobalSettingsActivity : AppCompatActivity(), UserGlobalPermissionPresente
 
         if(globalPermission == -1){
             setOnLoading()
-            UserProfileDataInteractor(UserDataDBEntry).getGlobalPermission(this)
+            UserNodeInteractor(UserDataDBEntry).getGlobalPermission(this)
         } else{
             setOffLoading()
             presentGlobalPersmission(globalPermission)
@@ -35,7 +35,7 @@ class GlobalSettingsActivity : AppCompatActivity(), UserGlobalPermissionPresente
             } else {
                 GLOBAL_ALLOWED
             }
-            UserProfileDataInteractor(UserDataDBEntry).switchGlobal(globalPermission)
+            UserNodeInteractor(UserDataDBEntry).switchGlobal(globalPermission)
         }
         InternetConnectionChecker.checkConnection(
             this,

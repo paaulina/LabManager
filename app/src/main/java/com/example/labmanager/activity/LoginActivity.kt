@@ -95,18 +95,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    private fun goToMainPageActivity(user: FirebaseUser){
+    fun goToMainPageActivity(user: FirebaseUser){
         val intent = Intent(this, MainPageActivity::class.java)
         intent.putExtra("user", user)
         startActivity(intent)
     }
 
-    private fun goToSignupActivity(view: View){
+    fun goToSignupActivity(view: View){
         val intent = Intent(this, SignupActivity::class.java)
         startActivity(intent)
     }
 
-    private fun goToResetPasswordActivity(view: View){
+    fun goToResetPasswordActivity(view: View){
         val intent = Intent(this, ResetPasswordActivity::class.java)
         intent.putExtra(PASSWOED_ENTRY_POINT, RESET_PASSWORD_ENTRY)
         startActivity(intent)

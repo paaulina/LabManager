@@ -4,6 +4,7 @@ import com.example.labmanager.dataBase.usecase.userData.Gateway.UserDataGateway
 import com.example.labmanager.IS_FAVORITE
 import com.example.labmanager.model.UserTestResult
 import com.example.labmanager.NOT_FAVORITE
+import com.example.labmanager.dataBase.usecase.userData.TestGruops.TestGroupsSavingCallback
 
 class TestResultsInteractor (
     private val userDataGatewey: UserDataGateway

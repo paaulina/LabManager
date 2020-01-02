@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.labmanager.model.UserTestResult
 import com.example.labmanager.R
 import com.example.labmanager.service.ItemClickedCallback
+import androidx.annotation.UiThread
+
+
+
 
 class TestResultAdapter (private val resultsArray: ArrayList<UserTestResult>,
                          val context: Context,
@@ -40,6 +44,7 @@ class TestResultAdapter (private val resultsArray: ArrayList<UserTestResult>,
     ) {
         callback.itemAtPositionLongClicked(position)
     }
+
 }
 
 

@@ -6,6 +6,7 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="edittextBackground">#E7E7E7</color>
     <color name="buttonColor">#0ECFE7</color>
+    <color name="clickedButtonColor">#08A7BB</color>
     <color name="lighterButtonColor">#2A1EC9DF</color>
     <color name="darkButtonColor">#A903B0E5</color>
     <color name="subbuttonColor">#BAC7CE</color>

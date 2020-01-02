@@ -68,6 +68,7 @@ class BloodTestAdapter(context: Context, resource: Int, private var items: Array
             Log.d("AutoComPleTeLog", "filtering")
             if (charSequence != null) {
                 suggestions.clear()
+                Log.d("tempItemsCount", "count: ${tempItems.size}")
                 for (bloodTest in tempItems) {
                     if (bloodTest.name!!.toLowerCase().startsWith(charSequence.toString().toLowerCase())) {
                         suggestions.add(bloodTest)

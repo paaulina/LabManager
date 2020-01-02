@@ -3,6 +3,7 @@ package com.example.labmanager.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.labmanager.fragment.GroupedResultsOverviewFragment
 import com.example.labmanager.fragment.TestsResultsOverviewFragment
@@ -18,7 +19,8 @@ class TestsResultOverviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tests_result_overview)
 
 
-        val testsResultsOverviewFragment = TestsResultsOverviewFragment(this)
+        Log.d("creatingEXP", "creatingEXP")
+        var testsResultsOverviewFragment = TestsResultsOverviewFragment(this)
         val userGroupsOverviewFragment = UserGroupsOverviewFragment(this, supportFragmentManager)
         val groupedResultsOverviewFragment = GroupedResultsOverviewFragment(this, supportFragmentManager)
 

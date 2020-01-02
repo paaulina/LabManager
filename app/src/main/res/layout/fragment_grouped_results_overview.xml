@@ -29,8 +29,20 @@
 
     </LinearLayout>
 
+    <TextView
+            android:id="@+id/textViewNoItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/frameLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            android:text="@string/no_items_displayable"/>
+
 
     <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minWidth="800dp"

@@ -17,12 +17,6 @@ object StaticDataDBEntry :  StaticDataGateway{
 
     override fun getBloodTestsArray(callback: StaticDataCallback) {
 
-        if(bloodTestsArray.size > 0){
-            callback.onBloodTestsRetrievalSuccess(bloodTestsArray)
-            return
-        }
-        callback.onBloodTestsRetrievalFailure(DATA_BASE_ERROR)
-
         bloodTestsArray = arrayListOf()
         val btEndpoint = databaseReference.child(BLOOD_TESTS_NODE)
         btEndpoint.addValueEventListener(object : ValueEventListener {
@@ -31,7 +25,12 @@ object StaticDataDBEntry :  StaticDataGateway{
                 for(btSnapshot in dataSnapshot.children){
                     bloodTestsArray.add(btSnapshot.getValue(BloodTest::class.java) as BloodTest)
                 }
-                callback.onBloodTestsRetrievalSuccess(bloodTestsArray)
+
+                var newAray = arrayListOf<BloodTest>()
+                for(b in bloodTestsArray){
+                    newAray.add(b)
+                }
+                callback.onBloodTestsRetrievalSuccess(newAray)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

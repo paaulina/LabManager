@@ -27,7 +27,7 @@ import com.example.labmanager.dataBase.usecase.globalData.GlobalDataInteractor
 import com.example.labmanager.dataBase.usecase.staticData.StaticDataInteractor
 import com.example.labmanager.dataBase.usecase.staticData.StaticDataPresenter
 import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserGlobalPermissionPresenter
-import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserProfileDataInteractor
+import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserNodeInteractor
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestResultsInteractor
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestsResultSavingPresenter
 import com.example.labmanager.service.InternetConnectionChecker
@@ -62,16 +62,7 @@ class AddTestResultActivity : AppCompatActivity(),
         setContentView(R.layout.activity_add_test_result)
         setUpTodaysDate()
         setUpPositiveNegativeSpinner()
-        val context = this
 
-//        autoCompleteTextView.setOnTouchListener { v, event ->
-//            Log.d("AutoComPleTeLog", "sending request")
-//            StaticDataInteractor(StaticDataDBEntry, context).getBloodTestsArray()
-//            autoCompleteTextView.setOnTouchListener(null)
-//            true
-//        }
-//        Log.d("AutoComPleTeLog", "on create")
-//        StaticDataInteractor(StaticDataDBEntry, context).getBloodTestsArray()
         POS_NEG_HASHMAP = hashMapOf(resources.getString(R.string.positive) to 1f, resources.getString(R.string.negative) to 0f)
         typesArray = resources.getStringArray(R.array.result_types_array)
 
@@ -88,7 +79,6 @@ class AddTestResultActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
-        Log.d("AutoComPleTeLog", "RESUME")
         insideLayout.visibility = INVISIBLE
         progress_bar_page_loading.visibility = VISIBLE
         StaticDataInteractor(StaticDataDBEntry, this).getBloodTestsArray()
@@ -130,11 +120,16 @@ class AddTestResultActivity : AppCompatActivity(),
         selectedDateString = dateString
     }
 
-// -------------------BLOOD TEST--------------------------------------------------------------------------
-
+// -------------------AUTOCOMPLETE BLOOD TEST--------------------------------------------------------------------------
+    private var allAutoCompleteData = arrayListOf<BloodTest>()
     override fun presentBloodTestsArray(bloodTests: ArrayList<BloodTest>) {
-        Log.d("AutoComPleTeLog", "receiving array")
         bloodTestsArray = bloodTests
+        if(allAutoCompleteData.isEmpty()){
+            for(test in bloodTests){
+                allAutoCompleteData.add(test)
+            }
+        }
+
         setUpAutoCompleteTextViewData()
         progress_bar_page_loading.visibility = GONE
         insideLayout.visibility =  VISIBLE
@@ -147,7 +142,6 @@ class AddTestResultActivity : AppCompatActivity(),
     }
 
     private fun setUpAutoCompleteTextViewData(){
-        Log.d("AutoComPleTeLog", "settingUpAutocomplete")
         bloodTestAdapter = BloodTestAdapter(
             this,
             R.layout.blood_test_row,
@@ -155,8 +149,6 @@ class AddTestResultActivity : AppCompatActivity(),
         )
         autoCompleteTextView.threshold = 1
         autoCompleteTextView.setAdapter(bloodTestAdapter)
-
-        Log.d("AutoComPleTeLog", "settingUpAutocomplete DONE")
         autoCompleteTextView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, i, l ->
 
             val selectedRow = parent.getItemAtPosition(i)
@@ -173,10 +165,12 @@ class AddTestResultActivity : AppCompatActivity(),
                 }
             }
         autoCompleteTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
             override fun afterTextChanged(s: Editable?) {0}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                Log.d("AutoComPleTeLog", "on text changed")
+                bloodTestsArray = allAutoCompleteData
                 if (s.isNotEmpty()) {
                     progress_bar.visibility = VISIBLE
                 } else {
@@ -295,7 +289,7 @@ class AddTestResultActivity : AppCompatActivity(),
         unitDialog = Dialog(this)
         unitDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         unitDialog.setCancelable(false)
-        unitDialog.setTitle("Wybierz jednostkę")
+        unitDialog.setTitle(getString(R.string.choose_unit))
         unitDialog.setContentView(R.layout.dialog_unit_picker)
         val firstUnitSpinner = unitDialog.findViewById(R.id.first_unit_spinner) as Spinner
         val secondUnitSpinner = unitDialog.findViewById(R.id.second_unit_spinner) as Spinner
@@ -365,6 +359,7 @@ class AddTestResultActivity : AppCompatActivity(),
             TestResultsInteractor(
                 UserDataDBEntry
             ).saveUserTestResult(testResult, this)
+            button.isClickable = false
 
         }
     }
@@ -398,11 +393,12 @@ class AddTestResultActivity : AppCompatActivity(),
     }
 
     override fun presentSaveSuccess() {
-        UserProfileDataInteractor(UserDataDBEntry).getGlobalPermission(this)
-
+        UserNodeInteractor(UserDataDBEntry).getGlobalPermission(this)
     }
 
-    override fun presentSaveError() {}
+    override fun presentSaveError() {
+        button.isClickable = true
+    }
 
     override fun presentGlobalPersmission(permission: Int) {
         if(permission == GLOBAL_ALLOWED){

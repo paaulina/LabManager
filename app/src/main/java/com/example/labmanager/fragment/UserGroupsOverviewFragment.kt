@@ -67,7 +67,9 @@ class UserGroupsOverviewFragment (
         ).getAllUserGroups()
     }
 
-    override fun presentRetrievalError() {}
+    override fun presentRetrievalError() {
+        textViewNoItems.visibility = View.VISIBLE
+    }
 
     private fun addGroup(){
         if(allTestResults.size > 0){
@@ -96,6 +98,12 @@ class UserGroupsOverviewFragment (
             names.add(group.groupName)
         }
         val adapter = ArrayAdapter<String>(parentContext, R.layout.group_name_recycler_item, names)
+
+        if(names.isEmpty() && textViewNoItems != null){
+            textViewNoItems.visibility = View.VISIBLE
+        } else if(textViewNoItems != null){
+            textViewNoItems.visibility = View.GONE
+        }
 
 
         if(userGroupsListView != null){

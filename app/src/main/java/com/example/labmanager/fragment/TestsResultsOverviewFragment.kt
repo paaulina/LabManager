@@ -3,7 +3,9 @@ package com.example.labmanager.fragment
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,8 @@ import com.example.labmanager.dataBase.usecase.userData.TestResults.TestResultsI
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestResultsSavingCallback
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestResultsPresenter
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestsResultSavingPresenter
+import com.example.labmanager.dialog.DetailsDialogDisplayer
+import com.example.labmanager.dialog.DialogManager
 import com.example.labmanager.service.UserTestsResultsGroupManager
 
 
@@ -31,7 +35,8 @@ class TestsResultsOverviewFragment(
     ItemClickedCallback,
     TestResultsPresenter,
     TestResultsSavingCallback,
-    TestsResultSavingPresenter{
+    TestsResultSavingPresenter,
+    DetailsDialogDisplayer{
 
 
     private var parentContext = context
@@ -61,6 +66,7 @@ class TestsResultsOverviewFragment(
         button_filter.setOnClickListener {
             showFiltersDialog()
         }
+
         resltsRecyclerOverview.visibility = View.GONE
         progress_bar.visibility = View.VISIBLE
 
@@ -73,7 +79,6 @@ class TestsResultsOverviewFragment(
                 showOnlyFavourites()
             }
         }
-
         TestResultsInteractor(
             UserDataDBEntry
         ).getAllTestResults(this)
@@ -81,6 +86,7 @@ class TestsResultsOverviewFragment(
 
 
     override fun presentUsersTestResults(testResults: ArrayList<UserTestResult>) {
+
         if(resltsRecyclerOverview != null) {
             resltsRecyclerOverview.visibility = View.VISIBLE
             progress_bar.visibility = View.GONE
@@ -88,6 +94,8 @@ class TestsResultsOverviewFragment(
             button_filter.visibility = View.VISIBLE
             resultsList = UserTestsResultsGroupManager(arrayListOf()).sortByDate(testResults)
             setUpRecycler(resultsList)
+            textViewNoItems.visibility = View.GONE
+            applyFilters()
         }
     }
 
@@ -96,30 +104,41 @@ class TestsResultsOverviewFragment(
 
     override fun presentRetrievalError() {
         progress_bar.visibility = View.GONE
+        textViewNoItems.visibility = View.VISIBLE
     }
 
 
     private fun showOnlyFavourites(){
-
-        buttonFavFilter.setImageDrawable(resources.getDrawable(R.drawable.star))
-        val favItems = arrayListOf<UserTestResult>()
-        for(res in displayableResultList){
-            if(res.favorite == IS_FAVORITE){
-                favItems.add(res)
+        if(displayableResultList.isNotEmpty()){
+            buttonFavFilter.setImageDrawable(resources.getDrawable(R.drawable.star))
+            val favItems = arrayListOf<UserTestResult>()
+            for(res in displayableResultList){
+                if(res.favorite == IS_FAVORITE){
+                    favItems.add(res)
+                }
             }
+            displayableResultList = favItems
+            setUpRecycler(displayableResultList)
         }
-        displayableResultList = favItems
-        setUpRecycler(displayableResultList)
+
     }
 
 
-    private fun setUpRecycler(results: ArrayList<UserTestResult>){
-        displayableResultList = results
-        val recyclerAdapter = TestResultAdapter(displayableResultList, parentContext, this)
-        resltsRecyclerOverview.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    fun setUpRecycler(results: ArrayList<UserTestResult>){
+
+        resltsRecyclerOverview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         resltsRecyclerOverview.setHasFixedSize(true)
+        displayableResultList = results
+        var recyclerAdapter = TestResultAdapter(displayableResultList, parentContext, this)
         resltsRecyclerOverview.adapter = recyclerAdapter
+        recyclerAdapter.notifyDataSetChanged()
+
+
+        if(displayableResultList.isEmpty()){
+            textViewNoItems.visibility = View.VISIBLE
+        } else {
+            textViewNoItems.visibility = View.GONE
+        }
     }
 
 
@@ -166,9 +185,11 @@ class TestsResultsOverviewFragment(
 
         cancelButton.setOnClickListener { filtersDialog.hide() }
         applyButton.setOnClickListener {
-            filterName = filterNameEditText.text.toString()
-            applyFilters()
-            filtersDialog.hide()
+            if(checkDatesRange()){
+                filterName = filterNameEditText.text.toString()
+                applyFilters()
+                filtersDialog.hide()
+            }
         }
 
         datePickerDialog = DatePickerDialog(parentContext)
@@ -179,6 +200,20 @@ class TestsResultsOverviewFragment(
 
     }
 
+    private fun checkDatesRange() : Boolean{
+        if(dateFromEditText.text.isNotEmpty() && dateToEditText.text.isNotEmpty()){
+            if( DateManager.toMillis(stringDateFrom) > DateManager.toMillis(stringDateTo)){
+                dateFromEditText.setTextColor(Color.RED)
+                dateToEditText.setTextColor(Color.RED)
+                return false
+            }
+        } else{
+            dateFromEditText.setTextColor(resources.getColor(R.color.colorPrimary))
+            dateToEditText.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+        }
+        return true
+    }
+
     private fun setUpFiltersFields(){
         filterNameEditText.setText(filterName)
         dateFromEditText.setText(stringDateFrom)
@@ -186,14 +221,14 @@ class TestsResultsOverviewFragment(
 
         if(selectedSorting.isNotEmpty()){
             when(selectedSorting){
-                sortingTypesArray[0] -> sortingSpinner.setSelection(0)
-                sortingTypesArray[1] -> sortingSpinner.setSelection(1)
+                sortingTypesArray.get(0) -> sortingSpinner.setSelection(0)
+                sortingTypesArray.get(1) -> sortingSpinner.setSelection(1)
 
             }
         }
     }
 
-// ----------------------------- DATE -------------------------------------------------------------
+    // ----------------------------- DATE -------------------------------------------------------------
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         when(dateDialogEntry){
             entryDateFrom -> showDateFrom(year, month+1, dayOfMonth)
@@ -232,6 +267,7 @@ class TestsResultsOverviewFragment(
         dateToEditText.setText(dateString)
         dateToSet = true
         stringDateTo = dateString
+        Log.d("dateToSetting " , " date to setting $dateString")
     }
 
     private var sortingTypesInitialized = false
@@ -262,25 +298,21 @@ class TestsResultsOverviewFragment(
     private fun applyFilters(){
         buttonFavFilter.setImageDrawable(resources.getDrawable(R.drawable.prestar))
         displayableResultList = resultsList
-        if(filterName.isNotEmpty()){
+        if(filterName.length > 0){
             displayableResultList = TestResultsFilter.filterByName(filterName, displayableResultList)
         }
 
-        if(dateFromEditText.text.isNotEmpty()){
-            displayableResultList = TestResultsFilter.filterByDateFrom(DateManager.toMillis(dateFromEditText.text.toString()),
-                                                                       displayableResultList)
-            stringDateFrom = dateFromEditText.text.toString()
+        if(dateFromSet){
+            displayableResultList = TestResultsFilter.filterByDateFrom(DateManager.toMillis(stringDateFrom), displayableResultList)
         }
 
-        if(dateToEditText.text.isNotEmpty()){
-            displayableResultList = TestResultsFilter.filterByDateTo(DateManager.toMillis(dateToEditText.text.toString()),
-                                                                     displayableResultList)
-            stringDateTo = dateToEditText.text.toString()
+        if(dateToSet){
+            displayableResultList = TestResultsFilter.filterByDateTo(DateManager.toMillis(stringDateTo), displayableResultList)
         }
         if(sortingTypesInitialized){
             when(selectedSorting){
-                sortingTypesArray[0] -> displayableResultList = TestResultsFilter.sortByName(displayableResultList)
-                sortingTypesArray[1] -> displayableResultList = TestResultsFilter.sortByDate(displayableResultList)
+                sortingTypesArray.get(0) -> displayableResultList = TestResultsFilter.sortByName(displayableResultList)
+                sortingTypesArray.get(1) -> displayableResultList = TestResultsFilter.sortByDate(displayableResultList)
 
             }
         }
@@ -290,71 +322,25 @@ class TestsResultsOverviewFragment(
 // ----------------------------------------- item selected ----------------------------------------------------------------
 
     private lateinit var selectedResult : UserTestResult
-    private lateinit var detailsDialog : Dialog
-    private lateinit var favouriteButton : ImageButton
-    private lateinit var deleteButton : ImageButton
     override fun itemAtPositionSelected(position: Int) {
-        showDetailsDialog(displayableResultList[position])
+        selectedResult = displayableResultList[position]
+        DialogManager().showDetailsDialog(DIALOG_EDITABLE, displayableResultList[position], parentContext, this)
     }
     override fun itemAtPositionLongClicked(position: Int) {}
 
-    private fun showDetailsDialog(userTestResult: UserTestResult){
 
-        selectedResult = userTestResult
-        detailsDialog = Dialog(parentContext)
-        detailsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        detailsDialog.setContentView(R.layout.dialog_test_result_details)
-        detailsDialog.findViewById<TextView>(R.id.testDateTextView).text = DateManager.dateMillisToStringDate(userTestResult.dateMillis)
-        detailsDialog.findViewById<TextView>(R.id.testResultNameTextView).text = userTestResult.bloodTestName
-
-        var text = ""
-        when(userTestResult.resultType){
-            RESULT_TYPE_NUMERIC -> text = userTestResult.result.toString() + " " + userTestResult.unit
-            RESULT_TYPE_POSITIVE_NEGATIVE -> {
-                when(userTestResult.result){
-                    POSITIVE_RESULT -> text = resources.getString(R.string.positive)
-                    NEGATIVE_RESULT -> text = resources.getString(R.string.negative)
-                }
-            }
-            RESULT_TYPE_DESC -> text = ""
-        }
-        detailsDialog.findViewById<TextView>(R.id.resultValueTextView).text = text
-        detailsDialog.findViewById<TextView>(R.id.notesTextView).text = userTestResult.note
-
-        var favouriteIcon = R.drawable.prestar
-        when(userTestResult.favorite){
-            IS_FAVORITE -> {
-                favouriteIcon = R.drawable.star
-            }
-        }
-        favouriteButton = detailsDialog.findViewById(R.id.imageButtonFavourite)
-        favouriteButton.setImageResource(favouriteIcon)
-        favouriteButton.setOnClickListener{
-            if (selectedResult.favorite == IS_FAVORITE) removeFromFavourites() else addToFavourites()
-        }
-
-        deleteButton = detailsDialog.findViewById(R.id.imageButtonDelete)
-        deleteButton.setOnClickListener {
-            deleteResult()
-        }
-        detailsDialog.show()
-    }
-
-    private fun addToFavourites(){
+    override fun addResultToFavourites() {
         selectedResult.favorite = IS_FAVORITE
-        favouriteButton.setImageResource(R.drawable.star)
         TestResultsInteractor(UserDataDBEntry).setFavourite(selectedResult, this)
     }
 
-    private fun removeFromFavourites(){
+    override fun removeResultFromFavourites() {
         selectedResult.favorite = NOT_FAVORITE
-        favouriteButton.setImageResource(R.drawable.prestar)
         TestResultsInteractor(UserDataDBEntry).setUNFavourite(selectedResult, this)
     }
 
-    private fun deleteResult() {
+    override fun deleteSelectedResult() {
         TestResultsInteractor(UserDataDBEntry).deleteUserTestResult(selectedResult,this)
-        detailsDialog.hide()
     }
 
     override fun presentSaveSuccess() {}

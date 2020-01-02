@@ -5,7 +5,7 @@ import com.example.labmanager.model.MedicalFile
 class MedicalFilesManager {
 
     fun sortFilesByName(input: ArrayList<MedicalFile>) :ArrayList<MedicalFile>{
-        input.sortWith(compareBy({it.name}, {it.name}))
+        input.sortWith(compareBy {it.name.toUpperCase()})
         return input
     }
 }

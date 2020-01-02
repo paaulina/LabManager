@@ -22,4 +22,14 @@ data class UserTestResult(
         bloodTestName: String = ""
     ) : this ("", dateMillis, result, note, unit, favorite, resultType, bloodTestName)
 
+    constructor( userTestResult: UserTestResult)
+            : this( userTestResult.id,
+                    userTestResult.dateMillis,
+                    userTestResult.result,
+                    userTestResult.note,
+                    userTestResult.unit,
+                    userTestResult.favorite,
+                    userTestResult.resultType,
+                    userTestResult.bloodTestName)
+
 }

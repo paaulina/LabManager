@@ -1,5 +1,6 @@
 package com.example.labmanager.service
 
+import android.util.Log
 import com.example.labmanager.AUTO_GENERATED
 import com.example.labmanager.AUTO_GENERATED_NO_CHART
 import com.example.labmanager.model.TestsGroup
@@ -46,6 +47,19 @@ class UserTestsResultsGroupManager (private var resultsLists : ArrayList<UserTes
         return  resultsLists1
     }
 
+    private fun sortedDatesAreUnique(resultsLists1: ArrayList<UserTestResult>) : Boolean{
+        var lastDate : Long = 0
+        for(result in resultsLists1){
+            if(lastDate > 0){
+                if(result.dateMillis == lastDate){
+                    return false
+                }
+            }
+            lastDate = result.dateMillis
+        }
+        return true
+    }
+
     fun getGroupedByName() : ArrayList<TestsGroup>{
         val groupList = arrayListOf<TestsGroup>()
 
@@ -62,6 +76,9 @@ class UserTestsResultsGroupManager (private var resultsLists : ArrayList<UserTes
             } else{
                 if (currGroup.resultsList.size > 1){
                     currGroup.resultsList = sortByDate(currGroup.resultsList)
+                    if(!sortedDatesAreUnique(currGroup.resultsList)){
+                        currGroup.groupType = AUTO_GENERATED_NO_CHART
+                    }
                     groupList.add(currGroup)
                 }
                 currGroup = TestsGroup(result.bloodTestName, arrayListOf(result), AUTO_GENERATED)
@@ -69,10 +86,24 @@ class UserTestsResultsGroupManager (private var resultsLists : ArrayList<UserTes
                     currGroup.groupType = AUTO_GENERATED_NO_CHART
                 }
             }
+
+            if(currGroup.groupType == AUTO_GENERATED){
+                var unified = UnitsService().unifyNumGroupUnits(currGroup)
+                if(unified.isEmpty()){
+                    currGroup.groupType = AUTO_GENERATED_NO_CHART
+                } else {
+                    currGroup.resultsList = unified
+                }
+            }
         }
+
+
 
         if (currGroup.resultsList.size > 1){
             currGroup.resultsList = sortByDate(currGroup.resultsList)
+            if(!sortedDatesAreUnique(currGroup.resultsList)){
+                currGroup.groupType = AUTO_GENERATED_NO_CHART
+            }
             groupList.add(currGroup)
          }
 

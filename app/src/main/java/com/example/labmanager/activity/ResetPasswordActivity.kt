@@ -19,6 +19,7 @@ class ResetPasswordActivity : AppCompatActivity() {
 
     private var mAuth: FirebaseAuth? = null
     private var message = ""
+    private var checkEmail = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +27,9 @@ class ResetPasswordActivity : AppCompatActivity() {
 
         message = intent.getStringExtra(PASSWOED_ENTRY_POINT)
         if(message == CHANGE_PASSWORD_ENTRY){
-            tv_message.text = "W celu potwierdzenia podaj e-mail"
-            button_reset.setText("Wyślij link resetujący.")
+            tv_message.text = getString(R.string.ineert_email_to_continue)
+            button_reset.setText(getString(R.string.send_reset_link))
+            checkEmail = true
         }
 
         mAuth = FirebaseAuth.getInstance()
@@ -46,13 +48,24 @@ class ResetPasswordActivity : AppCompatActivity() {
             layout_email_text.error = EMAIL_ERROR_TEXT
             return
         }
+
+        if(checkEmail){
+            var user = FirebaseAuth.getInstance().currentUser
+            if(user == null || !user.email.equals(emailText)){
+                layout_email_text.isErrorEnabled = true
+                layout_email_text.error = EMAIL_ERROR_TEXT_WRONG
+                return
+            }
+        }
+
         layout_email_text.isErrorEnabled = false
         mAuth?.sendPasswordResetEmail(emailText)
              ?.addOnCompleteListener(OnCompleteListener<Void> { task ->
                 if (task.isSuccessful) {
                     passwordResetSuccess(emailText)
                 } else {
-                    Toast.makeText(this, "Zy adres email", Toast.LENGTH_LONG)
+                    layout_email_text.isErrorEnabled = true
+                    layout_email_text.error = EMAIL_ERROR_TEXT_WRONG
                 }
             })
 

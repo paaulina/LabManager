@@ -14,6 +14,7 @@ import com.example.labmanager.model.MedicalFile
 import com.example.labmanager.R
 import com.example.labmanager.service.InternetConnectionChecker
 import com.example.labmanager.service.ItemClickedCallback
+import com.example.labmanager.service.MedicalFilesManager
 import kotlinx.android.synthetic.main.activity_medical_files.*
 
 class MedicalFilesActivity : AppCompatActivity(), MedicalFilesPresenter, ItemClickedCallback {
@@ -51,19 +52,30 @@ class MedicalFilesActivity : AppCompatActivity(), MedicalFilesPresenter, ItemCli
 
 
     override fun presentMedicalFiles(medicalFilesArrayList: ArrayList<MedicalFile>) {
-        filesList = medicalFilesArrayList
-        this.setUpRecycler(medicalFilesArrayList)
+        filesList = MedicalFilesManager().sortFilesByName(medicalFilesArrayList)
+        this.setUpRecycler(filesList)
 
     }
 
     override fun presentMedicalFilesRetrievalError() {
         progress_bar_med.visibility = View.GONE
+        textViewNoItems.visibility = View.VISIBLE
     }
 
     private fun setUpRecycler(medicalFiles: ArrayList<MedicalFile>){
+
         progress_bar_med.visibility = View.GONE
         gridRecycler.layoutManager = GridLayoutManager(this, 2)
-        gridRecycler.adapter = ImagesRecyclerAdapter(medicalFiles, this)
+        var adapter = ImagesRecyclerAdapter(medicalFiles, this)
+        gridRecycler.adapter = adapter
+        adapter.notifyDataSetChanged()
+
+
+        if(medicalFiles.isEmpty()){
+            textViewNoItems.visibility = View.VISIBLE
+        } else {
+            textViewNoItems.visibility = View.GONE
+        }
     }
 
     private lateinit var detailsFragment: MedicalFileDetailsFragment

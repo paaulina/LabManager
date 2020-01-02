@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.labmanager.DIALOG_NOT_EDITABLE
 import kotlinx.android.synthetic.main.fragment_group_with_chart.*
 import com.example.labmanager.adapter.TestResultAdapter
 import com.example.labmanager.model.TestsGroup
 import com.example.labmanager.R
+import com.example.labmanager.dialog.DialogManager
 import com.example.labmanager.service.DateManager
 import com.example.labmanager.service.ItemClickedCallback
 import com.github.mikephil.charting.components.XAxis
@@ -68,7 +70,7 @@ class GroupWithChartFragment (
         val xAxis = chart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
-        xAxis.labelCount = 5
+        xAxis.labelCount = 4
         xAxis.valueFormatter = object: ValueFormatter() {
 
             override fun getFormattedValue(value: Float): String {
@@ -97,7 +99,10 @@ class GroupWithChartFragment (
         resltsRecyclerOverview.adapter = recyclerAdapter
     }
 
-    override fun itemAtPositionSelected(position: Int) {}
+    override fun itemAtPositionSelected(position: Int) {
+        var selectedResult = testsGroup.resultsList[position]
+        DialogManager().showDetailsDialog(DIALOG_NOT_EDITABLE, selectedResult, parentContext, null)
+    }
 
     override fun itemAtPositionLongClicked(position: Int) {}
 
