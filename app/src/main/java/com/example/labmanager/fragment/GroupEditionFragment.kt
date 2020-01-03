@@ -26,6 +26,7 @@ class GroupEditionFragment(
 
     private var isGroupEdition = false
     lateinit var adapter: SelectiveTestResultAdapter
+    private var entryResultsList = arrayListOf<UserTestResult>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +40,10 @@ class GroupEditionFragment(
 
         if(testsGroup.groupName.isNotEmpty()) {
             isGroupEdition = true
+        }
+
+        for(res in testsGroup.resultsList){
+            entryResultsList.add(res)
         }
         setUpRecycler()
 
@@ -58,6 +63,7 @@ class GroupEditionFragment(
         }
 
         buttonCancel.setOnClickListener {
+            testsGroup.resultsList = entryResultsList
             fragmentmanager.popBackStackImmediate()
         }
     }

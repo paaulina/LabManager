@@ -180,6 +180,8 @@ class TestsResultsOverviewFragment(
         setUpSortingSpinner()
         setUpFiltersFields()
 
+        sortingSpinner.setSelection(1)
+
         val cancelButton = filtersDialog.findViewById(R.id.button_cancel) as Button
         val applyButton = filtersDialog.findViewById(R.id.button_apply) as Button
 
@@ -248,7 +250,12 @@ class TestsResultsOverviewFragment(
 
 
     private fun showDateFrom(year: Int, month: Int, day: Int) {
-        var dateString = "$day/$month/$year"
+        var monthString = if(month < 10){
+            "0$month"
+        }else{
+            "$month"
+        }
+        var dateString = "$day/$monthString/$year"
         if(day < 10){
             dateString = "0$dateString"
         }
@@ -259,7 +266,13 @@ class TestsResultsOverviewFragment(
     }
 
     private fun showDateTo(year: Int, month: Int, day: Int) {
-        var dateString = "$day/$month/$year"
+
+        var monthString = if(month < 10){
+            "0$month"
+        }else{
+            "$month"
+        }
+        var dateString = "$day/$monthString/$year"
         if(day < 10){
             dateString = "0$dateString"
         }
@@ -296,17 +309,19 @@ class TestsResultsOverviewFragment(
 
 
     private fun applyFilters(){
+
+        Log.d("DateLog" , "datelog $stringDateFrom $stringDateTo")
         buttonFavFilter.setImageDrawable(resources.getDrawable(R.drawable.prestar))
         displayableResultList = resultsList
         if(filterName.length > 0){
             displayableResultList = TestResultsFilter.filterByName(filterName, displayableResultList)
         }
 
-        if(dateFromSet){
+        if(stringDateFrom.isNotEmpty()){
             displayableResultList = TestResultsFilter.filterByDateFrom(DateManager.toMillis(stringDateFrom), displayableResultList)
         }
 
-        if(dateToSet){
+        if(stringDateTo.isNotEmpty()){
             displayableResultList = TestResultsFilter.filterByDateTo(DateManager.toMillis(stringDateTo), displayableResultList)
         }
         if(sortingTypesInitialized){

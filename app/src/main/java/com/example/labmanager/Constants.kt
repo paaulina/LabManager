@@ -86,21 +86,11 @@ const val MED_FILE_ADDITION = 2
 const val PASSWOED_ENTRY_POINT = "entryPoint"
 const val CHANGE_PASSWORD_ENTRY = "changePAssword"
 const val RESET_PASSWORD_ENTRY = "resetPAssword"
-
 const val HEX_CHARS = "0123456789ABCDEF"
 const val SHA_256 = "SHA-256"
-
 const val EMAIL_ERROR_TEXT = "Nieprawidowa wartość"
 const val EMAIL_ERROR_TEXT_WRONG = "Wprowadź swój adres e-mail"
 const val PASSWORD_ERROR_TEXT = "Hasło musi zawierać min. 8 znaków, w tym minimum jedną dużą i małą literę oraz liczbę"
-const val NAME_ERROR_TEXT = "Nieprawidowa wartość"
-
-const val ACTION_ADDING_FAV = 1
-const val ACTION_DELETING = 2
-const val ACTION_FILTERING = 3
-const val ACTION_SHOWING_FAV = 4
-
-
 const val DIALOG_EDITABLE = 1
 const val DIALOG_NOT_EDITABLE = 2
 
