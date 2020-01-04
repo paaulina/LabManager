@@ -31,6 +31,12 @@ import com.example.labmanager.dataBase.usecase.userData.ProfileData.UserNodeInte
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestResultsInteractor
 import com.example.labmanager.dataBase.usecase.userData.TestResults.TestsResultSavingPresenter
 import com.example.labmanager.service.InternetConnectionChecker
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 class AddTestResultActivity : AppCompatActivity(),
@@ -60,6 +66,8 @@ class AddTestResultActivity : AppCompatActivity(),
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_test_result)
+        val locale = resources.configuration.locale
+        Locale.setDefault(locale)
         setUpTodaysDate()
         setUpPositiveNegativeSpinner()
 
@@ -87,6 +95,7 @@ class AddTestResultActivity : AppCompatActivity(),
 // ----------------------------- DATE -------------------------------------------------------------
 
     private fun setUpTodaysDate(){
+
 
         val calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR)
