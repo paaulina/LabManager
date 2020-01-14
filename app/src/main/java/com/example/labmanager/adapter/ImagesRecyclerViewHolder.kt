@@ -15,7 +15,12 @@ class ImagesRecyclerViewHolder (itemView: View) :
 
 
     fun bind(medicalFile: MedicalFile){
-        imageView.setImageBitmap(medicalFile.imageBitmap)
+        if(medicalFile.smallBitmap != null){
+            imageView.setImageBitmap(medicalFile.smallBitmap)
+        } else{
+            imageView.setImageBitmap(medicalFile.imageBitmap)
+        }
+
         imageTitle.text = medicalFile.name
     }
 }

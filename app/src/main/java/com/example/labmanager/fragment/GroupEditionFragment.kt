@@ -76,11 +76,14 @@ class GroupEditionFragment(
         resltsRecycler.setHasFixedSize(true)
         resltsRecycler.adapter = adapter
 
-        if(allResults.isEmpty()){
-            textViewNoItems.visibility = View.VISIBLE
-        } else {
-            textViewNoItems.visibility = View.GONE
+        if(textViewNoItems !=null){
+            if(allResults.isEmpty()){
+                textViewNoItems.visibility = View.VISIBLE
+            } else {
+                textViewNoItems.visibility = View.GONE
+            }
         }
+
     }
 
     override fun onSaveSuccess() {

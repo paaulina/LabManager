@@ -16,6 +16,7 @@ import com.example.labmanager.dataBase.usecase.medicalFiles.MedicalFilesInteract
 import com.example.labmanager.dataBase.usecase.medicalFiles.MedicalFilesSavingResultPresenter
 import com.example.labmanager.model.MedicalFile
 import com.example.labmanager.R
+import kotlinx.android.synthetic.main.fragment_medical_file_details.*
 
 class MedicalFileDetailsFragment(
     private val medicalFile: MedicalFile
@@ -40,6 +41,7 @@ class MedicalFileDetailsFragment(
 
         textViewName.text = medicalFile.name
         imageView.setImageBitmap(medicalFile.imageBitmap)
+        dateTextView.text = medicalFile.dateString
         progressBar = view.findViewById(R.id.progress_bar)
 
         val deleteButton = view.findViewById<ImageButton>(R.id.buttonDelete)
@@ -50,6 +52,14 @@ class MedicalFileDetailsFragment(
                 .setCancelable(true)
                 .show()
 
+        }
+
+        imageView.setOnClickListener {
+            if(dateTextView.visibility == View.INVISIBLE){
+                dateTextView.visibility = View.VISIBLE
+            } else{
+                dateTextView.visibility = View.INVISIBLE
+            }
         }
     }
 

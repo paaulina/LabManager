@@ -54,7 +54,9 @@ class GroupedResultsOverviewFragment(context: Context,
     }
 
     override fun presentRetrievalError() {
-        textViewNoItems.visibility = View.VISIBLE
+        if(textViewNoItems != null){
+            textViewNoItems.visibility = View.VISIBLE
+        }
     }
 
     private fun setUpResults(testResults: ArrayList<UserTestResult>){

@@ -26,12 +26,14 @@ import com.example.labmanager.service.InternetConnectionChecker
 class AddMedicalFilesActivity : AppCompatActivity(), MedicalFilesSavingResultPresenter {
 
     private var mStorageRef: StorageReference? = null
+    private var inActivity = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.labmanager.R.layout.activity_add_medical_files)
         mStorageRef = FirebaseStorage.getInstance().reference
 
+        inActivity = true
         buttonUploadImage.setOnClickListener {
             showFileChooser()
         }
@@ -60,10 +62,12 @@ class AddMedicalFilesActivity : AppCompatActivity(), MedicalFilesSavingResultPre
     }
 
     fun exitActivity(view: View){
+        inActivity = false
         onBackPressed()
     }
 
     override fun onBackPressed(){
+        inActivity = false
         val intent = Intent(this, MainPageActivity::class.java)
         startActivity(intent)
     }
@@ -126,9 +130,13 @@ class AddMedicalFilesActivity : AppCompatActivity(), MedicalFilesSavingResultPre
     }
 
     override fun onSavingSuccess() {
-        val intent = Intent(this, SuccessActivity::class.java)
-        intent.putExtra(SUCCESS_ACTIVITY_ENTRY_POINT, MED_FILE_ADDITION)
-        startActivity(intent)
+        if(inActivity){
+            inActivity = false
+            val intent = Intent(this, SuccessActivity::class.java)
+            intent.putExtra(SUCCESS_ACTIVITY_ENTRY_POINT, MED_FILE_ADDITION)
+            startActivity(intent)
+        }
+        inActivity = false
     }
 
     override fun onSavingFailure() {}

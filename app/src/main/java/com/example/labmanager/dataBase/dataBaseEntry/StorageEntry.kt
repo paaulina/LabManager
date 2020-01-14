@@ -10,6 +10,7 @@ import com.example.labmanager.dataBase.usecase.userData.MedicalFiles.MedicalFile
 import com.example.labmanager.dataBase.usecase.userData.MedicalFiles.MedicalFilesIDsSavingCallback
 import com.example.labmanager.model.MedicalFile
 import com.example.labmanager.NAME
+import com.example.labmanager.service.DateManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
@@ -46,19 +47,21 @@ object StorageEntry : MedicalFilesGateway,
     override fun onRetrievalSuccess(emptyFilesList: ArrayList<MedicalFile>) {
 
         val medicalFiles = arrayListOf<MedicalFile>()
+        var fileReferences = arrayListOf<StorageReference>()
         for(file in emptyFilesList){
             var counter = 0
             val userId = firebaseAuth.currentUser!!.uid
             val path = userId +"/"+ file.path
             val pathReference = storageRef!!.child(path)
+            fileReferences.add(pathReference)
             val localFile = File.createTempFile("Images", "bmp")
             pathReference.getFile(localFile).addOnSuccessListener {
                 file.imageBitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 medicalFiles.add(file)
+
                 counter++
                 if(medicalFiles.size == emptyFilesList.size){
-                    allMedicalFiles = medicalFiles
-                    currentlyRetrievalCallback.onRetrievalSuccess(medicalFiles)
+                    addDates(medicalFiles, fileReferences)
                 }
 
             }.addOnFailureListener {
@@ -66,8 +69,24 @@ object StorageEntry : MedicalFilesGateway,
             }
 
         }
+
         if(emptyFilesList.isEmpty())
             currentlyRetrievalCallback.onRetrievalFailure()
+    }
+
+    fun addDates(medicalFiles: ArrayList<MedicalFile>, fileReferences : ArrayList<StorageReference>){
+        var refCounter = 0
+        for(ref in fileReferences){
+            ref.metadata.addOnSuccessListener {
+                medicalFiles[refCounter].dateString = DateManager.dateMillisToStringDate(it.creationTimeMillis)
+                refCounter++
+                if(medicalFiles.size == refCounter){
+                    allMedicalFiles = medicalFiles
+                    currentlyRetrievalCallback.onRetrievalSuccess(medicalFiles)
+                }
+
+            }
+        }
     }
 
     override fun onRetrievalFailure() {

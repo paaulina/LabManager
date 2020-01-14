@@ -103,8 +103,10 @@ class TestsResultsOverviewFragment(
 
 
     override fun presentRetrievalError() {
-        progress_bar.visibility = View.GONE
-        textViewNoItems.visibility = View.VISIBLE
+        if(progress_bar != null && textViewNoItems !=null){
+            progress_bar.visibility = View.GONE
+            textViewNoItems.visibility = View.VISIBLE
+        }
     }
 
 
@@ -133,12 +135,14 @@ class TestsResultsOverviewFragment(
         resltsRecyclerOverview.adapter = recyclerAdapter
         recyclerAdapter.notifyDataSetChanged()
 
-
-        if(displayableResultList.isEmpty()){
-            textViewNoItems.visibility = View.VISIBLE
-        } else {
-            textViewNoItems.visibility = View.GONE
+        if(textViewNoItems !=null){
+            if(displayableResultList.isEmpty()){
+                textViewNoItems.visibility = View.VISIBLE
+            } else {
+                textViewNoItems.visibility = View.GONE
+            }
         }
+
     }
 
 

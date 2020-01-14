@@ -1,6 +1,7 @@
 package com.example.labmanager.activity
 
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,6 +17,9 @@ import com.example.labmanager.service.InternetConnectionChecker
 import com.example.labmanager.service.ItemClickedCallback
 import com.example.labmanager.service.MedicalFilesManager
 import kotlinx.android.synthetic.main.activity_medical_files.*
+
+
+
 
 class MedicalFilesActivity : AppCompatActivity(), MedicalFilesPresenter, ItemClickedCallback {
 
@@ -53,8 +57,27 @@ class MedicalFilesActivity : AppCompatActivity(), MedicalFilesPresenter, ItemCli
 
     override fun presentMedicalFiles(medicalFilesArrayList: ArrayList<MedicalFile>) {
         filesList = MedicalFilesManager().sortFilesByName(medicalFilesArrayList)
+        for(file in filesList){
+            file.smallBitmap = getSmallBitmap(file.imageBitmap)
+        }
         this.setUpRecycler(filesList)
 
+    }
+
+    private fun getSmallBitmap(image: Bitmap) : Bitmap{
+        var maxSize = 200
+        var width = image.getWidth()
+        var height = image.getHeight()
+
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
     }
 
     override fun presentMedicalFilesRetrievalError() {
@@ -66,6 +89,10 @@ class MedicalFilesActivity : AppCompatActivity(), MedicalFilesPresenter, ItemCli
 
         progress_bar_med.visibility = View.GONE
         gridRecycler.layoutManager = GridLayoutManager(this, 2)
+        gridRecycler.setHasFixedSize(true)
+        gridRecycler.setItemViewCacheSize(20)
+        gridRecycler.setDrawingCacheEnabled(true);
+        gridRecycler.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         var adapter = ImagesRecyclerAdapter(medicalFiles, this)
         gridRecycler.adapter = adapter
         adapter.notifyDataSetChanged()

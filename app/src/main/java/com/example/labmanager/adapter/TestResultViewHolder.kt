@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.labmanager.*
 import com.example.labmanager.model.UserTestResult
 import com.example.labmanager.service.DateManager
+import com.example.labmanager.service.UnitsService
 import kotlinx.android.synthetic.main.test_result_list_item.view.*
 
 class TestResultViewHolder (itemView: View) :
@@ -29,7 +30,8 @@ class TestResultViewHolder (itemView: View) :
         when(userTestResult.resultType){
             RESULT_TYPE_NUMERIC -> {
                 resultNumericTextView.visibility = View.VISIBLE
-                resultNumericTextView.text = userTestResult.result.toString()
+                //resultNumericTextView.text = userTestResult.result.toString()
+                resultNumericTextView.text = UnitsService().getDisplayableStringFromConvertedResult(userTestResult.result)
                 posNegImageEmpty.visibility = View.INVISIBLE
                 posNegImageFilled.visibility = View.INVISIBLE
             }

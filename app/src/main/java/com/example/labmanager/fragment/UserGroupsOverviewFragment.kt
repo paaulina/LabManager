@@ -68,7 +68,10 @@ class UserGroupsOverviewFragment (
     }
 
     override fun presentRetrievalError() {
-        textViewNoItems.visibility = View.VISIBLE
+        if(textViewNoItems != null){
+            textViewNoItems.visibility = View.VISIBLE
+        }
+
     }
 
     private fun addGroup(){

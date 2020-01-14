@@ -4,11 +4,11 @@ val FIRST_UNIT_ARRAY = arrayListOf("µmol","umol","mcmol","µIU", "mIU", "IU", "
 val SECOND_UNIT_ARRAY = arrayListOf("mL","dL","L")
 
 val FIRST_UNIT_MOL = hashMapOf("µmol" to 1.0,
-                                                    "umol" to 1.0,
-                                                    "mcmol" to 1.0,
-                                                    "µM" to 1.0,
-                                                    "mcM" to 1.0,
-                                                    "uM" to 1.0)
+                                "umol" to 1.0,
+                                "mcmol" to 1.0,
+                                "µM" to 1.0,
+                                "mcM" to 1.0,
+                                "uM" to 1.0)
 
 
 val FIRST_UNIT_IU = hashMapOf(  "µIU" to 1000000.0,

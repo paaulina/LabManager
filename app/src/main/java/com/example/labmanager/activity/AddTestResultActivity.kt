@@ -59,6 +59,7 @@ class AddTestResultActivity : AppCompatActivity(),
     private var selectedResult = 0f
     private var selectedUnit = ""
     private var insertedNote = ""
+    private var inActivity = true
     private var POS_NEG_HASHMAP = hashMapOf<String, Float>()
     private lateinit var datePickerDialog: DatePickerDialog
 
@@ -70,6 +71,7 @@ class AddTestResultActivity : AppCompatActivity(),
         Locale.setDefault(locale)
         setUpTodaysDate()
         setUpPositiveNegativeSpinner()
+        inActivity = true
 
         POS_NEG_HASHMAP = hashMapOf(resources.getString(R.string.positive) to 1f, resources.getString(R.string.negative) to 0f)
         typesArray = resources.getStringArray(R.array.result_types_array)
@@ -87,6 +89,7 @@ class AddTestResultActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
+        inActivity = true
         insideLayout.visibility = INVISIBLE
         progress_bar_page_loading.visibility = VISIBLE
         StaticDataInteractor(StaticDataDBEntry, this).getBloodTestsArray()
@@ -282,10 +285,12 @@ class AddTestResultActivity : AppCompatActivity(),
 
 
     fun exitActivity(view: View){
+        inActivity = false
         onBackPressed()
     }
 
     override fun onBackPressed(){
+        inActivity = false
         val intent = Intent(this, MainPageActivity::class.java)
         startActivity(intent)
     }
@@ -413,15 +418,22 @@ class AddTestResultActivity : AppCompatActivity(),
         if(permission == GLOBAL_ALLOWED){
             GlobalDataInteractor.save(savedResult)
         }
-        val intent = Intent(this, SuccessActivity::class.java)
-        intent.putExtra(SUCCESS_ACTIVITY_ENTRY_POINT, TEST_RESULT_ADITION)
-        startActivity(intent)
+        if(inActivity){
+            inActivity = false
+            val intent = Intent(this, SuccessActivity::class.java)
+            intent.putExtra(SUCCESS_ACTIVITY_ENTRY_POINT, TEST_RESULT_ADITION)
+            startActivity(intent)
+        }
+
     }
 
     override fun presentPermissionRetrievalFailure() {
-        val intent = Intent(this, SuccessActivity::class.java)
-        intent.putExtra(SUCCESS_ACTIVITY_ENTRY_POINT, TEST_RESULT_ADITION)
-        startActivity(intent)
+        if(inActivity){
+            inActivity = false
+            val intent = Intent(this, SuccessActivity::class.java)
+            intent.putExtra(SUCCESS_ACTIVITY_ENTRY_POINT, TEST_RESULT_ADITION)
+            startActivity(intent)
+        }
     }
 
 

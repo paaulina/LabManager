@@ -5,32 +5,7 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--    <LinearLayout-->
-<!--            android:id="@+id/top_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="20dp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_marginEnd="70dp"-->
-<!--            android:orientation="horizontal"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/buttonDelete"-->
-<!--            app:layout_constraintHorizontal_bias="0.0"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-<!--        <ImageButton-->
-<!--                android:id="@+id/buttonBack"-->
-<!--                style="@style/backButtonStyle"-->
-<!--                android:onClick="exitActivity" />-->
-
-<!--        <TextView-->
-<!--                android:id="@+id/text_view_name"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Grupy badań"-->
-<!--                android:textSize="@dimen/tab_name_text_size" />-->
-
-<!--    </LinearLayout>-->
 
 
     <ImageButton
@@ -62,6 +37,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/top_layout" />
+
+    <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12-12-2019"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
             android:id="@+id/imageView"

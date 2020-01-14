@@ -70,7 +70,7 @@
     <string name="do_you_want_toDelete_folder">Czy chcesz usunąć katalog?</string>
     <string name="yes">Tak</string>
     <string name="cancel">Anuluj</string>
-    <string name="creation_date">Data wykonania.</string>
+    <string name="creation_date">Wartość wyniku</string>
     <string name="results">Wyniki</string>
     <string name="do_you_want_to_delete_file">Czy chcesz usunąć plik?</string>
     <string name="file_name">Nazwa</string>
